@@ -67,7 +67,6 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(5, 8, 15, 0.8); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.5); border-radius: 4px; }
         
-        /* التنبيه المضيء والمتحرك للمشرف */
         .pulse-alert-box {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(220, 38, 38, 0.15));
             border: 1px solid #f59e0b;
@@ -94,9 +93,9 @@
 </head>
 <body class="text-white font-cairo selection:bg-amber-500 selection:text-navy-950 flex flex-col h-screen overflow-hidden">
 
-    <!-- LOGIN SCREEN PORTAL -->
+    <!-- LOGIN SCREEN PORTAL (Secure Auth with Email & Password) -->
     <div id="loginScreen" class="fixed inset-0 bg-navy-950/98 z-50 flex items-center justify-center p-4 backdrop-blur-2xl">
-        <div class="glass-panel p-8 rounded-3xl max-w-xl w-full border border-amber-500/30 shadow-2xl space-y-6">
+        <div class="glass-panel p-8 rounded-3xl max-w-md w-full border border-amber-500/30 shadow-2xl space-y-6">
             <div class="text-center space-y-2">
                 <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-amber-300 flex items-center justify-center text-navy-950 font-black text-4xl mx-auto shadow-xl shadow-amber-500/20 border-2 border-amber-300">
                     <i class="fa-solid fa-compass-drafting"></i>
@@ -107,24 +106,32 @@
                 </p>
             </div>
 
-            <div class="space-y-4 pt-2">
-                <label class="block text-xs font-bold text-slate-200 text-right">قم باختيار حسابك الهندسي لتسجيل الدخول:</label>
-                
-                <!-- قسم الإدارة العليا والمبرمج -->
-                <div class="space-y-1">
-                    <span class="text-[10px] text-amber-400 font-black uppercase tracking-wider block px-1">إدارة النظام والمدير العام</span>
-                    <div class="grid grid-cols-1 gap-2" id="adminUsersList"></div>
+            <form onsubmit="handleLogin(event)" class="space-y-4 pt-2">
+                <div>
+                    <label class="block text-xs font-bold text-slate-200 mb-1">البريد الإلكتروني المهني *</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="email" id="loginEmail" required placeholder="مثال: ameer@alrai.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl pr-9 pl-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold">
+                    </div>
                 </div>
 
-                <!-- قسم المهندسين والمشرفين الميدانيين -->
-                <div class="space-y-1 pt-2">
-                    <span class="text-[10px] text-slate-400 font-black uppercase tracking-wider block px-1">المهندسون والمشرفون الميدانيون</span>
-                    <div class="grid grid-cols-1 gap-2.5 max-h-48 overflow-y-auto custom-scrollbar p-1" id="fieldUsersList"></div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-200 mb-1">كلمة المرور *</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl pr-9 pl-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold">
+                    </div>
                 </div>
-            </div>
 
-            <div class="text-center pt-2">
-                <span class="text-[11px] text-slate-400 font-bold">نظام محمي بمسار واعتماد رسمي للإشراف على القسايم</span>
+                <div id="loginError" class="hidden text-rose-400 text-xs font-bold text-center bg-rose-950/40 p-2 rounded-xl border border-rose-800"></div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-navy-950 font-black text-xs rounded-xl hover:brightness-110 transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول المشفر
+                </button>
+            </form>
+
+            <div class="text-center pt-2 border-t border-slate-800/80">
+                <span class="text-[11px] text-slate-400 font-bold">نظام محمي بتشفير عالي الأمان وقواعد بيانات مركزية</span>
             </div>
         </div>
     </div>
@@ -149,9 +156,6 @@
             <button id="programmerAddUserBtn" onclick="openAddUserModal()" class="hidden bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition">
                 <i class="fa-solid fa-user-plus text-amber-400"></i> إضافة مستخدم جديد (المبرمج)
             </button>
-            <button onclick="exportBackup()" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition">
-                <i class="fa-solid fa-file-export text-amber-400"></i> تصدير البيانات
-            </button>
             <button onclick="logout()" class="bg-rose-950/60 hover:bg-rose-900/80 text-rose-200 border border-rose-800 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition">
                 <i class="fa-solid fa-right-from-bracket"></i> خروج
             </button>
@@ -161,10 +165,9 @@
     <!-- Main Workspace -->
     <div class="flex flex-1 overflow-hidden">
 
-        <!-- RIGHT SIDEBAR (الشريط الجانبي الأيمن المتطور) -->
+        <!-- RIGHT SIDEBAR -->
         <aside class="w-[430px] bg-navy-950/95 border-l border-slate-800 flex flex-col shrink-0 no-print z-20 shadow-2xl">
             
-            <!-- Header sidebar -->
             <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-navy-900/80">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-folder-tree text-amber-400 text-sm"></i>
@@ -175,10 +178,8 @@
                 </button>
             </div>
 
-            <!-- 1. SECTION: TOP ANIMATED ALERT HEADER (قسم التنبيهات الثابت العلوي للمشرف) -->
-            <div id="sidebarAlertSection" class="p-3 border-b border-slate-800/80 bg-navy-950 shrink-0">
-                <!-- Loaded dynamically depending on pending supervisor tasks -->
-            </div>
+            <!-- SECTION: TOP ANIMATED ALERT HEADER -->
+            <div id="sidebarAlertSection" class="p-3 border-b border-slate-800/80 bg-navy-950 shrink-0"></div>
 
             <!-- Search input -->
             <div class="p-3 border-b border-slate-800/80 bg-navy-950/80">
@@ -192,15 +193,13 @@
             <div class="flex border-b border-slate-800 bg-navy-900/40 text-[11px] font-bold text-slate-300">
                 <button onclick="setFilterTab('all')" id="tabAll" class="flex-1 py-2.5 text-center border-b-2 border-amber-500 text-amber-400 bg-amber-500/5 transition">الكل</button>
                 <button onclick="setFilterTab('my_created')" id="tabCreated" class="flex-1 py-2.5 text-center border-b-2 border-transparent hover:text-white transition">من إنشائي</button>
-                <button onclick="setFilterTab('assigned')" id="tabAssigned" class="flex-1 py-2.5 text-center border-b-2 border-transparent hover:text-white relative transition">
-                    مُسندة إليّ
-                </button>
+                <button onclick="setFilterTab('assigned')" id="tabAssigned" class="flex-1 py-2.5 text-center border-b-2 border-transparent hover:text-white relative transition">مُسندة إليّ</button>
                 <button onclick="setFilterTab('pending')" id="tabPending" class="flex-1 py-2.5 text-center border-b-2 border-transparent hover:text-amber-400 relative transition">
                     معلقة 🟡 <span id="pendingBadgeCount" class="hidden bg-amber-500 text-navy-950 text-[9px] px-1.5 py-0.2 rounded-full font-black">0</span>
                 </button>
             </div>
 
-            <!-- 2. SECTION: SITES LIST (قائمة القسايم والمشاريع) -->
+            <!-- SECTION: SITES LIST -->
             <div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2.5 bg-navy-950/60">
                 <div id="sitesListContainer" class="space-y-2.5"></div>
             </div>
@@ -317,19 +316,27 @@
         </main>
     </div>
 
-    <!-- MODAL: Add New User (Programmer/Admin Only) -->
+    <!-- MODAL: Add New User (Includes Email & Secure Password Setup) -->
     <div id="addUserModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
         <div class="glass-panel bg-navy-900 border border-slate-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
             <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-navy-950">
                 <h3 class="text-base font-black text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-user-plus"></i> إضافة مستخدم جديد (صلاحيات المبرمج/المدير)
+                    <i class="fa-solid fa-user-plus"></i> إضافة مستخدم جديد وحساب آمن
                 </h3>
                 <button onclick="closeAddUserModal()" class="text-slate-400 hover:text-white p-2 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="saveNewUser(event)" class="p-6 space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">اسم المستخدم / المهندس *</label>
+                    <label class="block text-xs font-bold text-slate-200 mb-1">اسم المهندس / المستخدم *</label>
                     <input type="text" id="newUserNameInput" required placeholder="مثال: م/صالح" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-200 mb-1">البريد الإلكتروني المهني *</label>
+                    <input type="email" id="newUserEmailInput" required placeholder="saleh@alrai.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-200 mb-1">كلمة المرور *</label>
+                    <input type="password" id="newUserPasswordInput" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-200 mb-1">المسمى الوظيفي / الدور *</label>
@@ -344,7 +351,7 @@
                 </div>
                 <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
                     <button type="button" onclick="closeAddUserModal()" class="px-4 py-2 bg-slate-800 text-xs text-slate-300 font-bold rounded-xl">إلغاء</button>
-                    <button type="submit" class="px-6 py-2 bg-amber-500 text-navy-950 font-black text-xs rounded-xl hover:bg-amber-400 transition">حفظ وإضافة فورية</button>
+                    <button type="submit" class="px-6 py-2 bg-amber-500 text-navy-950 font-black text-xs rounded-xl hover:bg-amber-400 transition">إنشاء الحساب المشفر</button>
                 </div>
             </form>
         </div>
@@ -375,10 +382,7 @@
 
                 <div>
                     <label class="block text-xs font-bold text-amber-300 mb-1"><i class="fa-solid fa-user-shield"></i> تحديد المهندس المشرف المسؤول عن القسيمة *</label>
-                    <select id="modalSupervisorSelect" required class="w-full bg-slate-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-bold">
-                        <!-- Options loaded dynamically -->
-                    </select>
-                    <span class="text-[10px] text-amber-400/80 font-bold block mt-1">ملاحظة: ستظهر القسيمة للمشرف المختار كـ "بانتظار الموافقة والاعتماد".</span>
+                    <select id="modalSupervisorSelect" required class="w-full bg-slate-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-bold"></select>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -415,9 +419,7 @@
             <form onsubmit="saveAssignSupervisor(event)" class="p-6 space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-200 mb-2">اختر المشرف الهندسي الجديد للقسيمة:</label>
-                    <select id="assignSupervisorSelect" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-500 font-bold">
-                        <!-- Loaded dynamically -->
-                    </select>
+                    <select id="assignSupervisorSelect" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-500 font-bold"></select>
                 </div>
 
                 <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
@@ -496,146 +498,85 @@
         </div>
     </div>
 
-    <!-- Printable Invoice Section -->
-    <section id="printableInvoice" class="hidden print-only bg-white text-slate-900 p-8 rounded-xl"></section>
-
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 left-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 glass-panel border border-amber-500/50 text-white px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs font-bold pointer-events-none">
         <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
         <span id="toastMsg">تم التحديث بنجاح</span>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Server Connection & State Management Logic -->
     <script>
-        const STORAGE_KEY = 'alrai_eng_system_v32_approved';
-        
-        let defaultUsers = [
-            { name: "المدير العام", role: "إدارة شاملة ومتابعة", type: "admin" },
-            { name: "المبرمج", role: "دعم تقني وصلاحيات كاملة", type: "admin" },
-            { name: "م/أمير", role: "مهندس موقع / مشرف ميداني", type: "field" },
-            { name: "ابوسعد", role: "مشرف تنفيذ", type: "field" },
-            { name: "ايمن", role: "مشرف حركة ومشاريع", type: "field" }
-        ];
-
         let appData = { users: [], sites: [] };
         let currentUser = null;
         let activeSiteName = null;
         let currentFilterTab = 'all';
 
         window.onload = function() {
-            loadData();
-            renderUserLoginList();
-            
-            const savedUser = localStorage.getItem('alrai_current_user');
-            if (savedUser) {
-                currentUser = savedUser;
+            const token = localStorage.getItem('alrai_token');
+            const savedUser = localStorage.getItem('alrai_user');
+
+            if (token && savedUser) {
+                currentUser = JSON.parse(savedUser);
                 document.getElementById('loginScreen').classList.add('hidden');
                 checkProgrammerPrivileges();
                 initAppAfterLogin();
             }
         };
 
-        function loadData() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                try { appData = JSON.parse(stored); } catch(e) {}
-            }
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errEl = document.getElementById('loginError');
+            errEl.classList.add('hidden');
 
-            if (!appData.users || appData.users.length === 0) {
-                appData.users = defaultUsers;
-            }
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
 
-            if (!appData.sites || appData.sites.length === 0) {
-                appData.sites = [
-                    {
-                        id: 'site_demo_1',
-                        name: 'قسيمة 14 - قطعة 2، الجابريّة',
-                        owner: 'م/أمير',
-                        supervisor: 'ابوسعد',
-                        status: 'pending_approval', // pending_approval | approved
-                        client: 'السيد/ عبد الله العتيبي',
-                        startDate: '2026-03-01',
-                        duration: 45,
-                        workers: [
-                            { id: 'w1', name: 'كومار', workType: 'نجارة مسلحة للقواعد', dailyRate: 15, daysCount: 3 }
-                        ],
-                        expenses: [
-                            { id: 'ex1', title: 'توريد خشب جديد', amount: 120, date: '2026-03-02' }
-                        ],
-                        logs: [
-                            { date: new Date().toLocaleString('ar-KW'), author: 'م/أمير', text: 'أنشأ القسيمة وعيّن المشرف (ابوسعد) - بانتظار الاعتماد الرسمي' }
-                        ]
-                    },
-                    {
-                        id: 'site_demo_2',
-                        name: 'قسيمة 88 - قطعة 5، المطلع',
-                        owner: 'المدير العام',
-                        supervisor: 'ايمن',
-                        status: 'approved',
-                        client: 'شركة الأفق للمقاولات',
-                        startDate: '2026-02-15',
-                        duration: 60,
-                        approvedBy: 'ايمن',
-                        approvedAt: '2026-02-16 10:30 ص',
-                        workers: [],
-                        expenses: [],
-                        logs: [
-                            { date: '2026-02-16 10:30 ص', author: 'ايمن', text: 'تم اعتماد الإشراف واستلام الموقع رسمياً بواسطة (ايمن)' }
-                        ]
-                    }
-                ];
-            }
-            saveData();
-        }
-
-        function saveData() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-        }
-
-        function renderUserLoginList() {
-            const adminContainer = document.getElementById('adminUsersList');
-            const fieldContainer = document.getElementById('fieldUsersList');
-            
-            adminContainer.innerHTML = '';
-            fieldContainer.innerHTML = '';
-
-            appData.users.forEach(user => {
-                const btn = document.createElement('button');
-                btn.type = "button";
-                btn.className = "w-full bg-slate-900/80 hover:bg-amber-500/20 border border-slate-700/80 hover:border-amber-500/50 rounded-2xl p-3 flex items-center justify-between text-right transition group";
-                btn.onclick = () => selectUserAndLogin(user.name);
-                btn.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold group-hover:bg-amber-500 group-hover:text-navy-950 transition">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div>
-                            <div class="text-xs font-black text-white group-hover:text-amber-400 transition">${user.name}</div>
-                            <div class="text-[10px] text-slate-400 font-bold">${user.role}</div>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-left text-xs text-slate-400 group-hover:text-amber-400 transition"></i>
-                `;
-
-                if (user.type === 'admin') {
-                    adminContainer.appendChild(btn);
+                const data = await res.json();
+                if (res.ok) {
+                    localStorage.setItem('alrai_token', data.token);
+                    localStorage.setItem('alrai_user', JSON.stringify(data.user));
+                    currentUser = data.user;
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    checkProgrammerPrivileges();
+                    initAppAfterLogin();
                 } else {
-                    fieldContainer.appendChild(btn);
+                    errEl.innerText = data.error || 'فشل تسجيل الدخول';
+                    errEl.classList.remove('hidden');
                 }
-            });
+            } catch (err) {
+                errEl.innerText = 'عذراً، حدث خطأ في الاتصال بالسيرفر';
+                errEl.classList.remove('hidden');
+            }
         }
 
-        function selectUserAndLogin(userName) {
-            currentUser = userName;
-            localStorage.setItem('alrai_current_user', currentUser);
-            document.getElementById('loginScreen').classList.add('hidden');
-            checkProgrammerPrivileges();
-            initAppAfterLogin();
+        async function fetchServerData() {
+            try {
+                const res = await fetch('/api/data');
+                appData = await res.json();
+                populateSupervisorDropdowns();
+                renderSidebarAlerts();
+                renderSidebarSites();
+
+                if (activeSiteName) {
+                    renderSiteWorkspace();
+                } else {
+                    const visibleSites = getFilteredSites();
+                    if (visibleSites.length > 0) openSiteDetail(visibleSites[0].name);
+                }
+            } catch (err) {
+                console.error("Error fetching data:", err);
+            }
         }
 
         function checkProgrammerPrivileges() {
             const btn = document.getElementById('programmerAddUserBtn');
-            if (currentUser === 'المبرمج' || currentUser === 'المدير العام') {
+            if (currentUser && (currentUser.name === 'المبرمج' || currentUser.name === 'المدير العام' || currentUser.type === 'admin')) {
                 btn.classList.remove('hidden');
             } else {
                 btn.classList.add('hidden');
@@ -643,30 +584,19 @@
         }
 
         function logout() {
-            localStorage.removeItem('alrai_current_user');
+            localStorage.removeItem('alrai_token');
+            localStorage.removeItem('alrai_user');
             location.reload();
         }
 
         function initAppAfterLogin() {
-            document.getElementById('currentUserDisplay').innerHTML = `<i class="fa-solid fa-user-gear text-amber-400"></i> المستخدم الحالي: <strong class="text-white">${currentUser}</strong>`;
+            document.getElementById('currentUserDisplay').innerHTML = `<i class="fa-solid fa-user-gear text-amber-400"></i> المستخدم الحالي: <strong class="text-white">${currentUser.name}</strong> (${currentUser.role})`;
             
             const todayStr = new Date().toISOString().split('T')[0];
             document.getElementById('modalStartDate').value = todayStr;
             document.getElementById('expenseDate').value = todayStr;
 
-            populateSupervisorDropdowns();
-            renderSidebarAlerts();
-            renderSidebarSites();
-
-            const visibleSites = getFilteredSites();
-            if (visibleSites.length > 0) {
-                openSiteDetail(visibleSites[0].name);
-            } else if (appData.sites.length > 0) {
-                openSiteDetail(appData.sites[0].name);
-            } else {
-                activeSiteName = null;
-                document.getElementById('currentSiteTitle').innerText = 'لا توجد قسايم مسجلة حالياً';
-            }
+            fetchServerData();
         }
 
         function populateSupervisorDropdowns() {
@@ -682,33 +612,41 @@
             assignSelect.innerHTML = html;
         }
 
-        // إضافة مستخدم جديد (صلاحيات المبرمج والمدير)
         function openAddUserModal() {
             document.getElementById('newUserNameInput').value = '';
+            document.getElementById('newUserEmailInput').value = '';
+            document.getElementById('newUserPasswordInput').value = '';
             document.getElementById('newUserRoleInput').value = '';
             document.getElementById('addUserModal').classList.remove('hidden');
         }
         function closeAddUserModal() { document.getElementById('addUserModal').classList.add('hidden'); }
 
-        function saveNewUser(e) {
+        async function saveNewUser(e) {
             e.preventDefault();
             const name = document.getElementById('newUserNameInput').value.trim();
+            const email = document.getElementById('newUserEmailInput').value.trim();
+            const password = document.getElementById('newUserPasswordInput').value;
             const role = document.getElementById('newUserRoleInput').value.trim();
             const type = document.getElementById('newUserTypeSelect').value;
 
-            if (!name || !role) return;
+            try {
+                const res = await fetch('/api/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, role, type })
+                });
 
-            if (appData.users.some(u => u.name === name)) {
-                alert('هذا الاسم موجود مسبقاً!');
-                return;
+                if (res.ok) {
+                    closeAddUserModal();
+                    await fetchServerData();
+                    showToast(`تم إنشاء حساب جديد بنجاح لـ (${name})`);
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'خطأ في حفظ المستخدم');
+                }
+            } catch (err) {
+                alert('فشل حفظ المستخدم عبر السيرفر');
             }
-
-            appData.users.push({ name, role, type });
-            saveData();
-            populateSupervisorDropdowns();
-            renderUserLoginList();
-            closeAddUserModal();
-            showToast(`تمت إضافة المستخدم الجديد (${name}) بنجاح`);
         }
 
         function setFilterTab(tab) {
@@ -719,13 +657,7 @@
                 el.classList.add('border-transparent');
             });
 
-            const btnMap = {
-                'all': 'tabAll',
-                'my_created': 'tabCreated',
-                'assigned': 'tabAssigned',
-                'pending': 'tabPending'
-            };
-
+            const btnMap = { 'all': 'tabAll', 'my_created': 'tabCreated', 'assigned': 'tabAssigned', 'pending': 'tabPending' };
             document.getElementById(btnMap[tab]).classList.add('border-amber-500', 'text-amber-400', 'bg-amber-500/5');
             renderSidebarSites();
         }
@@ -733,14 +665,14 @@
         function getFilteredSites() {
             let list = appData.sites || [];
 
-            if (currentUser !== 'المدير العام' && currentUser !== 'المبرمج') {
-                list = list.filter(s => s.owner === currentUser || s.supervisor === currentUser);
+            if (currentUser.name !== 'المدير العام' && currentUser.name !== 'المبرمج') {
+                list = list.filter(s => s.owner === currentUser.name || s.supervisor === currentUser.name);
             }
 
             if (currentFilterTab === 'my_created') {
-                list = list.filter(s => s.owner === currentUser);
+                list = list.filter(s => s.owner === currentUser.name);
             } else if (currentFilterTab === 'assigned') {
-                list = list.filter(s => s.supervisor === currentUser);
+                list = list.filter(s => s.supervisor === currentUser.name);
             } else if (currentFilterTab === 'pending') {
                 list = list.filter(s => s.status === 'pending_approval');
             }
@@ -748,12 +680,9 @@
             return list;
         }
 
-        // 1. RENDER TOP ANIMATED ALERT BANNER (قسم التنبيهات وإشعار الإسناد الثابت)
         function renderSidebarAlerts() {
             const container = document.getElementById('sidebarAlertSection');
-            
-            // البحث عن القسايم المُسندة للمستخدم الحالي وبانتظار الاعتماد
-            const pendingForMe = appData.sites.filter(s => s.supervisor === currentUser && s.status === 'pending_approval');
+            const pendingForMe = appData.sites.filter(s => s.supervisor === currentUser.name && s.status === 'pending_approval');
             
             if (pendingForMe.length === 0) {
                 container.innerHTML = `
@@ -768,7 +697,6 @@
                 return;
             }
 
-            // في حال وجود قسيمة أو أكثر تنتظر الاعتماد
             let html = `
                 <div class="pulse-alert-box rounded-2xl p-3.5 space-y-2">
                     <div class="flex items-center justify-between">
@@ -801,7 +729,6 @@
             container.innerHTML = html;
         }
 
-        // 2. RENDER SIDEBAR SITES LIST (قسم القسايم والمشاريع)
         function renderSidebarSites() {
             const container = document.getElementById('sitesListContainer');
             const search = document.getElementById('siteSearchInput').value.trim().toLowerCase();
@@ -813,7 +740,6 @@
                 (s.supervisor && s.supervisor.toLowerCase().includes(search))
             );
 
-            // تحديث الشارة في التبويب للموقع المعلقة
             const totalPending = appData.sites.filter(s => s.status === 'pending_approval').length;
             const pendingBadge = document.getElementById('pendingBadgeCount');
             if (totalPending > 0) {
@@ -856,7 +782,7 @@
                             <span><i class="fa-solid fa-user-shield text-amber-500"></i> المشرف: <strong class="text-amber-300">${site.supervisor || 'غير محدد'}</strong></span>
                         </div>
                     </div>
-                    <button onclick="event.stopPropagation(); deleteSite('${site.id}')" class="text-slate-500 hover:text-rose-400 p-1.5 transition" title="حذف القسيمة"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                    <button onclick="event.stopPropagation(); deleteSite('${site._id}')" class="text-slate-500 hover:text-rose-400 p-1.5 transition" title="حذف القسيمة"><i class="fa-solid fa-trash-can text-xs"></i></button>
                 `;
                 container.appendChild(card);
             });
@@ -869,28 +795,23 @@
             renderSiteWorkspace();
         }
 
-        // إجراء الاعتماد الإجباري من قبل المشرف
-        function approveSupervisorAction(targetSiteName) {
+        async function approveSupervisorAction(targetSiteName) {
             const siteToApproveName = targetSiteName || activeSiteName;
             const site = appData.sites.find(s => s.name === siteToApproveName);
-            
             if (!site) return;
 
             site.status = 'approved';
-            site.approvedBy = currentUser;
+            site.approvedBy = currentUser.name;
             site.approvedAt = new Date().toLocaleString('ar-KW');
-
             if (!site.logs) site.logs = [];
+
             site.logs.push({
                 date: new Date().toLocaleString('ar-KW'),
-                author: currentUser,
-                text: `✅ تم اعتماد الإشراف على القسيمة واستلامها رسمياً بواسطة المشرف (${currentUser})`
+                author: currentUser.name,
+                text: `✅ تم اعتماد الإشراف على القسيمة واستلامها رسمياً بواسطة المشرف (${currentUser.name})`
             });
 
-            saveData();
-            renderSidebarAlerts();
-            renderSidebarSites();
-            renderSiteWorkspace();
+            await updateSiteOnServer(site);
             showToast(`تم اعتماد إشراف القسيمة (${site.name}) وتحديث الحالة للجميع بنجاح`);
         }
 
@@ -909,7 +830,7 @@
                 statusBadge.className = "text-[11px] px-2.5 py-0.5 rounded-md font-black bg-amber-500/20 text-amber-300 border border-amber-500/40";
                 statusBadge.innerText = "🟡 بانتظار موافقة واعتماد المشرف";
 
-                if (site.supervisor === currentUser) {
+                if (site.supervisor === currentUser.name) {
                     approveHeaderBtn.classList.remove('hidden');
                 } else {
                     approveHeaderBtn.classList.add('hidden');
@@ -991,7 +912,6 @@
             document.getElementById('statGrandTotal').innerText = `${(totalWorkersAmount + totalExpensesAmount).toFixed(3)} د.ك`;
         }
 
-        // Modals Action Handlers
         function openNewSiteModal() {
             populateSupervisorDropdowns();
             document.getElementById('modalSiteName').value = '';
@@ -1025,8 +945,7 @@
         }
         function closeExpenseModal() { document.getElementById('expenseModal').classList.add('hidden'); }
 
-        // Core Actions
-        function createNewSiteAction(e) {
+        async function createNewSiteAction(e) {
             e.preventDefault();
             const name = document.getElementById('modalSiteName').value.trim();
             const client = document.getElementById('modalClientName').value.trim();
@@ -1043,30 +962,54 @@
             }
 
             const newSite = {
-                id: 'site_' + Date.now(),
                 name: name,
-                owner: currentUser || "م/أمير",
+                owner: currentUser.name,
                 supervisor: supervisor,
-                status: 'pending_approval', // تدخل مباشرة حالة بانتظار الاعتماد
+                status: 'pending_approval',
                 client: client,
                 startDate: startDate,
                 duration: duration,
                 workers: [],
                 expenses: [],
                 logs: [
-                    { date: new Date().toLocaleString('ar-KW'), author: currentUser || "م/أمير", text: `أنشأ القسيمة وعيّن المشرف (${supervisor}) - القسيمة بانتظار اعتماد المشرف` }
+                    { date: new Date().toLocaleString('ar-KW'), author: currentUser.name, text: `أنشأ القسيمة وعيّن المشرف (${supervisor}) - القسيمة بانتظار اعتماد المشرف` }
                 ]
             };
 
-            appData.sites.unshift(newSite);
-            saveData();
-            closeNewSiteModal();
-            setFilterTab('all');
-            openSiteDetail(name);
-            showToast(`تم إنشاء القسيمة بنجاح وإرسال إشعار اعتماد للمشرف (${supervisor})`);
+            try {
+                const res = await fetch('/api/sites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newSite)
+                });
+                if (res.ok) {
+                    closeNewSiteModal();
+                    setFilterTab('all');
+                    await fetchServerData();
+                    openSiteDetail(name);
+                    showToast(`تم إنشاء القسيمة بنجاح وإرسال إشعار اعتماد للمشرف (${supervisor})`);
+                }
+            } catch(err) {
+                alert('فشل إضافة القسيمة عبر السيرفر');
+            }
         }
 
-        function saveAssignSupervisor(e) {
+        async function updateSiteOnServer(site) {
+            try {
+                const res = await fetch(`/api/sites/${site._id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(site)
+                });
+                if (res.ok) {
+                    await fetchServerData();
+                }
+            } catch(err) {
+                console.error("Error updating site:", err);
+            }
+        }
+
+        async function saveAssignSupervisor(e) {
             e.preventDefault();
             const site = appData.sites.find(s => s.name === activeSiteName);
             if (!site) return;
@@ -1075,23 +1018,20 @@
             if (!newSupervisor) return;
 
             site.supervisor = newSupervisor;
-            site.status = 'pending_approval'; // تعود لبانتظار الاعتماد للمشرف الجديد
+            site.status = 'pending_approval';
 
             site.logs.push({
                 date: new Date().toLocaleString('ar-KW'),
-                author: currentUser,
+                author: currentUser.name,
                 text: `قام بإعادة إسناد القسيمة إلى المشرف (${newSupervisor}) - وبانتظار اعتماده الرسمي`
             });
 
-            saveData();
             closeAssignModal();
-            renderSidebarAlerts();
-            renderSidebarSites();
-            renderSiteWorkspace();
+            await updateSiteOnServer(site);
             showToast(`تم تحديث التكليف وتنبيه المشرف (${newSupervisor}) بانتظار اعتماده`);
         }
 
-        function saveWorker(e) {
+        async function saveWorker(e) {
             e.preventDefault();
             const site = appData.sites.find(s => s.name === activeSiteName);
             if (!site) return;
@@ -1104,7 +1044,6 @@
             if(!site.workers) site.workers = [];
 
             site.workers.push({
-                id: 'wrk_' + Date.now(),
                 name: wName,
                 workType: wType,
                 dailyRate: rate,
@@ -1113,17 +1052,16 @@
 
             site.logs.push({
                 date: new Date().toLocaleString('ar-KW'),
-                author: currentUser,
+                author: currentUser.name,
                 text: `أضاف يومية جديد (${wName}) - بقيمة ${(rate * days).toFixed(3)} د.ك`
             });
 
-            saveData();
-            renderSiteWorkspace();
             closeWorkerModal();
+            await updateSiteOnServer(site);
             showToast('تم حفظ يومية العامل بنجاح');
         }
 
-        function saveExpense(e) {
+        async function saveExpense(e) {
             e.preventDefault();
             const site = appData.sites.find(s => s.name === activeSiteName);
             if (!site) return;
@@ -1134,47 +1072,32 @@
 
             if(!site.expenses) site.expenses = [];
 
-            site.expenses.push({
-                id: 'ex_' + Date.now(),
-                title: title,
-                amount: amount,
-                date: date
-            });
+            site.expenses.push({ title: title, amount: amount, date: date });
 
             site.logs.push({
                 date: new Date().toLocaleString('ar-KW'),
-                author: currentUser,
+                author: currentUser.name,
                 text: `سجل تكلفة جديدة (${title}) - بمبلغ ${amount.toFixed(3)} د.ك`
             });
 
-            saveData();
-            renderSiteWorkspace();
             closeExpenseModal();
+            await updateSiteOnServer(site);
             showToast('تم حفظ التكلفة بنجاح');
         }
 
-        function deleteSite(siteId) {
+        async function deleteSite(siteId) {
             if (confirm('هل أنت متأكد من حذف هذه القسيمة بالكامل؟')) {
-                appData.sites = appData.sites.filter(s => s.id !== siteId);
-                saveData();
-                renderSidebarAlerts();
-                renderSidebarSites();
-                const visible = getFilteredSites();
-                if (visible.length > 0) openSiteDetail(visible[0].name);
-                else {
-                    activeSiteName = null;
-                    document.getElementById('currentSiteTitle').innerText = 'لا توجد قسايم مسجلة';
+                try {
+                    const res = await fetch(`/api/sites/${siteId}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        activeSiteName = null;
+                        await fetchServerData();
+                        showToast('تم حذف القسيمة');
+                    }
+                } catch(err) {
+                    alert('فشل حذف القسيمة');
                 }
-                showToast('تم حذف القسيمة');
             }
-        }
-
-        function exportBackup() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData));
-            const dl = document.createElement('a');
-            dl.setAttribute("href", dataStr);
-            dl.setAttribute("download", `alrai_engineering_backup_${new Date().toISOString().split('T')[0]}.json`);
-            dl.click();
         }
 
         function showToast(msg) {
@@ -1197,7 +1120,7 @@
             text += `🏗️ *تحديث ميداني للقسيمة:* ${site.name}\n`;
             text += `👷‍♂️ *المشرف الميداني:* ${site.supervisor || 'غير محدد'}\n`;
             text += `📌 *حالة الإشراف:* ${site.status === 'approved' ? '🟢 معتمدة وجارية' : '🟡 بانتظار الاعتماد'}\n`;
-            text += `📝 *بواسطة:* ${currentUser}\n`;
+            text += `📝 *بواسطة:* ${currentUser.name}\n`;
             text += `------------------------------------\n`;
 
             let wTotal = 0;
@@ -1233,3 +1156,5 @@
 
         function printSiteInvoice() { window.print(); }
     </script>
+</body>
+</html>
