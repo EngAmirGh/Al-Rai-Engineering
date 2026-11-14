@@ -1,1160 +1,1625 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Rai Engineering Company - منصة إدارة القسايم والمشاريع الميدانية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>شركة الراي الهندسية | نموذج طلب تسعير مشروع</title>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Cairo Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        navy: { 800: '#0f172a', 900: '#090d16', 950: '#04070d' },
-                        amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
-                    },
-                    fontFamily: { cairo: ['Cairo', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
+    <!-- خطوط جوجل -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
-        * { user-select: none; }
-        input, select, textarea { font-family: 'Cairo', sans-serif; font-variant-numeric: lining-nums western-numeric; }
-        
-        body { 
-            background: #04070d;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.25) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
-                linear-gradient(to bottom, #04070d, #090d16);
-            color: #ffffff; 
-            font-family: 'Cairo', sans-serif; 
-            min-height: 100vh; 
-            overflow-x: hidden; 
+        :root {
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-input: #f8fafc;
+            --border-color: #cbd5e1;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --accent-amber: #f59e0b;
+            --accent-emerald: #059669;
+            --accent-rose: #e11d48;
+            --shadow-card: 0 4px 20px rgba(15, 23, 42, 0.06);
         }
 
-        .glass-panel { 
-            background: rgba(10, 16, 28, 0.95); 
-            backdrop-filter: blur(24px); 
-            border: 1px solid rgba(255, 255, 255, 0.12); 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
+        html.dark {
+            --bg-body: #020617;
+            --bg-card: #0f172a;
+            --bg-input: #1e293b;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.45);
         }
 
-        .glass-card { 
-            background: rgba(13, 21, 37, 0.9); 
-            backdrop-filter: blur(14px); 
-            border: 1px solid rgba(255, 255, 255, 0.12); 
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); 
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        
-        .glass-card:hover { 
-            border-color: rgba(245, 158, 11, 0.6); 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15); 
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(5, 8, 15, 0.8); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.5); border-radius: 4px; }
-        
-        .pulse-alert-box {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(220, 38, 38, 0.15));
-            border: 1px solid #f59e0b;
-            animation: pulseGlow 1.8s infinite alternate ease-in-out;
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+            padding-bottom: calc(24px + env(safe-area-inset-bottom));
         }
 
-        @keyframes pulseGlow {
-            0% { 
-                box-shadow: 0 0 10px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(245, 158, 11, 0.1);
-                border-color: rgba(245, 158, 11, 0.6);
+        .num-en {
+            font-family: 'JetBrains Mono', monospace;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* الهيدر العلوي */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-color);
+            padding-top: env(safe-area-inset-top);
+            color: #fff;
+        }
+
+        html:not(.dark) .app-header {
+            background: rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+        }
+
+        .header-inner {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0ea5e9, #1d4ed8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 900;
+            font-size: 18px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
+        }
+
+        .brand-title {
+            font-size: 14px;
+            font-weight: 900;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .brand-sub {
+            font-size: 11px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin: 2px 0 0 0;
+        }
+
+        html:not(.dark) .brand-sub {
+            color: #0284c7;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .icon-btn {
+            height: 38px;
+            padding: 0 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-input);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* الحاوية الرئيسية */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 16px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* شريط التقدم */
+        .progress-bar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-input);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0ea5e9, #10b981);
+            border-radius: 99px;
+            transition: width 0.3s ease;
+        }
+
+        /* البطاقات الهندسية */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 18px 16px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .card-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            font-weight: 900;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        html:not(.dark) .step-badge {
+            color: #0284c7;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        /* الحقول */
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .field-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .req {
+            color: #f43f5e;
+            font-weight: 900;
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border-color);
+            background: var(--bg-input);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 16px !important;
+            font-weight: 700;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-control:focus {
+            border-color: var(--primary);
+        }
+
+        textarea.input-control {
+            resize: vertical;
+            min-height: 110px;
+            line-height: 1.7;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
             }
-            100% { 
-                box-shadow: 0 0 25px rgba(245, 158, 11, 0.8), inset 0 0 15px rgba(245, 158, 11, 0.2);
-                border-color: #fbbf24;
+        }
+
+        /* زر الأولوية المستعجلة */
+        .urgent-toggle-btn {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-input);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-family: inherit;
+            text-align: right;
+            transition: all 0.2s;
+        }
+
+        .urgent-toggle-btn.is-urgent {
+            border-color: #f43f5e;
+            background: rgba(244, 63, 94, 0.14);
+        }
+
+        .urgent-pill {
+            padding: 5px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 900;
+            background: #334155;
+            color: #e2e8f0;
+        }
+
+        .urgent-toggle-btn.is-urgent .urgent-pill {
+            background: #e11d48;
+            color: #fff;
+        }
+
+        /* القائمة المنسدلة للمناطق */
+        .area-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            max-height: 220px;
+            overflow-y: auto;
+            background: var(--bg-card);
+            border: 1.5px solid var(--primary);
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            z-index: 60;
+        }
+
+        .area-item {
+            width: 100%;
+            padding: 12px 14px;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: right;
+            cursor: pointer;
+            display: block;
+        }
+
+        .area-item:last-child {
+            border-bottom: none;
+        }
+
+        .area-item:active, .area-item:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* أزرار الاختيار المربعية (تعمل 100% باللمس والماوس كأزرار حقيقية) */
+        .chips-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .select-tile {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-input);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s ease;
+        }
+
+        .select-tile:active {
+            transform: scale(0.97);
+        }
+
+        .select-tile.active {
+            background: #0284c7;
+            border-color: #38bdf8;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+
+        .check-box-visual {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid #64748b;
+            background: transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .select-tile.active .check-box-visual {
+            background: #ffffff;
+            border-color: #ffffff;
+            color: #0284c7;
+        }
+
+        /* شبكة المرفقات */
+        .attachments-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        @media (min-width: 520px) {
+            .attachments-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media print { 
-            .no-print { display: none !important; } 
-            .print-only { display: block !important; } 
-            body { background: white !important; color: black !important; } 
+        .attachments-grid .select-tile {
+            width: 100%;
+            justify-content: flex-start;
+            padding: 12px 14px;
+        }
+
+        /* أزرار طريقة التسعير */
+        .pricing-box {
+            padding: 14px;
+            border-radius: 14px;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1.5px solid rgba(14, 165, 233, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* صف الإضافة المخصصة */
+        .inline-add-row {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .btn-solid {
+            padding: 0 16px;
+            min-height: 46px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .btn-solid:active {
+            transform: scale(0.97);
+        }
+
+        /* بطاقة جهة الاتصال */
+        .contact-card {
+            padding: 12px;
+            border-radius: 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .btn-danger-sm {
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(244, 63, 94, 0.18);
+            color: #fb7185;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* قسم الاعتماد والحفظ والإرسال */
+        .action-hub {
+            background: linear-gradient(145deg, #0f172a, #1e293b, #0c4a6e);
+            border: 1.5px solid #334155;
+            border-radius: 22px;
+            padding: 18px 16px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .step-panel {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-save-main {
+            width: 100%;
+            min-height: 52px;
+            border-radius: 14px;
+            border: none;
+            background: #f59e0b;
+            color: #020617;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+            transition: all 0.2s;
+        }
+
+        .btn-save-main.saved {
+            background: #10b981;
+            color: #022c22;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-save-main:active {
+            transform: scale(0.98);
+        }
+
+        .export-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .export-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .btn-export {
+            min-height: 48px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-export.locked {
+            opacity: 0.4;
+            filter: grayscale(70%);
+            cursor: not-allowed;
+        }
+
+        .btn-wa {
+            background: #16a34a;
+            color: #fff;
+        }
+
+        .btn-pdf {
+            background: #0ea5e9;
+            color: #fff;
+        }
+
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .preview-box {
+            background: rgba(2, 6, 23, 0.85);
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 12px;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            line-height: 1.75;
+            max-height: 210px;
+            overflow-y: auto;
+            margin: 0;
+        }
+
+        /* الإشعارات المنبثقة */
+        .toast-wrap {
+            position: fixed;
+            top: calc(68px + env(safe-area-inset-top));
+            left: 14px;
+            right: 14px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .toast-msg {
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* تنسيق الطباعة و PDF */
+        #printReportContainer {
+            display: none;
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+                padding: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            #printReportContainer {
+                display: block !important;
+                width: 100% !important;
+                padding: 10px !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 12mm;
+            }
         }
     </style>
 </head>
-<body class="text-white font-cairo selection:bg-amber-500 selection:text-navy-950 flex flex-col h-screen overflow-hidden">
+<body>
 
-    <!-- LOGIN SCREEN PORTAL (Secure Auth with Email & Password) -->
-    <div id="loginScreen" class="fixed inset-0 bg-navy-950/98 z-50 flex items-center justify-center p-4 backdrop-blur-2xl">
-        <div class="glass-panel p-8 rounded-3xl max-w-md w-full border border-amber-500/30 shadow-2xl space-y-6">
-            <div class="text-center space-y-2">
-                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-amber-300 flex items-center justify-center text-navy-950 font-black text-4xl mx-auto shadow-xl shadow-amber-500/20 border-2 border-amber-300">
-                    <i class="fa-solid fa-compass-drafting"></i>
+    <div id="toastWrap" class="toast-wrap no-print"></div>
+
+    <!-- الهيدر -->
+    <header class="app-header no-print">
+        <div class="header-inner">
+            <div class="brand-box">
+                <div class="brand-logo">الراي</div>
+                <div style="min-width:0;">
+                    <h1 class="brand-title">شركة الراي الهندسية لتشييد و تشطيب المباني</h1>
+                    <p class="brand-sub">نموذج طلب تسعير مشروع • قسم الدراسات (م. أمير)</p>
                 </div>
-                <h1 class="text-2xl font-black text-white tracking-wide mt-3">Al-Rai Engineering Company</h1>
-                <p class="text-xs text-amber-400 font-bold bg-amber-500/10 border border-amber-500/20 py-1 px-3 rounded-full inline-block">
-                    منصة الإدارة والربط الميداني الهندسي
-                </p>
             </div>
-
-            <form onsubmit="handleLogin(event)" class="space-y-4 pt-2">
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">البريد الإلكتروني المهني *</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-envelope absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="email" id="loginEmail" required placeholder="مثال: ameer@alrai.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl pr-9 pl-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">كلمة المرور *</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-lock absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl pr-9 pl-3 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-bold">
-                    </div>
-                </div>
-
-                <div id="loginError" class="hidden text-rose-400 text-xs font-bold text-center bg-rose-950/40 p-2 rounded-xl border border-rose-800"></div>
-
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-navy-950 font-black text-xs rounded-xl hover:brightness-110 transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول المشفر
-                </button>
-            </form>
-
-            <div class="text-center pt-2 border-t border-slate-800/80">
-                <span class="text-[11px] text-slate-400 font-bold">نظام محمي بتشفير عالي الأمان وقواعد بيانات مركزية</span>
+            <div class="header-actions">
+                <button type="button" id="btnResetAll" class="icon-btn" title="تفريغ الحقول">🔄 تفريغ</button>
+                <button type="button" id="btnToggleTheme" class="icon-btn" title="تغيير المظهر">☀️</button>
             </div>
-        </div>
-    </div>
-
-    <!-- Header Navigation -->
-    <header class="bg-navy-950 border-b border-slate-800 px-6 py-3.5 shrink-0 flex items-center justify-between no-print shadow-2xl z-30">
-        <div class="flex items-center gap-4">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-navy-950 font-black text-2xl shadow-lg shadow-amber-500/20 border border-amber-300">
-                <i class="fa-solid fa-helmet-safety"></i>
-            </div>
-            <div>
-                <h1 class="text-lg font-black text-white tracking-wide flex items-center gap-2">
-                    Al-Rai Engineering <span class="bg-amber-500/20 text-amber-300 text-xs px-2.5 py-0.5 rounded-lg border border-amber-500/40 font-extrabold">المحتوى الميداني</span>
-                </h1>
-                <p class="text-xs text-amber-400 font-bold flex items-center gap-2 mt-0.5" id="currentUserDisplay">
-                    <i class="fa-solid fa-user-gear"></i> المستخدم: --
-                </p>
-            </div>
-        </div>
-
-        <div class="flex items-center gap-3">
-            <button id="programmerAddUserBtn" onclick="openAddUserModal()" class="hidden bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition">
-                <i class="fa-solid fa-user-plus text-amber-400"></i> إضافة مستخدم جديد (المبرمج)
-            </button>
-            <button onclick="logout()" class="bg-rose-950/60 hover:bg-rose-900/80 text-rose-200 border border-rose-800 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition">
-                <i class="fa-solid fa-right-from-bracket"></i> خروج
-            </button>
         </div>
     </header>
 
-    <!-- Main Workspace -->
-    <div class="flex flex-1 overflow-hidden">
+    <main class="container no-print">
 
-        <!-- RIGHT SIDEBAR -->
-        <aside class="w-[430px] bg-navy-950/95 border-l border-slate-800 flex flex-col shrink-0 no-print z-20 shadow-2xl">
-            
-            <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-navy-900/80">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-folder-tree text-amber-400 text-sm"></i>
-                    <span class="text-xs font-black text-white uppercase tracking-wider">لوحة الإشراف والقسايم</span>
-                </div>
-                <button onclick="openNewSiteModal()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-navy-950 font-black px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-lg shadow-amber-500/20 hover:brightness-110 transition">
-                    <i class="fa-solid fa-plus text-xs"></i> قسيمة جديدة
-                </button>
+        <!-- شريط اكتمال البيانات -->
+        <div class="progress-bar-card">
+            <div class="progress-top">
+                <span>اكتمال البيانات الأساسية للطلب</span>
+                <span id="progressPercent" class="num-en" style="color:#0ea5e9;">0%</span>
             </div>
+            <div class="progress-track">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+        </div>
 
-            <!-- SECTION: TOP ANIMATED ALERT HEADER -->
-            <div id="sidebarAlertSection" class="p-3 border-b border-slate-800/80 bg-navy-950 shrink-0"></div>
-
-            <!-- Search input -->
-            <div class="p-3 border-b border-slate-800/80 bg-navy-950/80">
-                <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                    <input type="text" id="siteSearchInput" oninput="renderSidebarSites()" placeholder="بحث باسم القسيمة، المالك، أو المشرف..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pr-9 pl-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 font-bold">
+        <!-- القسم 1: البيانات الأساسية -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-title-wrap">
+                    <span class="step-badge num-en">1</span>
+                    <h2 class="card-title">البيانات الأساسية وأولوية المشروع</h2>
                 </div>
             </div>
 
-            <!-- Filter Tabs -->
-            <div class="flex border-b border-slate-800 bg-navy-900/40 text-[11px] font-bold text-slate-300">
-                <button onclick="setFilterTab('all')" id="tabAll" class="flex-1 py-2.5 text-center border-b-2 border-amber-500 text-amber-400 bg-amber-500/5 transition">الكل</button>
-                <button onclick="setFilterTab('my_created')" id="tabCreated" class="flex-1 py-2.5 text-center border-b-2 border-transparent hover:text-white transition">من إنشائي</button>
-                <button onclick="setFilterTab('assigned')" id="tabAssigned" class="flex-1 py-2.5 text-center border-b-2 border-transparent hover:text-white relative transition">مُسندة إليّ</button>
-                <button onclick="setFilterTab('pending')" id="tabPending" class="flex-1 py-2.5 text-center border-b-2 border-transparent hover:text-amber-400 relative transition">
-                    معلقة 🟡 <span id="pendingBadgeCount" class="hidden bg-amber-500 text-navy-950 text-[9px] px-1.5 py-0.2 rounded-full font-black">0</span>
-                </button>
+            <div class="field-group">
+                <label class="field-label" for="projectName">اسم المشروع <span class="req">*</span></label>
+                <input type="text" id="projectName" class="input-control" placeholder="مثال: إنشاء وتشطيب مبنى إداري - قطعة 3">
             </div>
 
-            <!-- SECTION: SITES LIST -->
-            <div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2.5 bg-navy-950/60">
-                <div id="sitesListContainer" class="space-y-2.5"></div>
-            </div>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main class="flex-1 bg-navy-950 flex flex-col overflow-hidden relative">
-            
-            <!-- Site Header -->
-            <div id="activeSiteHeader" class="bg-navy-900 border-b border-slate-800 p-5 shrink-0 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center text-amber-400 text-2xl shrink-0 shadow-inner">
-                        <i class="fa-solid fa-city"></i>
-                    </div>
+            <div class="field-group">
+                <label class="field-label">أولوية التسعير</label>
+                <button type="button" id="urgentBtn" class="urgent-toggle-btn">
                     <div>
-                        <div class="flex flex-wrap items-center gap-2 mb-1">
-                            <span id="siteOwnerBadge" class="text-[11px] bg-slate-800 text-slate-200 px-2.5 py-0.5 rounded-md border border-slate-700 font-bold">أنشأها: --</span>
-                            <span id="siteSupervisorBadge" class="text-[11px] bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-md border border-amber-500/30 font-bold">المشرف الميداني: --</span>
-                            <span id="siteStatusBadge" class="text-[11px] px-2.5 py-0.5 rounded-md font-extrabold border">--</span>
+                        <div id="urgentTitle" style="font-size:14px; font-weight:900;">مشروع عادي</div>
+                        <div id="urgentSub" style="font-size:11px; color:var(--text-muted); margin-top:2px;">اضغط هنا لتفعيل وضع المستعجل جداً</div>
+                    </div>
+                    <span id="urgentPill" class="urgent-pill">عادي</span>
+                </button>
+            </div>
+
+            <div class="grid-2">
+                <div class="field-group">
+                    <label class="field-label" for="senderName">اسم المسؤول / مُرسل الطلب <span class="req">*</span></label>
+                    <input type="text" id="senderName" class="input-control" placeholder="اكتب اسمك هنا...">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="requestDate">تاريخ إرسال الطلب</label>
+                    <input type="date" id="requestDate" class="input-control num-en">
+                </div>
+            </div>
+        </section>
+
+        <!-- القسم 2: موقع المشروع -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-title-wrap">
+                    <span class="step-badge num-en">2</span>
+                    <h2 class="card-title">موقع المشروع (مناطق الكويت)</h2>
+                </div>
+            </div>
+
+            <div class="field-group" id="areaFieldWrapper">
+                <label class="field-label" for="locationSearch">المنطقة <span class="req">*</span></label>
+                <div class="inline-add-row">
+                    <input type="text" id="locationSearch" class="input-control" placeholder="ابحث أو اكتب المنطقة (مثال: الشويخ، السالمية)..." autocomplete="off">
+                    <button type="button" id="btnShowAllAreas" class="btn-solid" style="background:#334155;">القائمة ▼</button>
+                </div>
+                <div id="areaDropdown" class="area-dropdown hidden"></div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label" for="locationDetails">تفاصيل إضافية للموقع (قطعة / قسيمة / شارع)</label>
+                <input type="text" id="locationDetails" class="input-control" placeholder="مثال: قطعة 4 - قسيمة 112 - شارع 15">
+            </div>
+        </section>
+
+        <!-- القسم 3: نوع الأعمال والمواصفات -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-title-wrap">
+                    <span class="step-badge num-en">3</span>
+                    <h2 class="card-title">نوع الأعمال والمواصفات المطلوبة</h2>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">اختر بنود الأعمال (اضغط لاختيار بند أو أكثر):</label>
+                <div id="workTypesGrid" class="chips-grid"></div>
+            </div>
+
+            <div class="inline-add-row">
+                <input type="text" id="customWorkInput" class="input-control" placeholder="إضافة بند عمل مخصص آخر...">
+                <button type="button" id="btnAddCustomWork" class="btn-solid">+ إضافة</button>
+            </div>
+
+            <!-- خيار طريقة التسعير عند اختيار أكثر من بند -->
+            <div id="pricingPreferenceBox" class="pricing-box hidden">
+                <div style="font-size:12px; font-weight:900; color:#38bdf8;">طريقة عرض السعر المطلوبة للبنود:</div>
+                <div class="grid-2" id="pricingOptionsGrid"></div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label" for="specificationsText">المواصفات والتفاصيل الفنية المطلوبة <span class="req">*</span></label>
+                <textarea id="specificationsText" class="input-control" placeholder="اكتب كافة المواصفات، المساحات، الكميات، أو أي شروط خاصة للتسعير..."></textarea>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">المرفقات المتوفرة مع الطلب (اضغط لتحديد المرفقات):</label>
+                <div id="attachmentsGrid" class="attachments-grid"></div>
+            </div>
+        </section>
+
+        <!-- القسم 4: بيانات التواصل -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-title-wrap">
+                    <span class="step-badge num-en">4</span>
+                    <h2 class="card-title">أشخاص التواصل وأرقام الهواتف</h2>
+                </div>
+                <button type="button" id="btnAddContact" class="btn-solid" style="min-height:36px; padding:0 12px; background:#0d9488;">+ إضافة شخص</button>
+            </div>
+
+            <div id="contactsWrapper" style="display:flex; flex-direction:column; gap:10px;"></div>
+
+            <div class="grid-2">
+                <div class="field-group">
+                    <label class="field-label" for="clientEmail">البريد الإلكتروني (اختياري)</label>
+                    <input type="email" id="clientEmail" class="input-control num-en" placeholder="client@company.com">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="deadlineDate">آخر موعد لتقديم السعر (إن وجد)</label>
+                    <input type="date" id="deadlineDate" class="input-control num-en">
+                </div>
+            </div>
+        </section>
+
+        <!-- القسم 5: الحفظ الإلزامي ثم الإرسال والتصدير -->
+        <section class="action-hub">
+            <div class="step-panel">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                    <div>
+                        <div style="font-size:15px; font-weight:900;">1. حفظ واعتماد بيانات الطلب</div>
+                        <div id="saveStatusHint" style="font-size:12px; color:#fcd34d; margin-top:3px; font-weight:700;">
+                            🔒 يجب الضغط على زر الحفظ أولاً لفتح أزرار الإرسال والـ PDF
                         </div>
-                        <h2 class="text-xl font-black text-white tracking-wide" id="currentSiteTitle">اختر قسيمة من القائمة لبدء العمل</h2>
                     </div>
+                    <span id="saveStatusBadge" style="padding:4px 10px; border-radius:8px; background:rgba(245,158,11,0.2); color:#fcd34d; font-size:11px; font-weight:900; flex-shrink:0;">
+                        غير محفوظ
+                    </span>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-2.5">
-                    <button id="approveSiteHeaderBtn" onclick="approveSupervisorAction()" class="hidden bg-gradient-to-r from-amber-500 to-amber-600 text-navy-950 text-xs font-black px-4 py-2 rounded-xl shadow-lg shadow-amber-500/30 flex items-center gap-2 hover:brightness-110 transition animate-bounce">
-                        <i class="fa-solid fa-circle-check text-sm"></i> اعتماد الإشراف واستلام الموقع
-                    </button>
-                    <button onclick="openAssignModal()" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-2 transition">
-                        <i class="fa-solid fa-user-gear text-amber-400"></i> إسناد/تغيير المشرف
-                    </button>
-                    <button onclick="openExpenseModal()" class="bg-slate-900 hover:bg-slate-800 text-rose-300 border border-rose-900/50 text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-2 transition">
-                        <i class="fa-solid fa-receipt text-rose-400"></i> + مصاريف / مواد
-                    </button>
-                    <button onclick="openWorkerModal()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-navy-950 text-xs font-black px-4 py-2 rounded-xl shadow-lg shadow-amber-500/20 flex items-center gap-2 hover:brightness-110 transition">
-                        <i class="fa-solid fa-user-plus text-sm"></i> + إضافة عامل
-                    </button>
-                </div>
-            </div>
-
-            <!-- Financial Summary Bar -->
-            <div class="bg-navy-900/90 border-b border-slate-800 px-6 py-3 shrink-0 flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center gap-8 text-xs">
-                    <div>
-                        <span class="text-slate-400 font-bold block text-[10px]">مستحقات العمال</span>
-                        <span class="text-base font-black text-amber-400" id="statTotalAmount">0.000 د.ك</span>
-                    </div>
-                    <div class="h-7 w-px bg-slate-800"></div>
-                    <div>
-                        <span class="text-slate-400 font-bold block text-[10px]">المصاريف والمواد</span>
-                        <span class="text-base font-black text-rose-400" id="statTotalExpenses">0.000 د.ك</span>
-                    </div>
-                    <div class="h-7 w-px bg-slate-800"></div>
-                    <div>
-                        <span class="text-slate-400 font-bold block text-[10px]">إجمالي التكلفة الحالية</span>
-                        <span class="text-base font-black text-emerald-400" id="statGrandTotal">0.000 د.ك</span>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <button onclick="shareSiteSummary()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-emerald-400"></i> مشاركة واتساب</button>
-                    <button onclick="copySiteSummary()" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-copy text-amber-400"></i> نسخ ملخص</button>
-                    <button onclick="printSiteInvoice()" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-print"></i> طباعة تقرير</button>
-                </div>
-            </div>
-
-            <!-- Workspace Details Container -->
-            <div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 bg-navy-950">
-                
-                <!-- Workers Section -->
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-xs font-black text-white flex items-center gap-2 uppercase tracking-wider">
-                            <i class="fa-solid fa-users text-amber-400"></i> كشف العمال والمقاولين بالقسيمة
-                        </h3>
-                        <span id="workersCountBadge" class="text-[11px] bg-slate-900 text-slate-300 border border-slate-800 px-2.5 py-0.5 rounded-full font-bold">0 عمال</span>
-                    </div>
-                    
-                    <div id="siteWorkersContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-                    
-                    <div id="emptyWorkersState" class="hidden text-center py-16 glass-panel rounded-3xl border border-dashed border-slate-800 max-w-md mx-auto my-6">
-                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl mx-auto mb-3 border border-amber-500/20">
-                            <i class="fa-solid fa-user-slash"></i>
-                        </div>
-                        <h3 class="text-sm font-bold text-white mb-1">لا يوجد عمال مسجلون حتى الآن</h3>
-                        <p class="text-xs text-slate-400 mb-4">قم بإضافة بيانات العمال واليوميات الخاصة بهذه القسيمة</p>
-                        <button onclick="openWorkerModal()" class="bg-amber-500 text-navy-950 font-black text-xs px-5 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 hover:bg-amber-400 transition">+ إضافة عامل الآن</button>
-                    </div>
-                </div>
-
-                <!-- Expenses Section -->
-                <div class="pt-6 border-t border-slate-800">
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-xs font-black text-white flex items-center gap-2 uppercase tracking-wider">
-                            <i class="fa-solid fa-truck-ramp-box text-rose-400"></i> كشف المواد والتكاليف الإضافية
-                        </h3>
-                        <span id="expensesCountBadge" class="text-[11px] bg-slate-900 text-slate-300 border border-slate-800 px-2.5 py-0.5 rounded-full font-bold">0 سجلات</span>
-                    </div>
-                    
-                    <div id="expensesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-                </div>
-
-                <!-- Updates Log Section -->
-                <div class="pt-6 border-t border-slate-800">
-                    <h3 class="text-xs font-black text-white mb-3 flex items-center gap-2 uppercase tracking-wider">
-                        <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> سجل التحديثات والنشاطات والاعتمادات الأخيرة
-                    </h3>
-                    <div class="glass-card rounded-2xl p-4 border border-slate-800 max-h-56 overflow-y-auto custom-scrollbar">
-                        <div id="siteLogsContainer" class="space-y-2.5 text-xs"></div>
-                    </div>
-                </div>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- MODAL: Add New User (Includes Email & Secure Password Setup) -->
-    <div id="addUserModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-panel bg-navy-900 border border-slate-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
-            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-navy-950">
-                <h3 class="text-base font-black text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-user-plus"></i> إضافة مستخدم جديد وحساب آمن
-                </h3>
-                <button onclick="closeAddUserModal()" class="text-slate-400 hover:text-white p-2 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="saveNewUser(event)" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">اسم المهندس / المستخدم *</label>
-                    <input type="text" id="newUserNameInput" required placeholder="مثال: م/صالح" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">البريد الإلكتروني المهني *</label>
-                    <input type="email" id="newUserEmailInput" required placeholder="saleh@alrai.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">كلمة المرور *</label>
-                    <input type="password" id="newUserPasswordInput" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">المسمى الوظيفي / الدور *</label>
-                    <input type="text" id="newUserRoleInput" required placeholder="مثال: مهندس موقع / مشرف ميداني" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">نوع التصنيف *</label>
-                    <select id="newUserTypeSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white font-bold">
-                        <option value="field">مهندس / مشرف ميداني</option>
-                        <option value="admin">إدارة العليا / مدير عام / مبرمج</option>
-                    </select>
-                </div>
-                <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
-                    <button type="button" onclick="closeAddUserModal()" class="px-4 py-2 bg-slate-800 text-xs text-slate-300 font-bold rounded-xl">إلغاء</button>
-                    <button type="submit" class="px-6 py-2 bg-amber-500 text-navy-950 font-black text-xs rounded-xl hover:bg-amber-400 transition">إنشاء الحساب المشفر</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: Create New Site -->
-    <div id="newSiteModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-panel bg-navy-900 border border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
-            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-navy-950">
-                <h3 class="text-base font-black text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-building-circle-check"></i> فتح قسيمة أو مشروع ميداني جديد
-                </h3>
-                <button onclick="closeNewSiteModal()" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-xmark text-base"></i>
+                <button type="button" id="btnSaveForm" class="btn-save-main">
+                    💾 حفظ واعتماد بيانات الطلب
                 </button>
             </div>
 
-            <form onsubmit="createNewSiteAction(event)" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">اسم القسيمة أو رقم الموقع *</label>
-                    <input type="text" id="modalSiteName" required placeholder="مثال: قسيمة 42 - قطعة 3، الجابريّة" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 font-bold">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <div style="font-size:14px; font-weight:900; color:#bae6fd;">2. إرسال الطلب أو حفظه كـ PDF (بعد الحفظ):</div>
+                <div class="export-grid">
+                    <button type="button" id="btnSendWhatsApp" class="btn-export btn-wa locked">
+                        📲 إرسال واتساب مباشرة
+                    </button>
+                    <button type="button" id="btnExportPDF" class="btn-export btn-pdf locked">
+                        📄 حفظ كملف PDF مرتب
+                    </button>
+                    <button type="button" id="btnCopyText" class="btn-export btn-copy locked">
+                        📋 نسخ التفاصيل للواتساب
+                    </button>
                 </div>
-                
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">اسم المالك / العميل (اختياري)</label>
-                    <input type="text" id="modalClientName" placeholder="مثال: بو فهد المطيري" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 font-bold">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-amber-300 mb-1"><i class="fa-solid fa-user-shield"></i> تحديد المهندس المشرف المسؤول عن القسيمة *</label>
-                    <select id="modalSupervisorSelect" required class="w-full bg-slate-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-bold"></select>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1">تاريخ البدء *</label>
-                        <input type="date" id="modalStartDate" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-bold text-right">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1">المدة المتوقعة (بالأيام)</label>
-                        <input type="number" id="modalDuration" value="30" min="1" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-bold text-right">
-                    </div>
-                </div>
-
-                <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-800">
-                    <button type="button" onclick="closeNewSiteModal()" class="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold hover:bg-slate-700 transition">إلغاء</button>
-                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-navy-950 font-black text-xs hover:brightness-110 shadow-lg shadow-amber-500/20 transition">إضافة القسيمة وإرسال التكليف</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: Assign/Change Supervisor -->
-    <div id="assignModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-panel bg-navy-900 border border-slate-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
-            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-navy-950">
-                <h3 class="text-base font-black text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-user-gear"></i> إسناد/تعديل المهندس المشرف
-                </h3>
-                <button onclick="closeAssignModal()" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-xmark text-base"></i>
-                </button>
             </div>
 
-            <form onsubmit="saveAssignSupervisor(event)" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-2">اختر المشرف الهندسي الجديد للقسيمة:</label>
-                    <select id="assignSupervisorSelect" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-500 font-bold"></select>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:12px; font-weight:800; color:#7dd3fc;">معاينة نص الرسالة المنسقة:</span>
+                    <button type="button" id="btnQuickCopy" style="background:none; border:none; color:#34d399; font-family:inherit; font-size:12px; font-weight:900; text-decoration:underline; cursor:pointer;">نسخ النص</button>
                 </div>
-
-                <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
-                    <button type="button" onclick="closeAssignModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold">إلغاء</button>
-                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-amber-500 text-navy-950 font-black text-xs hover:bg-amber-400 transition">تأكيد التكليف والإرسال</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: Add Worker -->
-    <div id="workerModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-panel bg-navy-900 border border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
-            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-navy-950">
-                <h3 class="text-base font-black text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-user-plus"></i> تسجيل يومية عامل بالقسيمة
-                </h3>
-                <button onclick="closeWorkerModal()" class="text-slate-400 hover:text-white p-1.5 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
+                <pre id="whatsappPreviewBox" class="preview-box"></pre>
             </div>
-            <form onsubmit="saveWorker(event)" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">اسم العامل / المقاول *</label>
-                    <input type="text" id="workerName" required placeholder="مثال: كومار، أبو علي الحلاق..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">طبيعة الشغل والمهمة *</label>
-                    <input type="text" id="workType" required placeholder="مثال: صب خرسانة، نجارة مسلحة..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1">اليومية (د.ك) *</label>
-                        <input type="number" step="any" id="dailyRate" required placeholder="15" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white font-bold">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1">عدد الأيام / الطريحة</label>
-                        <input type="number" step="any" id="daysCount" value="1" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white font-bold">
-                    </div>
-                </div>
-                <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
-                    <button type="button" onclick="closeWorkerModal()" class="px-4 py-2 bg-slate-800 text-xs text-slate-300 font-bold rounded-xl">إلغاء</button>
-                    <button type="submit" class="px-6 py-2 bg-amber-500 text-navy-950 font-black text-xs rounded-xl hover:bg-amber-400 transition">حفظ يومية العامل</button>
-                </div>
-            </form>
-        </div>
-    </div>
+        </section>
 
-    <!-- MODAL: Add Expense -->
-    <div id="expenseModal" class="fixed inset-0 bg-navy-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-panel bg-navy-900 border border-slate-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
-            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-navy-950">
-                <h3 class="text-base font-black text-rose-400 flex items-center gap-2">
-                    <i class="fa-solid fa-receipt"></i> إضافة مصاريف أو مواد
-                </h3>
-                <button onclick="closeExpenseModal()" class="text-slate-400 hover:text-white p-1.5 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="saveExpense(event)" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-200 mb-1">بيان المادة / التكلفة *</label>
-                    <input type="text" id="expenseTitle" required placeholder="مثال: شراء خشب، حديد تسليح، ديزل..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 font-bold">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1">المبلغ (د.ك) *</label>
-                        <input type="number" step="any" id="expenseAmount" required placeholder="50" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white font-bold">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1">التاريخ</label>
-                        <input type="date" id="expenseDate" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-bold">
-                    </div>
-                </div>
-                <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
-                    <button type="button" onclick="closeExpenseModal()" class="px-4 py-2 bg-slate-800 text-xs text-slate-300 font-bold rounded-xl">إلغاء</button>
-                    <button type="submit" class="px-6 py-2 bg-rose-600 text-white font-black text-xs rounded-xl hover:bg-rose-500 transition">إضافة التكلفة</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    </main>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 left-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 glass-panel border border-amber-500/50 text-white px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs font-bold pointer-events-none">
-        <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
-        <span id="toastMsg">تم التحديث بنجاح</span>
-    </div>
+    <!-- حاوية الطباعة و PDF -->
+    <div id="printReportContainer"></div>
 
-    <!-- JavaScript Server Connection & State Management Logic -->
     <script>
-        let appData = { users: [], sites: [] };
-        let currentUser = null;
-        let activeSiteName = null;
-        let currentFilterTab = 'all';
+        (function() {
+            "use strict";
 
-        window.onload = function() {
-            const token = localStorage.getItem('alrai_token');
-            const savedUser = localStorage.getItem('alrai_user');
+            // قاعدة بيانات مناطق الكويت
+            const KUWAIT_AREAS = [
+                "مدينة الكويت", "شرق", "المرقاب", "القبلة", "الصالحية", "بنيد القار", "الدسمة", "الدعية", "المنصورية",
+                "عبدالله السالم", "النزهة", "الفيحاء", "الشامية", "الروضة", "العديلية", "الخالدية", "القادسية",
+                "قرطبة", "السرة", "اليرموك", "الشويخ", "الشويخ الصناعية", "الشويخ السكنية", "الري", "غرناطة", "الصليبيخات", "الدوحة", "النهضة", "شمال غرب الصليبيخات", "جابر الأحمد", "القيروان",
+                "حولي", "السالمية", "الجابرية", "الرميثية", "سلوى", "بيان", "مشرف", "مبارك العبدالله (غرب مشرف)", "الشعب", "ميدان حولي", "البدع", "الزهراء", "حطين", "الشهداء", "الصديق", "السلام",
+                "الفروانية", "خيطان", "العمرية", "الرابية", "الرحاب", "الأندلس", "الرقعي", "العارضية", "العارضية الصناعية", "صباح الناصر", "الفردوس", "إشبيلية", "جليب الشيوخ", "الضجيج", "عبدالله المبارك", "غرب عبدالله المبارك", "جنوب عبدالله المبارك",
+                "الأحمدي", "الفحيحيل", "المنقف", "أبو حليفة", "المهبولة", "الفنطاس", "العقيلة", "الرقة", "هدية", "الصباحية", "جابر العلي", "الظهر", "علي صباح السالم (أم الهيمان)", "صباح الأحمد السكنية", "صباح الأحمد البحرية (الخيران)", "الوفرة", "الزور", "بنيدر", "الجليعة", "الضباعية", "ميناء عبدالله", "الشعيبة الصناعية",
+                "مبارك الكبير", "القرين", "القصور", "العدان", "المسيلة", "الفنيطيس", "أبو فطيرة", "صبحان", "صبحان الصناعية", "المسايل", "الوسطى",
+                "الجهراء", "الواحة", "العيون", "القصر", "النسيم", "تيماء", "النعيم", "سعد العبدالله", "جنوب سعد العبدالله", "المطلاع", "الصليبية", "الصليبية الصناعية", "أمغرة", "كبد", "السالمي", "العبدلي", "الصبية", "كاظمة"
+            ];
 
-            if (token && savedUser) {
-                currentUser = JSON.parse(savedUser);
-                document.getElementById('loginScreen').classList.add('hidden');
-                checkProgrammerPrivileges();
-                initAppAfterLogin();
-            }
-        };
+            const ATTACHMENT_OPTIONS = [
+                "مخططات هندسية (CAD / PDF)",
+                "جدول كميات (BOQ)",
+                "صور من الموقع",
+                "كراسة شروط ومواصفات"
+            ];
 
-        async function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            const errEl = document.getElementById('loginError');
-            errEl.classList.add('hidden');
+            const PRICING_OPTIONS = [
+                "سعر إجمالي واحد لجميع البنود",
+                "سعر منفصل لكل بند على حدة"
+            ];
 
-            try {
-                const res = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-
-                const data = await res.json();
-                if (res.ok) {
-                    localStorage.setItem('alrai_token', data.token);
-                    localStorage.setItem('alrai_user', JSON.stringify(data.user));
-                    currentUser = data.user;
-                    document.getElementById('loginScreen').classList.add('hidden');
-                    checkProgrammerPrivileges();
-                    initAppAfterLogin();
-                } else {
-                    errEl.innerText = data.error || 'فشل تسجيل الدخول';
-                    errEl.classList.remove('hidden');
-                }
-            } catch (err) {
-                errEl.innerText = 'عذراً، حدث خطأ في الاتصال بالسيرفر';
-                errEl.classList.remove('hidden');
-            }
-        }
-
-        async function fetchServerData() {
-            try {
-                const res = await fetch('/api/data');
-                appData = await res.json();
-                populateSupervisorDropdowns();
-                renderSidebarAlerts();
-                renderSidebarSites();
-
-                if (activeSiteName) {
-                    renderSiteWorkspace();
-                } else {
-                    const visibleSites = getFilteredSites();
-                    if (visibleSites.length > 0) openSiteDetail(visibleSites[0].name);
-                }
-            } catch (err) {
-                console.error("Error fetching data:", err);
-            }
-        }
-
-        function checkProgrammerPrivileges() {
-            const btn = document.getElementById('programmerAddUserBtn');
-            if (currentUser && (currentUser.name === 'المبرمج' || currentUser.name === 'المدير العام' || currentUser.type === 'admin')) {
-                btn.classList.remove('hidden');
-            } else {
-                btn.classList.add('hidden');
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('alrai_token');
-            localStorage.removeItem('alrai_user');
-            location.reload();
-        }
-
-        function initAppAfterLogin() {
-            document.getElementById('currentUserDisplay').innerHTML = `<i class="fa-solid fa-user-gear text-amber-400"></i> المستخدم الحالي: <strong class="text-white">${currentUser.name}</strong> (${currentUser.role})`;
-            
-            const todayStr = new Date().toISOString().split('T')[0];
-            document.getElementById('modalStartDate').value = todayStr;
-            document.getElementById('expenseDate').value = todayStr;
-
-            fetchServerData();
-        }
-
-        function populateSupervisorDropdowns() {
-            const modalSelect = document.getElementById('modalSupervisorSelect');
-            const assignSelect = document.getElementById('assignSupervisorSelect');
-            
-            let html = '<option value="" disabled selected>-- اختر المشرف الهندسي --</option>';
-            appData.users.forEach(u => {
-                html += `<option value="${u.name}">${u.name} (${u.role})</option>`;
-            });
-
-            modalSelect.innerHTML = html;
-            assignSelect.innerHTML = html;
-        }
-
-        function openAddUserModal() {
-            document.getElementById('newUserNameInput').value = '';
-            document.getElementById('newUserEmailInput').value = '';
-            document.getElementById('newUserPasswordInput').value = '';
-            document.getElementById('newUserRoleInput').value = '';
-            document.getElementById('addUserModal').classList.remove('hidden');
-        }
-        function closeAddUserModal() { document.getElementById('addUserModal').classList.add('hidden'); }
-
-        async function saveNewUser(e) {
-            e.preventDefault();
-            const name = document.getElementById('newUserNameInput').value.trim();
-            const email = document.getElementById('newUserEmailInput').value.trim();
-            const password = document.getElementById('newUserPasswordInput').value;
-            const role = document.getElementById('newUserRoleInput').value.trim();
-            const type = document.getElementById('newUserTypeSelect').value;
-
-            try {
-                const res = await fetch('/api/users', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password, role, type })
-                });
-
-                if (res.ok) {
-                    closeAddUserModal();
-                    await fetchServerData();
-                    showToast(`تم إنشاء حساب جديد بنجاح لـ (${name})`);
-                } else {
-                    const err = await res.json();
-                    alert(err.error || 'خطأ في حفظ المستخدم');
-                }
-            } catch (err) {
-                alert('فشل حفظ المستخدم عبر السيرفر');
-            }
-        }
-
-        function setFilterTab(tab) {
-            currentFilterTab = tab;
-            ['tabAll', 'tabCreated', 'tabAssigned', 'tabPending'].forEach(id => {
-                const el = document.getElementById(id);
-                el.classList.remove('border-amber-500', 'text-amber-400', 'bg-amber-500/5');
-                el.classList.add('border-transparent');
-            });
-
-            const btnMap = { 'all': 'tabAll', 'my_created': 'tabCreated', 'assigned': 'tabAssigned', 'pending': 'tabPending' };
-            document.getElementById(btnMap[tab]).classList.add('border-amber-500', 'text-amber-400', 'bg-amber-500/5');
-            renderSidebarSites();
-        }
-
-        function getFilteredSites() {
-            let list = appData.sites || [];
-
-            if (currentUser.name !== 'المدير العام' && currentUser.name !== 'المبرمج') {
-                list = list.filter(s => s.owner === currentUser.name || s.supervisor === currentUser.name);
-            }
-
-            if (currentFilterTab === 'my_created') {
-                list = list.filter(s => s.owner === currentUser.name);
-            } else if (currentFilterTab === 'assigned') {
-                list = list.filter(s => s.supervisor === currentUser.name);
-            } else if (currentFilterTab === 'pending') {
-                list = list.filter(s => s.status === 'pending_approval');
-            }
-
-            return list;
-        }
-
-        function renderSidebarAlerts() {
-            const container = document.getElementById('sidebarAlertSection');
-            const pendingForMe = appData.sites.filter(s => s.supervisor === currentUser.name && s.status === 'pending_approval');
-            
-            if (pendingForMe.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-navy-900/60 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-                            <span class="text-xs font-bold text-slate-300">جميع القسايم المُسندة معتمدة وجارية</span>
-                        </div>
-                        <span class="text-[10px] text-slate-500 font-bold">لا توجد تنبيهات عاجلة</span>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = `
-                <div class="pulse-alert-box rounded-2xl p-3.5 space-y-2">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2 text-amber-400 font-black text-xs">
-                            <i class="fa-solid fa-bell text-rose-500 animate-bounce"></i>
-                            <span>تنبيه إسناد قسيمة جديدة (${pendingForMe.length})</span>
-                        </div>
-                        <span class="bg-rose-500/20 text-rose-300 text-[10px] px-2 py-0.5 rounded-md border border-rose-500/40 font-black">بانتظار الاعتماد</span>
-                    </div>
-            `;
-
-            pendingForMe.forEach(site => {
-                html += `
-                    <div class="bg-navy-950/80 p-2.5 rounded-xl border border-amber-500/40 space-y-2">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="text-xs font-black text-white">${escapeHtml(site.name)}</h4>
-                                <span class="text-[10px] text-slate-400 block font-bold mt-0.5">من قِبل: ${site.owner}</span>
-                            </div>
-                            <button onclick="openSiteDetail('${site.name}')" class="text-[10px] text-amber-400 underline font-bold">عرض التفاصيل</button>
-                        </div>
-                        <button onclick="approveSupervisorAction('${site.name}')" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-navy-950 font-black text-xs py-1.5 rounded-lg shadow-md hover:brightness-110 transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-circle-check"></i> اعتماد القسيمة وقبول الإشراف
-                        </button>
-                    </div>
-                `;
-            });
-
-            html += `</div>`;
-            container.innerHTML = html;
-        }
-
-        function renderSidebarSites() {
-            const container = document.getElementById('sitesListContainer');
-            const search = document.getElementById('siteSearchInput').value.trim().toLowerCase();
-            container.innerHTML = '';
-
-            const filtered = getFilteredSites().filter(s => 
-                s.name.toLowerCase().includes(search) || 
-                (s.client && s.client.toLowerCase().includes(search)) ||
-                (s.supervisor && s.supervisor.toLowerCase().includes(search))
-            );
-
-            const totalPending = appData.sites.filter(s => s.status === 'pending_approval').length;
-            const pendingBadge = document.getElementById('pendingBadgeCount');
-            if (totalPending > 0) {
-                pendingBadge.innerText = totalPending;
-                pendingBadge.classList.remove('hidden');
-            } else {
-                pendingBadge.classList.add('hidden');
-            }
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<p class="text-center text-xs text-slate-400 py-8 font-bold">لا توجد قسايم مطابقة للبحث</p>`;
-                return;
-            }
-
-            filtered.forEach(site => {
-                const isSelected = activeSiteName === site.name;
-                const isPending = site.status === 'pending_approval';
-
-                const card = document.createElement('div');
-                card.className = `glass-card p-3.5 rounded-2xl flex items-center justify-between cursor-pointer border ${isSelected ? 'border-amber-400 ring-1 ring-amber-400/50 bg-amber-500/10' : 'border-slate-800'} ${isPending ? 'border-amber-500/50 bg-amber-500/5' : ''}`;
-                card.onclick = () => openSiteDetail(site.name);
-                
-                card.innerHTML = `
-                    <div class="space-y-1.5 w-full pl-2">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-xs font-black ${isSelected ? 'text-amber-400' : 'text-white'} flex items-center gap-1.5">
-                                ${escapeHtml(site.name)}
-                            </h3>
-                            ${isPending ? 
-                                `<span class="bg-amber-500/20 text-amber-400 text-[9px] px-2 py-0.5 rounded-md border border-amber-500/40 font-black flex items-center gap-1">
-                                    <i class="fa-solid fa-hourglass-half text-[8px] animate-spin"></i> بانتظار الاعتماد
-                                 </span>` : 
-                                `<span class="bg-emerald-500/20 text-emerald-400 text-[9px] px-2 py-0.5 rounded-md border border-emerald-500/40 font-black">
-                                    🟢 معتمدة
-                                 </span>`
-                            }
-                        </div>
-                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-slate-400 font-bold">
-                            <span><i class="fa-solid fa-user-pen text-slate-500"></i> ${site.owner}</span>
-                            <span><i class="fa-solid fa-user-shield text-amber-500"></i> المشرف: <strong class="text-amber-300">${site.supervisor || 'غير محدد'}</strong></span>
-                        </div>
-                    </div>
-                    <button onclick="event.stopPropagation(); deleteSite('${site._id}')" class="text-slate-500 hover:text-rose-400 p-1.5 transition" title="حذف القسيمة"><i class="fa-solid fa-trash-can text-xs"></i></button>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function openSiteDetail(siteName) {
-            activeSiteName = siteName;
-            renderSidebarAlerts();
-            renderSidebarSites();
-            renderSiteWorkspace();
-        }
-
-        async function approveSupervisorAction(targetSiteName) {
-            const siteToApproveName = targetSiteName || activeSiteName;
-            const site = appData.sites.find(s => s.name === siteToApproveName);
-            if (!site) return;
-
-            site.status = 'approved';
-            site.approvedBy = currentUser.name;
-            site.approvedAt = new Date().toLocaleString('ar-KW');
-            if (!site.logs) site.logs = [];
-
-            site.logs.push({
-                date: new Date().toLocaleString('ar-KW'),
-                author: currentUser.name,
-                text: `✅ تم اعتماد الإشراف على القسيمة واستلامها رسمياً بواسطة المشرف (${currentUser.name})`
-            });
-
-            await updateSiteOnServer(site);
-            showToast(`تم اعتماد إشراف القسيمة (${site.name}) وتحديث الحالة للجميع بنجاح`);
-        }
-
-        function renderSiteWorkspace() {
-            const site = appData.sites.find(s => s.name === activeSiteName);
-            if (!site) return;
-
-            document.getElementById('currentSiteTitle').innerText = site.name;
-            document.getElementById('siteOwnerBadge').innerText = `أنشأها: ${site.owner}`;
-            document.getElementById('siteSupervisorBadge').innerHTML = `<i class="fa-solid fa-user-shield"></i> المشرف الميداني: <strong class="text-amber-400">${site.supervisor || 'لم يحدد بعد'}</strong>`;
-
-            const statusBadge = document.getElementById('siteStatusBadge');
-            const approveHeaderBtn = document.getElementById('approveSiteHeaderBtn');
-
-            if (site.status === 'pending_approval') {
-                statusBadge.className = "text-[11px] px-2.5 py-0.5 rounded-md font-black bg-amber-500/20 text-amber-300 border border-amber-500/40";
-                statusBadge.innerText = "🟡 بانتظار موافقة واعتماد المشرف";
-
-                if (site.supervisor === currentUser.name) {
-                    approveHeaderBtn.classList.remove('hidden');
-                } else {
-                    approveHeaderBtn.classList.add('hidden');
-                }
-            } else {
-                statusBadge.className = "text-[11px] px-2.5 py-0.5 rounded-md font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
-                statusBadge.innerText = `🟢 معتمدة رسمياً (بواسطة ${site.approvedBy || site.supervisor})`;
-                approveHeaderBtn.classList.add('hidden');
-            }
-
-            const workersContainer = document.getElementById('siteWorkersContainer');
-            const expensesContainer = document.getElementById('expensesContainer');
-            const emptyWorkersState = document.getElementById('emptyWorkersState');
-            const logsContainer = document.getElementById('siteLogsContainer');
-            
-            workersContainer.innerHTML = '';
-            expensesContainer.innerHTML = '';
-            logsContainer.innerHTML = '';
-
-            let totalWorkersAmount = 0;
-            let totalExpensesAmount = 0;
-
-            if (!site.workers || site.workers.length === 0) {
-                emptyWorkersState.classList.remove('hidden');
-            } else {
-                emptyWorkersState.classList.add('hidden');
-                site.workers.forEach(w => {
-                    const total = (w.daysCount || 1) * (w.dailyRate || 0);
-                    totalWorkersAmount += total;
-                    workersContainer.innerHTML += `
-                        <div class="glass-card rounded-2xl p-4 border border-slate-800 space-y-2 text-xs">
-                            <div class="flex justify-between font-black text-white">
-                                <span class="text-sm font-bold text-amber-300">${escapeHtml(w.name)}</span>
-                                <span class="text-amber-400 font-extrabold text-sm">${total.toFixed(3)} د.ك</span>
-                            </div>
-                            <div class="text-slate-300 font-bold">
-                                <i class="fa-solid fa-hammer ml-1 text-slate-400"></i> ${escapeHtml(w.workType)}
-                            </div>
-                            <div class="text-[11px] text-slate-400 flex items-center justify-between pt-2 border-t border-slate-800/80">
-                                <span>اليومية: ${w.dailyRate} د.ك</span>
-                                <span>الأيام: ${w.daysCount} يوم</span>
-                            </div>
-                        </div>`;
-                });
-            }
-
-            if (site.expenses) {
-                site.expenses.forEach(ex => {
-                    totalExpensesAmount += (ex.amount || 0);
-                    expensesContainer.innerHTML += `
-                        <div class="glass-card p-3.5 rounded-2xl border border-slate-800 flex justify-between text-xs items-center">
-                            <div>
-                                <span class="font-black text-white block">${escapeHtml(ex.title)}</span>
-                                <span class="text-[10px] text-slate-400 font-bold block mt-0.5">${ex.date}</span>
-                            </div>
-                            <span class="text-rose-400 font-black text-sm">${ex.amount.toFixed(3)} د.ك</span>
-                        </div>`;
-                });
-            }
-
-            if (site.logs) {
-                site.logs.slice().reverse().forEach(log => {
-                    logsContainer.innerHTML += `
-                        <div class="flex items-start gap-2 border-b border-slate-800/60 pb-1.5">
-                            <i class="fa-solid fa-circle-dot text-[10px] text-amber-400 mt-1"></i>
-                            <div>
-                                <span class="text-slate-200 font-bold">${escapeHtml(log.text)}</span>
-                                <span class="text-[10px] text-slate-400 block">${log.author} • ${log.date}</span>
-                            </div>
-                        </div>`;
-                });
-            }
-
-            document.getElementById('workersCountBadge').innerText = `${site.workers ? site.workers.length : 0} عمال`;
-            document.getElementById('expensesCountBadge').innerText = `${site.expenses ? site.expenses.length : 0} سجلات`;
-
-            document.getElementById('statTotalAmount').innerText = `${totalWorkersAmount.toFixed(3)} د.ك`;
-            document.getElementById('statTotalExpenses').innerText = `${totalExpensesAmount.toFixed(3)} د.ك`;
-            document.getElementById('statGrandTotal').innerText = `${(totalWorkersAmount + totalExpensesAmount).toFixed(3)} د.ك`;
-        }
-
-        function openNewSiteModal() {
-            populateSupervisorDropdowns();
-            document.getElementById('modalSiteName').value = '';
-            document.getElementById('modalClientName').value = '';
-            document.getElementById('newSiteModal').classList.remove('hidden');
-        }
-        function closeNewSiteModal() { document.getElementById('newSiteModal').classList.add('hidden'); }
-
-        function openAssignModal() {
-            if (!activeSiteName) { alert('اختر قسيمة أولاً'); return; }
-            populateSupervisorDropdowns();
-            document.getElementById('assignModal').classList.remove('hidden');
-        }
-        function closeAssignModal() { document.getElementById('assignModal').classList.add('hidden'); }
-
-        function openWorkerModal() {
-            if (!activeSiteName) { alert('اختر قسيمة أولاً'); return; }
-            document.getElementById('workerName').value = '';
-            document.getElementById('workType').value = '';
-            document.getElementById('dailyRate').value = '';
-            document.getElementById('daysCount').value = '1';
-            document.getElementById('workerModal').classList.remove('hidden');
-        }
-        function closeWorkerModal() { document.getElementById('workerModal').classList.add('hidden'); }
-
-        function openExpenseModal() {
-            if (!activeSiteName) { alert('اختر قسيمة أولاً'); return; }
-            document.getElementById('expenseTitle').value = '';
-            document.getElementById('expenseAmount').value = '';
-            document.getElementById('expenseModal').classList.remove('hidden');
-        }
-        function closeExpenseModal() { document.getElementById('expenseModal').classList.add('hidden'); }
-
-        async function createNewSiteAction(e) {
-            e.preventDefault();
-            const name = document.getElementById('modalSiteName').value.trim();
-            const client = document.getElementById('modalClientName').value.trim();
-            const supervisor = document.getElementById('modalSupervisorSelect').value;
-            const startDate = document.getElementById('modalStartDate').value;
-            const duration = parseInt(document.getElementById('modalDuration').value) || 30;
-
-            if (!name || !supervisor) return;
-
-            let existing = appData.sites.find(s => s.name.toLowerCase() === name.toLowerCase());
-            if (existing) {
-                alert('هذه القسيمة موجودة مسبقاً!');
-                return;
-            }
-
-            const newSite = {
-                name: name,
-                owner: currentUser.name,
-                supervisor: supervisor,
-                status: 'pending_approval',
-                client: client,
-                startDate: startDate,
-                duration: duration,
-                workers: [],
-                expenses: [],
-                logs: [
-                    { date: new Date().toLocaleString('ar-KW'), author: currentUser.name, text: `أنشأ القسيمة وعيّن المشرف (${supervisor}) - القسيمة بانتظار اعتماد المشرف` }
-                ]
+            // حالة التطبيق المركزية (Single Source of Truth)
+            const state = {
+                projectName: "",
+                isUrgent: false,
+                senderName: "",
+                requestDate: new Date().toISOString().slice(0, 10),
+                area: "",
+                locationDetails: "",
+                workTypes: [
+                    "أعمال الحفر", "الأعمال المدنية", "أعمال متكاملة",
+                    "تحسين البنية التحتية", "توريد", "Steel Structure",
+                    "كرفان", "مظلات", "معدات"
+                ],
+                selectedWorks: [],
+                pricingStyle: "سعر إجمالي واحد لجميع البنود",
+                specifications: "",
+                selectedAttachments: [],
+                contacts: [{ name: "", phone: "" }],
+                clientEmail: "",
+                deadlineDate: "",
+                isSaved: false
             };
 
-            try {
-                const res = await fetch('/api/sites', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(newSite)
-                });
-                if (res.ok) {
-                    closeNewSiteModal();
-                    setFilterTab('all');
-                    await fetchServerData();
-                    openSiteDetail(name);
-                    showToast(`تم إنشاء القسيمة بنجاح وإرسال إشعار اعتماد للمشرف (${supervisor})`);
-                }
-            } catch(err) {
-                alert('فشل إضافة القسيمة عبر السيرفر');
+            const STORAGE_KEY = "alrai_project_request_draft_v1";
+
+            // عناصر DOM
+            const el = {
+                projectName: document.getElementById("projectName"),
+                urgentBtn: document.getElementById("urgentBtn"),
+                urgentTitle: document.getElementById("urgentTitle"),
+                urgentSub: document.getElementById("urgentSub"),
+                urgentPill: document.getElementById("urgentPill"),
+                senderName: document.getElementById("senderName"),
+                requestDate: document.getElementById("requestDate"),
+                locationSearch: document.getElementById("locationSearch"),
+                btnShowAllAreas: document.getElementById("btnShowAllAreas"),
+                areaDropdown: document.getElementById("areaDropdown"),
+                locationDetails: document.getElementById("locationDetails"),
+                workTypesGrid: document.getElementById("workTypesGrid"),
+                customWorkInput: document.getElementById("customWorkInput"),
+                btnAddCustomWork: document.getElementById("btnAddCustomWork"),
+                pricingPreferenceBox: document.getElementById("pricingPreferenceBox"),
+                pricingOptionsGrid: document.getElementById("pricingOptionsGrid"),
+                specificationsText: document.getElementById("specificationsText"),
+                attachmentsGrid: document.getElementById("attachmentsGrid"),
+                contactsWrapper: document.getElementById("contactsWrapper"),
+                btnAddContact: document.getElementById("btnAddContact"),
+                clientEmail: document.getElementById("clientEmail"),
+                deadlineDate: document.getElementById("deadlineDate"),
+                btnSaveForm: document.getElementById("btnSaveForm"),
+                saveStatusHint: document.getElementById("saveStatusHint"),
+                saveStatusBadge: document.getElementById("saveStatusBadge"),
+                btnSendWhatsApp: document.getElementById("btnSendWhatsApp"),
+                btnExportPDF: document.getElementById("btnExportPDF"),
+                btnCopyText: document.getElementById("btnCopyText"),
+                btnQuickCopy: document.getElementById("btnQuickCopy"),
+                whatsappPreviewBox: document.getElementById("whatsappPreviewBox"),
+                progressPercent: document.getElementById("progressPercent"),
+                progressFill: document.getElementById("progressFill"),
+                btnResetAll: document.getElementById("btnResetAll"),
+                btnToggleTheme: document.getElementById("btnToggleTheme"),
+                printReportContainer: document.getElementById("printReportContainer"),
+                toastWrap: document.getElementById("toastWrap")
+            };
+
+            // إظهار الإشعارات
+            function notify(message, type = "info") {
+                const colors = {
+                    success: "#059669",
+                    error: "#e11d48",
+                    info: "#0284c7"
+                };
+                const div = document.createElement("div");
+                div.className = "toast-msg";
+                div.style.background = colors[type] || colors.info;
+                div.textContent = message;
+                el.toastWrap.appendChild(div);
+                setTimeout(() => div.remove(), 3200);
             }
-        }
 
-        async function updateSiteOnServer(site) {
-            try {
-                const res = await fetch(`/api/sites/${site._id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(site)
-                });
-                if (res.ok) {
-                    await fetchServerData();
+            // وضع التعديل (إلغاء حالة الحفظ تلقائياً عند تغيير أي مدخل)
+            function markDirty() {
+                if (state.isSaved) {
+                    state.isSaved = false;
+                    renderSaveLockState();
                 }
-            } catch(err) {
-                console.error("Error updating site:", err);
+                renderSummaryAndProgress();
             }
-        }
 
-        async function saveAssignSupervisor(e) {
-            e.preventDefault();
-            const site = appData.sites.find(s => s.name === activeSiteName);
-            if (!site) return;
+            // رسم بنود الأعمال
+            function renderWorkTypes() {
+                el.workTypesGrid.innerHTML = "";
+                state.workTypes.forEach((work) => {
+                    const isSelected = state.selectedWorks.includes(work);
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = "select-tile" + (isSelected ? " active" : "");
+                    btn.innerHTML = `<span class="check-box-visual">${isSelected ? "✓" : ""}</span><span>${escapeHtml(work)}</span>`;
+                    btn.addEventListener("click", () => {
+                        const idx = state.selectedWorks.indexOf(work);
+                        if (idx > -1) {
+                            state.selectedWorks.splice(idx, 1);
+                        } else {
+                            state.selectedWorks.push(work);
+                        }
+                        renderWorkTypes();
+                        renderPricingOptions();
+                        markDirty();
+                    });
+                    el.workTypesGrid.appendChild(btn);
+                });
+            }
 
-            const newSupervisor = document.getElementById('assignSupervisorSelect').value;
-            if (!newSupervisor) return;
+            // رسم خيارات طريقة التسعير
+            function renderPricingOptions() {
+                if (state.selectedWorks.length >= 2) {
+                    el.pricingPreferenceBox.classList.remove("hidden");
+                } else {
+                    el.pricingPreferenceBox.classList.add("hidden");
+                }
 
-            site.supervisor = newSupervisor;
-            site.status = 'pending_approval';
+                el.pricingOptionsGrid.innerHTML = "";
+                PRICING_OPTIONS.forEach((opt) => {
+                    const isSelected = state.pricingStyle === opt;
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = "select-tile" + (isSelected ? " active" : "");
+                    btn.style.width = "100%";
+                    btn.innerHTML = `<span class="check-box-visual" style="border-radius:50%;">${isSelected ? "●" : ""}</span><span>${escapeHtml(opt)}</span>`;
+                    btn.addEventListener("click", () => {
+                        state.pricingStyle = opt;
+                        renderPricingOptions();
+                        markDirty();
+                    });
+                    el.pricingOptionsGrid.appendChild(btn);
+                });
+            }
 
-            site.logs.push({
-                date: new Date().toLocaleString('ar-KW'),
-                author: currentUser.name,
-                text: `قام بإعادة إسناد القسيمة إلى المشرف (${newSupervisor}) - وبانتظار اعتماده الرسمي`
-            });
+            // رسم خانات المرفقات المربعية
+            function renderAttachments() {
+                el.attachmentsGrid.innerHTML = "";
+                ATTACHMENT_OPTIONS.forEach((att) => {
+                    const isSelected = state.selectedAttachments.includes(att);
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = "select-tile" + (isSelected ? " active" : "");
+                    btn.innerHTML = `<span class="check-box-visual">${isSelected ? "✓" : ""}</span><span>${escapeHtml(att)}</span>`;
+                    btn.addEventListener("click", () => {
+                        const idx = state.selectedAttachments.indexOf(att);
+                        if (idx > -1) {
+                            state.selectedAttachments.splice(idx, 1);
+                        } else {
+                            state.selectedAttachments.push(att);
+                        }
+                        renderAttachments();
+                        markDirty();
+                    });
+                    el.attachmentsGrid.appendChild(btn);
+                });
+            }
 
-            closeAssignModal();
-            await updateSiteOnServer(site);
-            showToast(`تم تحديث التكليف وتنبيه المشرف (${newSupervisor}) بانتظار اعتماده`);
-        }
+            // رسم جهات الاتصال
+            function renderContacts() {
+                el.contactsWrapper.innerHTML = "";
+                state.contacts.forEach((contact, idx) => {
+                    const card = document.createElement("div");
+                    card.className = "contact-card";
 
-        async function saveWorker(e) {
-            e.preventDefault();
-            const site = appData.sites.find(s => s.name === activeSiteName);
-            if (!site) return;
+                    const top = document.createElement("div");
+                    top.className = "contact-card-top";
+                    top.innerHTML = `<span>جهة تواصل #${idx + 1}</span>`;
 
-            const wName = document.getElementById('workerName').value.trim();
-            const wType = document.getElementById('workType').value.trim();
-            const rate = parseFloat(document.getElementById('dailyRate').value) || 0;
-            const days = parseFloat(document.getElementById('daysCount').value) || 1;
-
-            if(!site.workers) site.workers = [];
-
-            site.workers.push({
-                name: wName,
-                workType: wType,
-                dailyRate: rate,
-                daysCount: days
-            });
-
-            site.logs.push({
-                date: new Date().toLocaleString('ar-KW'),
-                author: currentUser.name,
-                text: `أضاف يومية جديد (${wName}) - بقيمة ${(rate * days).toFixed(3)} د.ك`
-            });
-
-            closeWorkerModal();
-            await updateSiteOnServer(site);
-            showToast('تم حفظ يومية العامل بنجاح');
-        }
-
-        async function saveExpense(e) {
-            e.preventDefault();
-            const site = appData.sites.find(s => s.name === activeSiteName);
-            if (!site) return;
-
-            const title = document.getElementById('expenseTitle').value.trim();
-            const amount = parseFloat(document.getElementById('expenseAmount').value) || 0;
-            const date = document.getElementById('expenseDate').value;
-
-            if(!site.expenses) site.expenses = [];
-
-            site.expenses.push({ title: title, amount: amount, date: date });
-
-            site.logs.push({
-                date: new Date().toLocaleString('ar-KW'),
-                author: currentUser.name,
-                text: `سجل تكلفة جديدة (${title}) - بمبلغ ${amount.toFixed(3)} د.ك`
-            });
-
-            closeExpenseModal();
-            await updateSiteOnServer(site);
-            showToast('تم حفظ التكلفة بنجاح');
-        }
-
-        async function deleteSite(siteId) {
-            if (confirm('هل أنت متأكد من حذف هذه القسيمة بالكامل؟')) {
-                try {
-                    const res = await fetch(`/api/sites/${siteId}`, { method: 'DELETE' });
-                    if (res.ok) {
-                        activeSiteName = null;
-                        await fetchServerData();
-                        showToast('تم حذف القسيمة');
+                    if (state.contacts.length > 1) {
+                        const delBtn = document.createElement("button");
+                        delBtn.type = "button";
+                        delBtn.className = "btn-danger-sm";
+                        delBtn.textContent = "حذف ✕";
+                        delBtn.addEventListener("click", () => {
+                            state.contacts.splice(idx, 1);
+                            renderContacts();
+                            markDirty();
+                        });
+                        top.appendChild(delBtn);
                     }
-                } catch(err) {
-                    alert('فشل حذف القسيمة');
+
+                    const row = document.createElement("div");
+                    row.className = "grid-2";
+
+                    const nameInput = document.createElement("input");
+                    nameInput.type = "text";
+                    nameInput.className = "input-control";
+                    nameInput.placeholder = "الاسم (المالك / المهندس / المقاول)";
+                    nameInput.value = contact.name;
+                    nameInput.addEventListener("input", (e) => {
+                        state.contacts[idx].name = e.target.value;
+                        markDirty();
+                    });
+
+                    const phoneInput = document.createElement("input");
+                    phoneInput.type = "tel";
+                    phoneInput.setAttribute("inputmode", "tel");
+                    phoneInput.className = "input-control num-en";
+                    phoneInput.placeholder = "رقم الهاتف (مثال: 99xxxxxx)";
+                    phoneInput.value = contact.phone;
+                    phoneInput.addEventListener("input", (e) => {
+                        state.contacts[idx].phone = e.target.value;
+                        markDirty();
+                    });
+
+                    row.appendChild(nameInput);
+                    row.appendChild(phoneInput);
+                    card.appendChild(top);
+                    card.appendChild(row);
+                    el.contactsWrapper.appendChild(card);
+                });
+            }
+
+            // رسم زر الأولوية المستعجلة
+            function renderUrgentButton() {
+                if (state.isUrgent) {
+                    el.urgentBtn.classList.add("is-urgent");
+                    el.urgentTitle.textContent = "مستعجل جداً 🔥";
+                    el.urgentTitle.style.color = "#fb7185";
+                    el.urgentSub.textContent = "سيتم إعطاؤه أولوية قصوى بالتسعير";
+                    el.urgentPill.textContent = "مستعجل 🔥";
+                } else {
+                    el.urgentBtn.classList.remove("is-urgent");
+                    el.urgentTitle.textContent = "مشروع عادي";
+                    el.urgentTitle.style.color = "";
+                    el.urgentSub.textContent = "اضغط هنا لتفعيل وضع المستعجل جداً";
+                    el.urgentPill.textContent = "عادي";
                 }
             }
-        }
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            t.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 2800);
-        }
+            // مناطق الكويت
+            function showAreaMatches(queryText) {
+                const q = queryText.trim().toLowerCase();
+                const matches = q ? KUWAIT_AREAS.filter((a) => a.toLowerCase().includes(q)) : KUWAIT_AREAS;
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
+                el.areaDropdown.innerHTML = "";
+                if (matches.length === 0) {
+                    const info = document.createElement("div");
+                    info.style.padding = "12px";
+                    info.style.fontSize = "12px";
+                    info.style.color = "var(--text-muted)";
+                    info.style.textAlign = "center";
+                    info.textContent = "سيتم اعتماد المنطقة كما كتبتها";
+                    el.areaDropdown.appendChild(info);
+                } else {
+                    matches.forEach((area) => {
+                        const item = document.createElement("button");
+                        item.type = "button";
+                        item.className = "area-item";
+                        item.textContent = area;
+                        item.addEventListener("click", () => {
+                            state.area = area;
+                            el.locationSearch.value = area;
+                            el.areaDropdown.classList.add("hidden");
+                            markDirty();
+                        });
+                        el.areaDropdown.appendChild(item);
+                    });
+                }
+                el.areaDropdown.classList.remove("hidden");
+            }
 
-        function shareSiteSummary() { 
-            const site = appData.sites.find(s => s.name === activeSiteName);
-            if (!site) return;
+            // بناء رسالة الواتساب المنسقة
+            function buildWhatsAppText() {
+                const lines = [];
+                lines.push("*شركة الراي الهندسية لتشييد و تشطيب المباني*");
+                lines.push("📋 *طلب تسعير مشروع جديد*");
+                if (state.isUrgent) {
+                    lines.push("🚨 *الأولوية: مستعجل جداً 🔥*");
+                }
+                lines.push("━━━━━━━━━━━━━━━━━━━━");
+                lines.push(`🏗️ *اسم المشروع:* ${state.projectName.trim() || "لم يُحدد"}`);
+                lines.push(`👤 *المسؤول / المُرسل:* ${state.senderName.trim() || "غير محدد"}`);
+                lines.push(`📅 *تاريخ الطلب:* ${state.requestDate || "-"}`);
+                if (state.deadlineDate) {
+                    lines.push(`⏳ *آخر موعد للتسليم:* ${state.deadlineDate}`);
+                }
+                const loc = state.area.trim() || "غير محدد";
+                const det = state.locationDetails.trim();
+                lines.push(`📍 *الموقع:* ${loc}${det ? ` (${det})` : ""}`);
 
-            let text = `*Al-Rai Engineering Company*\n`;
-            text += `🏗️ *تحديث ميداني للقسيمة:* ${site.name}\n`;
-            text += `👷‍♂️ *المشرف الميداني:* ${site.supervisor || 'غير محدد'}\n`;
-            text += `📌 *حالة الإشراف:* ${site.status === 'approved' ? '🟢 معتمدة وجارية' : '🟡 بانتظار الاعتماد'}\n`;
-            text += `📝 *بواسطة:* ${currentUser.name}\n`;
-            text += `------------------------------------\n`;
+                lines.push("\n🛠️ *نوع الأعمال / البنود المطلوبة:*");
+                if (state.selectedWorks.length > 0) {
+                    state.selectedWorks.forEach((w, i) => lines.push(`   ${i + 1}. ${w}`));
+                    if (state.selectedWorks.length >= 2) {
+                        lines.push(`💰 *طريقة التسعير:* ${state.pricingStyle}`);
+                    }
+                } else {
+                    lines.push("   - غير محدد");
+                }
 
-            let wTotal = 0;
-            if (site.workers && site.workers.length > 0) {
-                text += `👷 *العمال واليوميات:*\n`;
-                site.workers.forEach(w => {
-                    const tot = w.daysCount * w.dailyRate;
-                    wTotal += tot;
-                    text += `• ${w.name} (${w.workType}): ${tot.toFixed(3)} د.ك\n`;
+                lines.push("\n📝 *المواصفات والتفاصيل المطلوبة:*");
+                lines.push(state.specifications.trim() || "لا توجد مواصفات إضافية مكتوبة.");
+
+                if (state.selectedAttachments.length > 0) {
+                    lines.push(`\n📎 *المرفقات المرسلة:* ${state.selectedAttachments.join(" ، ")}`);
+                }
+
+                lines.push("\n📞 *بيانات التواصل:*");
+                const validContacts = state.contacts.filter((c) => c.name.trim() || c.phone.trim());
+                if (validContacts.length > 0) {
+                    validContacts.forEach((c) => {
+                        lines.push(`   • ${c.name.trim() || "جهة تواصل"}: ${c.phone.trim() || "-"}`);
+                    });
+                } else {
+                    lines.push("   • لا يوجد");
+                }
+                if (state.clientEmail.trim()) {
+                    lines.push(`   ✉️ البريد: ${state.clientEmail.trim()}`);
+                }
+
+                lines.push("━━━━━━━━━━━━━━━━━━━━");
+                lines.push("_تم إعداد الطلب عبر نموذج التسعير الذكي - شركة الراي الهندسية_");
+
+                return lines.join("\n");
+            }
+
+            // تحديث المعاينة ونسبة الاكتمال
+            function renderSummaryAndProgress() {
+                el.whatsappPreviewBox.textContent = buildWhatsAppText();
+
+                let score = 0;
+                if (state.projectName.trim()) score += 25;
+                if (state.senderName.trim()) score += 20;
+                if (state.area.trim()) score += 20;
+                if (state.selectedWorks.length > 0) score += 15;
+                if (state.specifications.trim()) score += 20;
+
+                el.progressPercent.textContent = score + "%";
+                el.progressFill.style.width = score + "%";
+            }
+
+            // تحديث حالة قفل الأزرار
+            function renderSaveLockState() {
+                const exportBtns = [el.btnSendWhatsApp, el.btnExportPDF, el.btnCopyText];
+                if (state.isSaved) {
+                    exportBtns.forEach((b) => b.classList.remove("locked"));
+                    el.btnSaveForm.classList.add("saved");
+                    el.btnSaveForm.textContent = "✅ تم الحفظ والاعتماد (اضغط لتحديث الحفظ عند التعديل)";
+                    el.saveStatusHint.textContent = "✅ البيانات محفوظة ومعتمدة — يمكنك الآن الإرسال أو التصدير كـ PDF";
+                    el.saveStatusHint.style.color = "#6ee7b7";
+                    el.saveStatusBadge.textContent = "محفوظ ✓";
+                    el.saveStatusBadge.style.background = "rgba(16, 185, 129, 0.25)";
+                    el.saveStatusBadge.style.color = "#6ee7b7";
+                } else {
+                    exportBtns.forEach((b) => b.classList.add("locked"));
+                    el.btnSaveForm.classList.remove("saved");
+                    el.btnSaveForm.textContent = "💾 حفظ واعتماد بيانات الطلب";
+                    el.saveStatusHint.textContent = "🔒 يجب الضغط على زر الحفظ أولاً لفتح أزرار الإرسال والـ PDF";
+                    el.saveStatusHint.style.color = "#fcd34d";
+                    el.saveStatusBadge.textContent = "غير محفوظ";
+                    el.saveStatusBadge.style.background = "rgba(245, 158, 11, 0.2)";
+                    el.saveStatusBadge.style.color = "#fcd34d";
+                }
+            }
+
+            // التحقق من الحقول الإلزامية
+            function validateForm() {
+                if (!state.projectName.trim()) {
+                    notify("يرجى إدخال اسم المشروع أولاً!", "error");
+                    el.projectName.focus();
+                    return false;
+                }
+                if (!state.senderName.trim()) {
+                    notify("يرجى إدخال اسم المسؤول / مُرسل الطلب!", "error");
+                    el.senderName.focus();
+                    return false;
+                }
+                if (!state.area.trim()) {
+                    notify("يرجى تحديد منطقة المشروع!", "error");
+                    el.locationSearch.focus();
+                    return false;
+                }
+                if (!state.specifications.trim()) {
+                    notify("يرجى كتابة المواصفات والتفاصيل الفنية المطلوبة!", "error");
+                    el.specificationsText.focus();
+                    return false;
+                }
+                return true;
+            }
+
+            function requireSaved() {
+                if (!state.isSaved) {
+                    notify("يجب الضغط على زر (حفظ واعتماد بيانات الطلب) أولاً!", "error");
+                    el.btnSaveForm.scrollIntoView({ behavior: "smooth", block: "center" });
+                    return false;
+                }
+                return true;
+            }
+
+            // نسخ النص
+            function copyTextAction() {
+                if (!requireSaved()) return;
+                const text = buildWhatsAppText();
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        notify("تم نسخ التفاصيل بنجاح! الصقها في الواتساب الآن", "success");
+                    }).catch(() => fallbackCopy(text));
+                } else {
+                    fallbackCopy(text);
+                }
+            }
+
+            function fallbackCopy(text) {
+                const ta = document.createElement("textarea");
+                ta.value = text;
+                ta.style.position = "fixed";
+                ta.style.opacity = "0";
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                document.execCommand("copy");
+                document.body.removeChild(ta);
+                notify("تم نسخ التفاصيل بنجاح! الصقها في الواتساب الآن", "success");
+            }
+
+            // إرسال واتساب مباشر
+            function sendWhatsAppAction() {
+                if (!requireSaved()) return;
+                const encoded = encodeURIComponent(buildWhatsAppText());
+                window.location.href = `https://wa.me/?text=${encoded}`;
+            }
+
+            // توليد تقرير PDF والطباعة
+            function exportPDFAction() {
+                if (!requireSaved()) return;
+
+                const validContacts = state.contacts.filter((c) => c.name.trim() || c.phone.trim());
+                const effectivePricing = state.selectedWorks.length >= 2 ? state.pricingStyle : "سعر إجمالي واحد للمشروع";
+
+                el.printReportContainer.innerHTML = `
+                    <div style="border:2px solid #0284c7; border-radius:16px; padding:22px; font-family:'Cairo', sans-serif; color:#0f172a;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0284c7; padding-bottom:14px; margin-bottom:18px;">
+                            <div>
+                                <h1 style="font-size:19px; font-weight:900; margin:0;">شركة الراي الهندسية لتشييد و تشطيب المباني</h1>
+                                <p style="font-size:12px; color:#475569; margin:4px 0 0 0;">نموذج طلب دراسة وتسعير مشروع • قسم الدراسات والمشاريع (م. أمير)</p>
+                            </div>
+                            <div style="text-align:left;">
+                                <div style="font-size:11px; color:#64748b;">تاريخ الطلب</div>
+                                <div style="font-size:14px; font-weight:800; font-family:monospace;">${escapeHtml(state.requestDate || "-")}</div>
+                                <div style="margin-top:6px; padding:3px 10px; border-radius:6px; font-size:11px; font-weight:900; ${state.isUrgent ? "background:#e11d48; color:#fff;" : "background:#e2e8f0; color:#334155;"}">
+                                    ${state.isUrgent ? "🚨 مشروع مستعجل جداً" : "الأولوية: عادي"}
+                                </div>
+                            </div>
+                        </div>
+
+                        <table style="width:100%; border-collapse:collapse; margin-bottom:16px; font-size:13px;">
+                            <tr>
+                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800; width:24%;">اسم المشروع</td>
+                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:900; font-size:15px;" colspan="3">${escapeHtml(state.projectName)}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800;">الموقع (المنطقة)</td>
+                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:700;">${escapeHtml(state.area)} ${state.locationDetails ? `(${escapeHtml(state.locationDetails)})` : ""}</td>
+                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800; width:22%;">المسؤول / المُرسل</td>
+                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:700;">${escapeHtml(state.senderName)}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800;">طريقة التسعير</td>
+                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:700; color:#0369a1;">${escapeHtml(effectivePricing)}</td>
+                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800;">آخر موعد للتسليم</td>
+                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:700; font-family:monospace;">${escapeHtml(state.deadlineDate || "غير محدد")}</td>
+                            </tr>
+                        </table>
+
+                        <div style="margin-bottom:16px;">
+                            <h3 style="font-size:13px; font-weight:900; color:#0369a1; margin:0 0 8px 0;">1. بنود ونوع الأعمال المطلوب تسعيرها:</h3>
+                            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                                ${state.selectedWorks.length > 0
+                                    ? state.selectedWorks.map((w) => `<span style="background:#e0f2fe; border:1px solid #7dd3fc; color:#0c4a6e; padding:5px 12px; border-radius:8px; font-size:12px; font-weight:800;">✓ ${escapeHtml(w)}</span>`).join("")
+                                    : '<span style="font-size:12px; color:#64748b;">لم يتم تحديد بنود</span>'}
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:16px;">
+                            <h3 style="font-size:13px; font-weight:900; color:#0369a1; margin:0 0 8px 0;">2. المواصفات والتفاصيل الفنية المطلوبة:</h3>
+                            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:14px; font-size:13px; line-height:1.8; white-space:pre-wrap; min-height:110px;">${escapeHtml(state.specifications)}</div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+                            <div style="border:1px solid #cbd5e1; border-radius:10px; padding:12px;">
+                                <h4 style="font-size:12px; font-weight:900; color:#0f766e; margin:0 0 8px 0;">3. أشخاص التواصل وأرقام الهواتف:</h4>
+                                ${validContacts.length > 0
+                                    ? validContacts.map((c) => `<div style="font-size:12px; margin-bottom:4px;"><strong>${escapeHtml(c.name || "تواصل")}:</strong> <span style="font-family:monospace; font-weight:800;">${escapeHtml(c.phone || "-")}</span></div>`).join("")
+                                    : '<div style="font-size:12px; color:#64748b;">لا يوجد</div>'}
+                                ${state.clientEmail ? `<div style="font-size:11px; color:#475569; margin-top:6px; border-top:1px dashed #cbd5e1; padding-top:4px;">Email: ${escapeHtml(state.clientEmail)}</div>` : ""}
+                            </div>
+
+                            <div style="border:1px solid #cbd5e1; border-radius:10px; padding:12px;">
+                                <h4 style="font-size:12px; font-weight:900; color:#b45309; margin:0 0 8px 0;">4. المرفقات المرسلة مع الطلب:</h4>
+                                ${state.selectedAttachments.length > 0
+                                    ? state.selectedAttachments.map((a) => `<div style="font-size:12px; font-weight:700; margin-bottom:3px;">• ${escapeHtml(a)}</div>`).join("")
+                                    : '<div style="font-size:12px; color:#64748b;">لا توجد مرفقات محددة</div>'}
+                            </div>
+                        </div>
+
+                        <div style="border-top:1px solid #cbd5e1; padding-top:10px; display:flex; justify-content:space-between; font-size:10px; color:#64748b;">
+                            <span>شركة الراي الهندسية لتشييد و تشطيب المباني - دولة الكويت</span>
+                            <span>مُعد للإدخال في نظام إدارة عروض الأسعار</span>
+                        </div>
+                    </div>
+                `;
+
+                const oldTitle = document.title;
+                document.title = `طلب_تسعير_${state.projectName.trim().replace(/\s+/g, "_")}`;
+                setTimeout(() => {
+                    window.print();
+                    document.title = oldTitle;
+                }, 200);
+            }
+
+            // حفظ في ذاكرة المتصفح
+            function saveToLocalStorage() {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                } catch (e) {}
+            }
+
+            function loadFromLocalStorage() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    if (!raw) return;
+                    const saved = JSON.parse(raw);
+                    Object.assign(state, saved);
+                    state.isSaved = false; // يتطلب ضغط زر الاعتماد عند الفتح الجديد
+                } catch (e) {}
+            }
+
+            function escapeHtml(str) {
+                return String(str)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;");
+            }
+
+            // ربط كافة الأحداث
+            function bindEvents() {
+                el.projectName.addEventListener("input", (e) => { state.projectName = e.target.value; markDirty(); });
+                el.senderName.addEventListener("input", (e) => { state.senderName = e.target.value; markDirty(); });
+                el.requestDate.addEventListener("change", (e) => { state.requestDate = e.target.value; markDirty(); });
+                el.locationDetails.addEventListener("input", (e) => { state.locationDetails = e.target.value; markDirty(); });
+                el.specificationsText.addEventListener("input", (e) => { state.specifications = e.target.value; markDirty(); });
+                el.clientEmail.addEventListener("input", (e) => { state.clientEmail = e.target.value; markDirty(); });
+                el.deadlineDate.addEventListener("change", (e) => { state.deadlineDate = e.target.value; markDirty(); });
+
+                el.urgentBtn.addEventListener("click", () => {
+                    state.isUrgent = !state.isUrgent;
+                    renderUrgentButton();
+                    markDirty();
+                });
+
+                el.locationSearch.addEventListener("input", (e) => {
+                    state.area = e.target.value;
+                    showAreaMatches(e.target.value);
+                    markDirty();
+                });
+
+                el.btnShowAllAreas.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    if (el.areaDropdown.classList.contains("hidden")) {
+                        showAreaMatches("");
+                    } else {
+                        el.areaDropdown.classList.add("hidden");
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!document.getElementById("areaFieldWrapper").contains(e.target)) {
+                        el.areaDropdown.classList.add("hidden");
+                    }
+                });
+
+                function handleAddCustomWork() {
+                    const val = el.customWorkInput.value.trim();
+                    if (!val) return;
+                    if (!state.workTypes.includes(val)) {
+                        state.workTypes.push(val);
+                    }
+                    if (!state.selectedWorks.includes(val)) {
+                        state.selectedWorks.push(val);
+                    }
+                    el.customWorkInput.value = "";
+                    renderWorkTypes();
+                    renderPricingOptions();
+                    markDirty();
+                    notify(`تم إضافة بند "${val}"`, "success");
+                }
+
+                el.btnAddCustomWork.addEventListener("click", handleAddCustomWork);
+                el.customWorkInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleAddCustomWork();
+                    }
+                });
+
+                el.btnAddContact.addEventListener("click", () => {
+                    state.contacts.push({ name: "", phone: "" });
+                    renderContacts();
+                    markDirty();
+                });
+
+                el.btnSaveForm.addEventListener("click", () => {
+                    if (!validateForm()) return;
+                    state.isSaved = true;
+                    saveToLocalStorage();
+                    renderSaveLockState();
+                    renderSummaryAndProgress();
+                    notify("تم حفظ واعتماد بيانات الطلب بنجاح! اختر طريقة الإرسال الآن", "success");
+                });
+
+                el.btnSendWhatsApp.addEventListener("click", sendWhatsAppAction);
+                el.btnExportPDF.addEventListener("click", exportPDFAction);
+                el.btnCopyText.addEventListener("click", copyTextAction);
+                el.btnQuickCopy.addEventListener("click", copyTextAction);
+
+                el.btnToggleTheme.addEventListener("click", () => {
+                    const isDark = document.documentElement.classList.toggle("dark");
+                    el.btnToggleTheme.textContent = isDark ? "☀️" : "🌙";
+                });
+
+                el.btnResetAll.addEventListener("click", () => {
+                    state.projectName = "";
+                    state.isUrgent = false;
+                    state.senderName = "";
+                    state.requestDate = new Date().toISOString().slice(0, 10);
+                    state.area = "";
+                    state.locationDetails = "";
+                    state.selectedWorks = [];
+                    state.pricingStyle = PRICING_OPTIONS[0];
+                    state.specifications = "";
+                    state.selectedAttachments = [];
+                    state.contacts = [{ name: "", phone: "" }];
+                    state.clientEmail = "";
+                    state.deadlineDate = "";
+                    state.isSaved = false;
+
+                    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+                    syncInputsFromState();
+                    renderAll();
+                    notify("تم تفريغ النموذج لبدء طلب جديد", "info");
                 });
             }
 
-            let eTotal = 0;
-            if (site.expenses && site.expenses.length > 0) {
-                text += `\n📦 *المصاريف والمواد:*\n`;
-                site.expenses.forEach(ex => {
-                    eTotal += ex.amount;
-                    text += `• ${ex.title}: ${ex.amount.toFixed(3)} د.ك\n`;
-                });
+            function syncInputsFromState() {
+                el.projectName.value = state.projectName;
+                el.senderName.value = state.senderName;
+                el.requestDate.value = state.requestDate;
+                el.locationSearch.value = state.area;
+                el.locationDetails.value = state.locationDetails;
+                el.specificationsText.value = state.specifications;
+                el.clientEmail.value = state.clientEmail;
+                el.deadlineDate.value = state.deadlineDate;
             }
 
-            text += `------------------------------------\n`;
-            text += `💰 *إجمالي التكلفة الحالية:* ${(wTotal + eTotal).toFixed(3)} د.ك\n`;
+            function renderAll() {
+                renderUrgentButton();
+                renderWorkTypes();
+                renderPricingOptions();
+                renderAttachments();
+                renderContacts();
+                renderSaveLockState();
+                renderSummaryAndProgress();
+            }
 
-            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
-        }
-
-        function copySiteSummary() { 
-            shareSiteSummary();
-            showToast('تم التجهيز والنسخ للمشاركة'); 
-        }
-
-        function printSiteInvoice() { window.print(); }
+            // التشغيل الأولي
+            loadFromLocalStorage();
+            syncInputsFromState();
+            bindEvents();
+            renderAll();
+        })();
     </script>
 </body>
 </html>
