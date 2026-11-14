@@ -162,6 +162,16 @@
             transform: scale(0.96);
         }
 
+        .history-badge-count {
+            background: var(--primary);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 1px 6px;
+            border-radius: 99px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
         /* الحاوية الرئيسية */
         .container {
             max-width: 780px;
@@ -385,7 +395,7 @@
             color: #fff;
         }
 
-        /* أزرار الاختيار المربعية (تعمل 100% باللمس والماوس كأزرار حقيقية) */
+        /* أزرار الاختيار المربعية */
         .chips-grid {
             display: flex;
             flex-wrap: wrap;
@@ -617,9 +627,10 @@
             cursor: not-allowed;
         }
 
-        .btn-wa {
-            background: #16a34a;
+        .btn-email {
+            background: #0078d4;
             color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.35);
         }
 
         .btn-pdf {
@@ -646,6 +657,91 @@
             max-height: 210px;
             overflow-y: auto;
             margin: 0;
+        }
+
+        /* نافذة السجل (History Modal) */
+        .history-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.78);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 120;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .history-modal-box {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            border-radius: 22px;
+            width: 100%;
+            max-width: 620px;
+            max-height: 82vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+            overflow: hidden;
+        }
+
+        .history-modal-header {
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .history-modal-body {
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .history-item-card {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .btn-history-load {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-history-del {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(244, 63, 94, 0.16);
+            color: #fb7185;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
         }
 
         /* الإشعارات المنبثقة */
@@ -725,11 +821,31 @@
                 </div>
             </div>
             <div class="header-actions">
+                <button type="button" id="btnOpenHistory" class="icon-btn" title="سجل الطلبات المحفوظة">
+                    📜 السجل <span id="historyCountBadge" class="history-badge-count">0</span>
+                </button>
                 <button type="button" id="btnResetAll" class="icon-btn" title="تفريغ الحقول">🔄 تفريغ</button>
                 <button type="button" id="btnToggleTheme" class="icon-btn" title="تغيير المظهر">☀️</button>
             </div>
         </div>
     </header>
+
+    <!-- نافذة السجل (History) -->
+    <div id="historyModal" class="history-modal-backdrop hidden no-print">
+        <div class="history-modal-box">
+            <div class="history-modal-header">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:18px;">📜</span>
+                    <div>
+                        <h3 style="margin:0; font-size:15px; font-weight:900;">سجل الطلبات المحفوظة (History)</h3>
+                        <p style="margin:2px 0 0 0; font-size:11px; color:var(--text-muted);">أي طلب يتم حفظه واعتماده يُسجل هنا للمراجعة أو الاسترجاع</p>
+                    </div>
+                </div>
+                <button type="button" id="btnCloseHistory" class="icon-btn" style="padding:0 10px;">✕ إغلاق</button>
+            </div>
+            <div id="historyListContainer" class="history-modal-body"></div>
+        </div>
+    </div>
 
     <main class="container no-print">
 
@@ -874,7 +990,7 @@
                     <div>
                         <div style="font-size:15px; font-weight:900;">1. حفظ واعتماد بيانات الطلب</div>
                         <div id="saveStatusHint" style="font-size:12px; color:#fcd34d; margin-top:3px; font-weight:700;">
-                            🔒 يجب الضغط على زر الحفظ أولاً لفتح أزرار الإرسال والـ PDF
+                            🔒 يجب الضغط على زر الحفظ أولاً لفتح أزرار الإيميل والنسخ والـ PDF
                         </div>
                     </div>
                     <span id="saveStatusBadge" style="padding:4px 10px; border-radius:8px; background:rgba(245,158,11,0.2); color:#fcd34d; font-size:11px; font-weight:900; flex-shrink:0;">
@@ -888,26 +1004,26 @@
             </div>
 
             <div style="display:flex; flex-direction:column; gap:10px;">
-                <div style="font-size:14px; font-weight:900; color:#bae6fd;">2. إرسال الطلب أو حفظه كـ PDF (بعد الحفظ):</div>
+                <div style="font-size:14px; font-weight:900; color:#bae6fd;">2. إرسال عبر الإيميل أو النسخ أو حفظ كـ PDF (بعد الحفظ):</div>
                 <div class="export-grid">
-                    <button type="button" id="btnSendWhatsApp" class="btn-export btn-wa locked">
-                        📲 إرسال واتساب مباشرة
+                    <button type="button" id="btnSendEmail" class="btn-export btn-email locked">
+                        📧 إرسال عبر الإيميل (Outlook)
+                    </button>
+                    <button type="button" id="btnCopyText" class="btn-export btn-copy locked">
+                        📋 نسخ التفاصيل بالكامل
                     </button>
                     <button type="button" id="btnExportPDF" class="btn-export btn-pdf locked">
                         📄 حفظ كملف PDF مرتب
-                    </button>
-                    <button type="button" id="btnCopyText" class="btn-export btn-copy locked">
-                        📋 نسخ التفاصيل للواتساب
                     </button>
                 </div>
             </div>
 
             <div style="display:flex; flex-direction:column; gap:6px;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:12px; font-weight:800; color:#7dd3fc;">معاينة نص الرسالة المنسقة:</span>
+                    <span style="font-size:12px; font-weight:800; color:#7dd3fc;">معاينة نص الطلب المنسق:</span>
                     <button type="button" id="btnQuickCopy" style="background:none; border:none; color:#34d399; font-family:inherit; font-size:12px; font-weight:900; text-decoration:underline; cursor:pointer;">نسخ النص</button>
                 </div>
-                <pre id="whatsappPreviewBox" class="preview-box"></pre>
+                <pre id="messagePreviewBox" class="preview-box"></pre>
             </div>
         </section>
 
@@ -968,6 +1084,9 @@
             };
 
             const STORAGE_KEY = "alrai_project_request_draft_v1";
+            const HISTORY_STORAGE_KEY = "alrai_project_request_history_v1";
+            const TARGET_EMAIL = "Eng.amir@alraiengineering.com";
+            const COMPANY_NAME = "شركة الراي الهندسية لتشييد و تشطيب المباني";
 
             // عناصر DOM
             const el = {
@@ -996,15 +1115,20 @@
                 btnSaveForm: document.getElementById("btnSaveForm"),
                 saveStatusHint: document.getElementById("saveStatusHint"),
                 saveStatusBadge: document.getElementById("saveStatusBadge"),
-                btnSendWhatsApp: document.getElementById("btnSendWhatsApp"),
+                btnSendEmail: document.getElementById("btnSendEmail"),
                 btnExportPDF: document.getElementById("btnExportPDF"),
                 btnCopyText: document.getElementById("btnCopyText"),
                 btnQuickCopy: document.getElementById("btnQuickCopy"),
-                whatsappPreviewBox: document.getElementById("whatsappPreviewBox"),
+                messagePreviewBox: document.getElementById("messagePreviewBox"),
                 progressPercent: document.getElementById("progressPercent"),
                 progressFill: document.getElementById("progressFill"),
                 btnResetAll: document.getElementById("btnResetAll"),
                 btnToggleTheme: document.getElementById("btnToggleTheme"),
+                btnOpenHistory: document.getElementById("btnOpenHistory"),
+                btnCloseHistory: document.getElementById("btnCloseHistory"),
+                historyModal: document.getElementById("historyModal"),
+                historyListContainer: document.getElementById("historyListContainer"),
+                historyCountBadge: document.getElementById("historyCountBadge"),
                 printReportContainer: document.getElementById("printReportContainer"),
                 toastWrap: document.getElementById("toastWrap")
             };
@@ -1210,43 +1334,43 @@
                 el.areaDropdown.classList.remove("hidden");
             }
 
-            // بناء رسالة الواتساب المنسقة
-            function buildWhatsAppText() {
+            // بناء نص الطلب المنسق للإيميل والنسخ
+            function buildFormattedRequestText() {
                 const lines = [];
-                lines.push("*شركة الراي الهندسية لتشييد و تشطيب المباني*");
-                lines.push("📋 *طلب تسعير مشروع جديد*");
+                lines.push("شركة الراي الهندسية لتشييد و تشطيب المباني");
+                lines.push("📋 طلب تسعير مشروع جديد");
                 if (state.isUrgent) {
-                    lines.push("🚨 *الأولوية: مستعجل جداً 🔥*");
+                    lines.push("🚨 الأولوية: مستعجل جداً 🔥");
                 }
                 lines.push("━━━━━━━━━━━━━━━━━━━━");
-                lines.push(`🏗️ *اسم المشروع:* ${state.projectName.trim() || "لم يُحدد"}`);
-                lines.push(`👤 *المسؤول / المُرسل:* ${state.senderName.trim() || "غير محدد"}`);
-                lines.push(`📅 *تاريخ الطلب:* ${state.requestDate || "-"}`);
+                lines.push(`🏗️ اسم المشروع: ${state.projectName.trim() || "لم يُحدد"}`);
+                lines.push(`👤 المسؤول / المُرسل: ${state.senderName.trim() || "غير محدد"}`);
+                lines.push(`📅 تاريخ الطلب: ${state.requestDate || "-"}`);
                 if (state.deadlineDate) {
-                    lines.push(`⏳ *آخر موعد للتسليم:* ${state.deadlineDate}`);
+                    lines.push(`⏳ آخر موعد للتسليم: ${state.deadlineDate}`);
                 }
                 const loc = state.area.trim() || "غير محدد";
                 const det = state.locationDetails.trim();
-                lines.push(`📍 *الموقع:* ${loc}${det ? ` (${det})` : ""}`);
+                lines.push(`📍 الموقع: ${loc}${det ? ` (${det})` : ""}`);
 
-                lines.push("\n🛠️ *نوع الأعمال / البنود المطلوبة:*");
+                lines.push("\n🛠️ نوع الأعمال / البنود المطلوبة:");
                 if (state.selectedWorks.length > 0) {
                     state.selectedWorks.forEach((w, i) => lines.push(`   ${i + 1}. ${w}`));
                     if (state.selectedWorks.length >= 2) {
-                        lines.push(`💰 *طريقة التسعير:* ${state.pricingStyle}`);
+                        lines.push(`💰 طريقة التسعير: ${state.pricingStyle}`);
                     }
                 } else {
                     lines.push("   - غير محدد");
                 }
 
-                lines.push("\n📝 *المواصفات والتفاصيل المطلوبة:*");
+                lines.push("\n📝 المواصفات والتفاصيل المطلوبة:");
                 lines.push(state.specifications.trim() || "لا توجد مواصفات إضافية مكتوبة.");
 
                 if (state.selectedAttachments.length > 0) {
-                    lines.push(`\n📎 *المرفقات المرسلة:* ${state.selectedAttachments.join(" ، ")}`);
+                    lines.push(`\n📎 المرفقات المرسلة: ${state.selectedAttachments.join(" ، ")}`);
                 }
 
-                lines.push("\n📞 *بيانات التواصل:*");
+                lines.push("\n📞 بيانات التواصل:");
                 const validContacts = state.contacts.filter((c) => c.name.trim() || c.phone.trim());
                 if (validContacts.length > 0) {
                     validContacts.forEach((c) => {
@@ -1260,14 +1384,14 @@
                 }
 
                 lines.push("━━━━━━━━━━━━━━━━━━━━");
-                lines.push("_تم إعداد الطلب عبر نموذج التسعير الذكي - شركة الراي الهندسية_");
+                lines.push("تم إعداد الطلب عبر نموذج التسعير الذكي - شركة الراي الهندسية");
 
                 return lines.join("\n");
             }
 
             // تحديث المعاينة ونسبة الاكتمال
             function renderSummaryAndProgress() {
-                el.whatsappPreviewBox.textContent = buildWhatsAppText();
+                el.messagePreviewBox.textContent = buildFormattedRequestText();
 
                 let score = 0;
                 if (state.projectName.trim()) score += 25;
@@ -1282,12 +1406,12 @@
 
             // تحديث حالة قفل الأزرار
             function renderSaveLockState() {
-                const exportBtns = [el.btnSendWhatsApp, el.btnExportPDF, el.btnCopyText];
+                const exportBtns = [el.btnSendEmail, el.btnExportPDF, el.btnCopyText];
                 if (state.isSaved) {
                     exportBtns.forEach((b) => b.classList.remove("locked"));
                     el.btnSaveForm.classList.add("saved");
                     el.btnSaveForm.textContent = "✅ تم الحفظ والاعتماد (اضغط لتحديث الحفظ عند التعديل)";
-                    el.saveStatusHint.textContent = "✅ البيانات محفوظة ومعتمدة — يمكنك الآن الإرسال أو التصدير كـ PDF";
+                    el.saveStatusHint.textContent = "✅ البيانات محفوظة ومعتمدة — يمكنك الآن الإرسال عبر الإيميل أو النسخ أو PDF";
                     el.saveStatusHint.style.color = "#6ee7b7";
                     el.saveStatusBadge.textContent = "محفوظ ✓";
                     el.saveStatusBadge.style.background = "rgba(16, 185, 129, 0.25)";
@@ -1296,7 +1420,7 @@
                     exportBtns.forEach((b) => b.classList.add("locked"));
                     el.btnSaveForm.classList.remove("saved");
                     el.btnSaveForm.textContent = "💾 حفظ واعتماد بيانات الطلب";
-                    el.saveStatusHint.textContent = "🔒 يجب الضغط على زر الحفظ أولاً لفتح أزرار الإرسال والـ PDF";
+                    el.saveStatusHint.textContent = "🔒 يجب الضغط على زر الحفظ أولاً لفتح أزرار الإيميل والنسخ والـ PDF";
                     el.saveStatusHint.style.color = "#fcd34d";
                     el.saveStatusBadge.textContent = "غير محفوظ";
                     el.saveStatusBadge.style.background = "rgba(245, 158, 11, 0.2)";
@@ -1341,10 +1465,10 @@
             // نسخ النص
             function copyTextAction() {
                 if (!requireSaved()) return;
-                const text = buildWhatsAppText();
+                const text = buildFormattedRequestText();
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(() => {
-                        notify("تم نسخ التفاصيل بنجاح! الصقها في الواتساب الآن", "success");
+                        notify("تم نسخ التفاصيل بالكامل! يمكنك لصقها في أي مكان الآن", "success");
                     }).catch(() => fallbackCopy(text));
                 } else {
                     fallbackCopy(text);
@@ -1361,14 +1485,132 @@
                 ta.select();
                 document.execCommand("copy");
                 document.body.removeChild(ta);
-                notify("تم نسخ التفاصيل بنجاح! الصقها في الواتساب الآن", "success");
+                notify("تم نسخ التفاصيل بالكامل! يمكنك لصقها في أي مكان الآن", "success");
             }
 
-            // إرسال واتساب مباشر
-            function sendWhatsAppAction() {
+            // إرسال عبر الإيميل (Outlook) تلقائياً
+            function sendEmailAction() {
                 if (!requireSaved()) return;
-                const encoded = encodeURIComponent(buildWhatsAppText());
-                window.location.href = `https://wa.me/?text=${encoded}`;
+                const projectTitle = state.projectName.trim() || "طلب تسعير مشروع";
+                const subjectText = `${projectTitle} - ${COMPANY_NAME}`;
+                const bodyText = buildFormattedRequestText();
+
+                const mailtoUrl = `mailto:${TARGET_EMAIL}?subject=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
+                window.location.href = mailtoUrl;
+                notify("جاري فتح برنامج الإيميل (Outlook) مع تعبئة البيانات...", "info");
+            }
+
+            // إدارة السجل (History)
+            function getHistoryList() {
+                try {
+                    const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+                    return raw ? JSON.parse(raw) : [];
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            function saveHistoryList(list) {
+                try {
+                    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(list));
+                } catch (e) {}
+                updateHistoryBadge();
+            }
+
+            function updateHistoryBadge() {
+                const list = getHistoryList();
+                el.historyCountBadge.textContent = list.length;
+            }
+
+            function addCurrentStateToHistory() {
+                const list = getHistoryList();
+                const now = new Date();
+                const timestamp = now.toLocaleDateString("ar-KW") + " - " + now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+
+                const snapshot = JSON.parse(JSON.stringify(state));
+                delete snapshot.isSaved;
+
+                const entry = {
+                    id: Date.now().toString(),
+                    savedAt: timestamp,
+                    projectName: state.projectName.trim(),
+                    area: state.area.trim(),
+                    senderName: state.senderName.trim(),
+                    isUrgent: state.isUrgent,
+                    data: snapshot
+                };
+
+                list.unshift(entry);
+                saveHistoryList(list);
+            }
+
+            function renderHistoryModal() {
+                const list = getHistoryList();
+                el.historyListContainer.innerHTML = "";
+
+                if (list.length === 0) {
+                    el.historyListContainer.innerHTML = `
+                        <div style="text-align:center; padding:32px 16px; color:var(--text-muted); font-size:13px; font-weight:700;">
+                            لا توجد طلبات محفوظة في السجل حتى الآن.<br>
+                            عند الضغط على زر (حفظ واعتماد بيانات الطلب) سيُحفظ الطلب هنا تلقائياً.
+                        </div>
+                    `;
+                    return;
+                }
+
+                list.forEach((item) => {
+                    const card = document.createElement("div");
+                    card.className = "history-item-card";
+
+                    const urgentBadge = item.isUrgent
+                        ? `<span style="background:#e11d48; color:#fff; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:900;">مستعجل 🔥</span>`
+                        : `<span style="background:rgba(14,165,233,0.15); color:#38bdf8; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:800;">عادي</span>`;
+
+                    card.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                            <div style="font-size:14px; font-weight:900; color:var(--text-main);">${escapeHtml(item.projectName || "بدون اسم")}</div>
+                            ${urgentBadge}
+                        </div>
+                        <div style="font-size:12px; color:var(--text-muted); display:flex; flex-wrap:wrap; gap:10px;">
+                            <span>📍 ${escapeHtml(item.area || "-")}</span>
+                            <span>👤 ${escapeHtml(item.senderName || "-")}</span>
+                            <span class="num-en" style="font-size:11px;">🕒 ${escapeHtml(item.savedAt || "")}</span>
+                        </div>
+                    `;
+
+                    const actionsRow = document.createElement("div");
+                    actionsRow.className = "history-item-actions";
+
+                    const loadBtn = document.createElement("button");
+                    loadBtn.type = "button";
+                    loadBtn.className = "btn-history-load";
+                    loadBtn.textContent = "📂 استرجاع ومراجعة الطلب";
+                    loadBtn.addEventListener("click", () => {
+                        Object.assign(state, JSON.parse(JSON.stringify(item.data)));
+                        state.isSaved = true;
+                        saveToLocalStorage();
+                        syncInputsFromState();
+                        renderAll();
+                        el.historyModal.classList.add("hidden");
+                        notify(`تم استرجاع طلب "${item.projectName}" بنجاح`, "success");
+                    });
+
+                    const delBtn = document.createElement("button");
+                    delBtn.type = "button";
+                    delBtn.className = "btn-history-del";
+                    delBtn.textContent = "حذف ✕";
+                    delBtn.addEventListener("click", () => {
+                        const updated = getHistoryList().filter((x) => x.id !== item.id);
+                        saveHistoryList(updated);
+                        renderHistoryModal();
+                        notify("تم حذف السجل", "info");
+                    });
+
+                    actionsRow.appendChild(loadBtn);
+                    actionsRow.appendChild(delBtn);
+                    card.appendChild(actionsRow);
+                    el.historyListContainer.appendChild(card);
+                });
             }
 
             // توليد تقرير PDF والطباعة
@@ -1555,15 +1797,32 @@
                     if (!validateForm()) return;
                     state.isSaved = true;
                     saveToLocalStorage();
+                    addCurrentStateToHistory();
                     renderSaveLockState();
                     renderSummaryAndProgress();
-                    notify("تم حفظ واعتماد بيانات الطلب بنجاح! اختر طريقة الإرسال الآن", "success");
+                    notify("تم حفظ واعتماد بيانات الطلب وإضافته للسجل! اختر طريقة الإرسال الآن", "success");
                 });
 
-                el.btnSendWhatsApp.addEventListener("click", sendWhatsAppAction);
+                el.btnSendEmail.addEventListener("click", sendEmailAction);
                 el.btnExportPDF.addEventListener("click", exportPDFAction);
                 el.btnCopyText.addEventListener("click", copyTextAction);
                 el.btnQuickCopy.addEventListener("click", copyTextAction);
+
+                // أحداث نافذة السجل (History)
+                el.btnOpenHistory.addEventListener("click", () => {
+                    renderHistoryModal();
+                    el.historyModal.classList.remove("hidden");
+                });
+
+                el.btnCloseHistory.addEventListener("click", () => {
+                    el.historyModal.classList.add("hidden");
+                });
+
+                el.historyModal.addEventListener("click", (e) => {
+                    if (e.target === el.historyModal) {
+                        el.historyModal.classList.add("hidden");
+                    }
+                });
 
                 el.btnToggleTheme.addEventListener("click", () => {
                     const isDark = document.documentElement.classList.toggle("dark");
@@ -1612,6 +1871,7 @@
                 renderContacts();
                 renderSaveLockState();
                 renderSummaryAndProgress();
+                updateHistoryBadge();
             }
 
             // التشغيل الأولي
