@@ -90,6 +90,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .brand-box {
@@ -156,9 +157,38 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            transition: transform 0.15s, background 0.2s;
         }
 
         .icon-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* زر مشروع جديد الاحترافي في الهيدر */
+        .btn-new-project {
+            height: 42px;
+            padding: 0 16px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-new-project:hover {
+            filter: brightness(1.06);
+        }
+
+        .btn-new-project:active {
             transform: scale(0.96);
         }
 
@@ -180,6 +210,26 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+        }
+
+        /* شارة وضع التعديل النشط */
+        .edit-mode-banner {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1.5px solid #f59e0b;
+            border-radius: 14px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #fbbf24;
+        }
+
+        html:not(.dark) .edit-mode-banner {
+            color: #b45309;
+            background: rgba(245, 158, 11, 0.12);
         }
 
         /* شريط التقدم */
@@ -593,6 +643,28 @@
             transform: scale(0.98);
         }
 
+        .btn-view-saved {
+            width: 100%;
+            min-height: 48px;
+            border-radius: 14px;
+            border: 1.5px solid #38bdf8;
+            background: rgba(14, 165, 233, 0.18);
+            color: #e0f2fe;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-view-saved:hover {
+            background: rgba(14, 165, 233, 0.3);
+        }
+
         .export-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -644,19 +716,201 @@
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
-        .preview-box {
-            background: rgba(2, 6, 23, 0.85);
-            border: 1px solid #334155;
-            border-radius: 14px;
-            padding: 12px;
+        /* =========================================================
+           صفحة / واجهة عرض المشروع الاحترافية (Project Detail View)
+           ========================================================= */
+        .project-view-page {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 16px 14px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .view-top-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow-card);
+        }
+
+        .btn-edit-project {
+            padding: 10px 18px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #020617;
             font-family: inherit;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-edit-project:active {
+            transform: scale(0.97);
+        }
+
+        .view-hero-card {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border: 1.5px solid #334155;
+            border-radius: 22px;
+            padding: 22px 20px;
+            color: #f8fafc;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 99px;
             font-size: 12px;
-            color: #e2e8f0;
-            white-space: pre-wrap;
-            line-height: 1.75;
-            max-height: 210px;
-            overflow-y: auto;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .view-hero-badge.normal {
+            background: rgba(14, 165, 233, 0.2);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+        }
+
+        .view-hero-badge.urgent {
+            background: rgba(244, 63, 94, 0.25);
+            color: #fda4af;
+            border: 1px solid rgba(244, 63, 94, 0.5);
+        }
+
+        .view-project-title {
+            font-size: 20px;
+            font-weight: 900;
+            margin: 0 0 8px 0;
+            line-height: 1.4;
+            color: #ffffff;
+        }
+
+        .view-company-subtitle {
+            font-size: 14px;
+            font-weight: 800;
+            color: #38bdf8;
             margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .view-section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .view-section-title {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 560px) {
+            .view-info-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .view-info-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px 14px;
+        }
+
+        .view-info-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .view-info-value {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--text-main);
+            word-break: break-word;
+        }
+
+        .view-tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .view-tag-pill {
+            padding: 7px 13px;
+            border-radius: 10px;
+            background: rgba(14, 165, 233, 0.14);
+            border: 1px solid rgba(14, 165, 233, 0.35);
+            color: #38bdf8;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        html:not(.dark) .view-tag-pill {
+            color: #0284c7;
+        }
+
+        .view-specs-box {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.85;
+            white-space: pre-wrap;
+            color: var(--text-main);
+        }
+
+        .view-contact-row {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         /* نافذة السجل (History Modal) */
@@ -717,11 +971,25 @@
             display: flex;
             gap: 8px;
             margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .btn-history-view {
+            flex: 1;
+            padding: 9px 12px;
+            border-radius: 10px;
+            border: none;
+            background: #059669;
+            color: #fff;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
         }
 
         .btn-history-load {
             flex: 1;
-            padding: 8px 12px;
+            padding: 9px 12px;
             border-radius: 10px;
             border: none;
             background: var(--primary);
@@ -733,7 +1001,7 @@
         }
 
         .btn-history-del {
-            padding: 8px 12px;
+            padding: 9px 12px;
             border-radius: 10px;
             border: none;
             background: rgba(244, 63, 94, 0.16);
@@ -821,10 +1089,12 @@
                 </div>
             </div>
             <div class="header-actions">
+                <button type="button" id="btnNewProject" class="btn-new-project" title="إنشاء طلب تسعير مشروع جديد">
+                    ➕ مشروع جديد
+                </button>
                 <button type="button" id="btnOpenHistory" class="icon-btn" title="سجل الطلبات المحفوظة">
                     📜 السجل <span id="historyCountBadge" class="history-badge-count">0</span>
                 </button>
-                <button type="button" id="btnResetAll" class="icon-btn" title="تفريغ الحقول">🔄 تفريغ</button>
                 <button type="button" id="btnToggleTheme" class="icon-btn" title="تغيير المظهر">☀️</button>
             </div>
         </div>
@@ -837,8 +1107,8 @@
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span style="font-size:18px;">📜</span>
                     <div>
-                        <h3 style="margin:0; font-size:15px; font-weight:900;">سجل الطلبات المحفوظة (History)</h3>
-                        <p style="margin:2px 0 0 0; font-size:11px; color:var(--text-muted);">أي طلب يتم حفظه واعتماده يُسجل هنا للمراجعة أو الاسترجاع</p>
+                        <h3 style="margin:0; font-size:15px; font-weight:900;">سجل الطلبات المحفوظة</h3>
+                        <p style="margin:2px 0 0 0; font-size:11px; color:var(--text-muted);">اختر أي مشروع لعرض تفاصيله بالكامل أو تعديله</p>
                     </div>
                 </div>
                 <button type="button" id="btnCloseHistory" class="icon-btn" style="padding:0 10px;">✕ إغلاق</button>
@@ -847,7 +1117,44 @@
         </div>
     </div>
 
-    <main class="container no-print">
+    <!-- =========================================================
+         صفحة عرض تفاصيل المشروع المحفوظ (واجهة أنيقة بعيداً عن الجداول)
+         ========================================================= -->
+    <section id="projectDetailView" class="project-view-page hidden no-print">
+        <div class="view-top-bar">
+            <button type="button" id="btnBackToForm" class="icon-btn">
+                → العودة للنموذج
+            </button>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" id="btnEditFromView" class="btn-edit-project">
+                    ✏️ تعديل بيانات المشروع
+                </button>
+            </div>
+        </div>
+
+        <div id="projectDetailContent" style="display:flex; flex-direction:column; gap:16px;"></div>
+
+        <!-- أزرار الإرسال السريعة من صفحة العرض -->
+        <div class="action-hub">
+            <div style="font-size:14px; font-weight:900;">مشاركة وتصدير بيانات المشروع المعتمد:</div>
+            <div class="export-grid">
+                <button type="button" id="btnViewEmail" class="btn-export btn-email">✉️ إرسال إيميل</button>
+                <button type="button" id="btnViewPdf" class="btn-export btn-pdf">📄 طباعة / PDF</button>
+                <button type="button" id="btnViewCopy" class="btn-export btn-copy">📋 نسخ التقرير</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         واجهة إدخال وتعديل البيانات (النموذج الرئيسي)
+         ========================================================= -->
+    <main id="mainFormContainer" class="container no-print">
+
+        <!-- تنبيه وضع التعديل -->
+        <div id="editModeBanner" class="edit-mode-banner hidden">
+            <span>✏️ أنت الآن في وضع تعديل مشروع محفوظ مسبقاً</span>
+            <button type="button" id="btnCancelEdit" class="icon-btn" style="height:32px; font-size:11px;">إلغاء التعديل</button>
+        </div>
 
         <!-- شريط اكتمال البيانات -->
         <div class="progress-bar-card">
@@ -872,6 +1179,12 @@
             <div class="field-group">
                 <label class="field-label" for="projectName">اسم المشروع <span class="req">*</span></label>
                 <input type="text" id="projectName" class="input-control" placeholder="مثال: إنشاء وتشطيب مبنى إداري - قطعة 3">
+            </div>
+
+            <!-- الخانة الجديدة: اسم الشركة بعد اسم المشروع مباشرة -->
+            <div class="field-group">
+                <label class="field-label" for="companyName">اسم الشركة / الجهة المالكة <span class="req">*</span></label>
+                <input type="text" id="companyName" class="input-control" placeholder="مثال: شركة الخليج للتجارة والمقاولات العامة">
             </div>
 
             <div class="field-group">
@@ -983,14 +1296,14 @@
             </div>
         </section>
 
-        <!-- القسم 5: الحفظ الإلزامي ثم الإرسال والتصدير -->
+        <!-- القسم 5: الحفظ الإلزامي ثم العرض والإرسال -->
         <section class="action-hub">
             <div class="step-panel">
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                     <div>
                         <div style="font-size:15px; font-weight:900;">1. حفظ واعتماد بيانات الطلب</div>
                         <div id="saveStatusHint" style="font-size:12px; color:#fcd34d; margin-top:3px; font-weight:700;">
-                            🔒 يجب الضغط على زر الحفظ أولاً لفتح أزرار الإيميل والنسخ والـ PDF
+                            🔒 احفظ الطلب لفتحه في صفحة عرض منظمة أو إرساله
                         </div>
                     </div>
                     <span id="saveStatusBadge" style="padding:4px 10px; border-radius:8px; background:rgba(245,158,11,0.2); color:#fcd34d; font-size:11px; font-weight:900; flex-shrink:0;">
@@ -999,511 +1312,128 @@
                 </div>
 
                 <button type="button" id="btnSaveForm" class="btn-save-main">
-                    💾 حفظ واعتماد بيانات الطلب
+                    💾 حفظ واعتماد وعرض المشروع
+                </button>
+
+                <button type="button" id="btnOpenSavedDetail" class="btn-view-saved hidden">
+                    👁️ عرض صفحة تفاصيل المشروع المحفوظ
                 </button>
             </div>
 
-            <div style="display:flex; flex-direction:column; gap:10px;">
-                <div style="font-size:14px; font-weight:900; color:#bae6fd;">2. إرسال عبر الإيميل أو النسخ أو حفظ كـ PDF (بعد الحفظ):</div>
+            <div class="step-panel">
+                <div style="font-size:14px; font-weight:900;">2. خيارات الإرسال والتصدير المباشر</div>
                 <div class="export-grid">
-                    <button type="button" id="btnSendEmail" class="btn-export btn-email locked">
-                        📧 إرسال عبر الإيميل (Outlook)
-                    </button>
-                    <button type="button" id="btnCopyText" class="btn-export btn-copy locked">
-                        📋 نسخ التفاصيل بالكامل
-                    </button>
-                    <button type="button" id="btnExportPDF" class="btn-export btn-pdf locked">
-                        📄 حفظ كملف PDF مرتب
-                    </button>
+                    <button type="button" id="btnSendEmail" class="btn-export btn-email locked">✉️ إرسال إيميل</button>
+                    <button type="button" id="btnPrintPdf" class="btn-export btn-pdf locked">📄 طباعة / PDF</button>
+                    <button type="button" id="btnCopyText" class="btn-export btn-copy locked">📋 نسخ النص</button>
                 </div>
-            </div>
-
-            <div style="display:flex; flex-direction:column; gap:6px;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:12px; font-weight:800; color:#7dd3fc;">معاينة نص الطلب المنسق:</span>
-                    <button type="button" id="btnQuickCopy" style="background:none; border:none; color:#34d399; font-family:inherit; font-size:12px; font-weight:900; text-decoration:underline; cursor:pointer;">نسخ النص</button>
-                </div>
-                <pre id="messagePreviewBox" class="preview-box"></pre>
             </div>
         </section>
 
     </main>
 
-    <!-- حاوية الطباعة و PDF -->
+    <!-- حاوية الطباعة الرسمية A4 -->
     <div id="printReportContainer"></div>
 
     <script>
-        (function() {
-            "use strict";
+        (function () {
+            'use strict';
 
-            // قاعدة بيانات مناطق الكويت
+            const STORAGE_KEY = 'alrai_pricing_requests_v2';
+
             const KUWAIT_AREAS = [
-                "مدينة الكويت", "شرق", "المرقاب", "القبلة", "الصالحية", "بنيد القار", "الدسمة", "الدعية", "المنصورية",
-                "عبدالله السالم", "النزهة", "الفيحاء", "الشامية", "الروضة", "العديلية", "الخالدية", "القادسية",
-                "قرطبة", "السرة", "اليرموك", "الشويخ", "الشويخ الصناعية", "الشويخ السكنية", "الري", "غرناطة", "الصليبيخات", "الدوحة", "النهضة", "شمال غرب الصليبيخات", "جابر الأحمد", "القيروان",
-                "حولي", "السالمية", "الجابرية", "الرميثية", "سلوى", "بيان", "مشرف", "مبارك العبدالله (غرب مشرف)", "الشعب", "ميدان حولي", "البدع", "الزهراء", "حطين", "الشهداء", "الصديق", "السلام",
-                "الفروانية", "خيطان", "العمرية", "الرابية", "الرحاب", "الأندلس", "الرقعي", "العارضية", "العارضية الصناعية", "صباح الناصر", "الفردوس", "إشبيلية", "جليب الشيوخ", "الضجيج", "عبدالله المبارك", "غرب عبدالله المبارك", "جنوب عبدالله المبارك",
-                "الأحمدي", "الفحيحيل", "المنقف", "أبو حليفة", "المهبولة", "الفنطاس", "العقيلة", "الرقة", "هدية", "الصباحية", "جابر العلي", "الظهر", "علي صباح السالم (أم الهيمان)", "صباح الأحمد السكنية", "صباح الأحمد البحرية (الخيران)", "الوفرة", "الزور", "بنيدر", "الجليعة", "الضباعية", "ميناء عبدالله", "الشعيبة الصناعية",
-                "مبارك الكبير", "القرين", "القصور", "العدان", "المسيلة", "الفنيطيس", "أبو فطيرة", "صبحان", "صبحان الصناعية", "المسايل", "الوسطى",
-                "الجهراء", "الواحة", "العيون", "القصر", "النسيم", "تيماء", "النعيم", "سعد العبدالله", "جنوب سعد العبدالله", "المطلاع", "الصليبية", "الصليبية الصناعية", "أمغرة", "كبد", "السالمي", "العبدلي", "الصبية", "كاظمة"
+                "مدينة الكويت", "شرق", "المرقاب", "القبلة", "الصالحية", "بنيد القار", "الدسمة", "الدعية",
+                "المنصورية", "ضاحية عبد الله السالم", "النزهة", "الفيحاء", "الشامية", "الروضة", "العديلية",
+                "الخالدية", "القادسية", "قرطبة", "السرة", "اليرموك", "الشويخ السكنية", "الشويخ الصناعية",
+                "الشويخ التعليمية", "الري", "غرناطة", "الصليبيخات", "الدوحة", "النهضة", "شمال غرب الصليبيخات",
+                "جابر الأحمد", "القيروان", "حولي", "الشعب", "السالمية", "الرميثية", "الجابرية", "مشرف",
+                "بيان", "البدع", "النقرة", "ميدان حولي", "ضاحية مبارك العبد الله", "سلوى", "الزهراء",
+                "الصديق", "حطين", "السلام", "الشهداء", "الفروانية", "خيطان", "الأندلس", "إشبيلية",
+                "جليب الشيوخ", "العمرية", "الرابية", "الرحاب", "الرقعي", "العارضية", "العارضية الحرفية",
+                "صباح الناصر", "الفردوس", "ضاحية عبد الله المبارك", "غرب عبد الله المبارك", "الضجيج",
+                "مطار الكويت الدولي", "الأحمدي", "الفحيحيل", "المنقف", "أبو حليفة", "الصباحية", "الرقة",
+                "هدية", "الظهر", "العقيلة", "المهبولة", "الفنطاس", "جابر العلي", "فهد الأحمد", "علي صباح السالم",
+                "ميناء عبد الله", "الشعيبة الصناعية", "الوفرة", "الخيران", "صباح الأحمد السكنية",
+                "صباح الأحمد البحرية", "الزور", "الجهراء", "الواحة", "العيون", "القصر", "النسيم", "تيماء",
+                "النعيم", "جنوب الجهراء", "سعد العبد الله", "المطلاع", "الصبية", "كبد", "أمغرة",
+                "مبارك الكبير", "القرين", "القصور", "العدان", "المسيلة", "المسايل", "أبو فطيرة",
+                "أبو الحصانية", "صبحان", "الفنيطيس", "غرب أبو فطيرة الحرفية"
+            ];
+
+            const DEFAULT_WORK_TYPES = [
+                "هيكل أسود",
+                "تشطيبات داخلية وخارجية",
+                "ترميم وتوسعة",
+                "أعمال ألمنيوم وزجاج",
+                "أعمال حدادة ومظلات",
+                "عزل مائي وحراري",
+                "أعمال كهرباء وصحية",
+                "أعمال ديكور وجبس بورد",
+                "أعمال تكييف وتهوية",
+                "أعمال أرضيات وبورسلان"
             ];
 
             const ATTACHMENT_OPTIONS = [
-                "مخططات هندسية (CAD / PDF)",
+                "مخططات معمارية (PDF / AutoCAD)",
+                "مخططات إنشائية",
                 "جدول كميات (BOQ)",
-                "صور من الموقع",
-                "كراسة شروط ومواصفات"
+                "صور الموقع الحالي",
+                "كراسة شروط ومواصفات",
+                "رخصة البناء / موافقات البلدية"
             ];
 
-            const PRICING_OPTIONS = [
-                "سعر إجمالي واحد لجميع البنود",
-                "سعر منفصل لكل بند على حدة"
+            const PRICING_MODES = [
+                { id: "lump_sum", label: "سعر إجمالي مقطوع لجميع البنود" },
+                { id: "itemized", label: "تسعير تفصيلي منفصل لكل بند" }
             ];
 
-            // حالة التطبيق المركزية (Single Source of Truth)
-            const state = {
+            let state = {
+                editingId: null,
+                isSaved: false,
                 projectName: "",
+                companyName: "",
                 isUrgent: false,
                 senderName: "",
-                requestDate: new Date().toISOString().slice(0, 10),
-                area: "",
+                requestDate: new Date().toISOString().split('T')[0],
+                locationArea: "",
                 locationDetails: "",
-                workTypes: [
-                    "أعمال الحفر", "الأعمال المدنية", "أعمال متكاملة",
-                    "تحسين البنية التحتية", "توريد", "Steel Structure",
-                    "كرفان", "مظلات", "معدات"
-                ],
-                selectedWorks: [],
-                pricingStyle: "سعر إجمالي واحد لجميع البنود",
+                selectedWorkTypes: [],
+                customWorkTypes: [],
+                pricingMode: "itemized",
                 specifications: "",
                 selectedAttachments: [],
                 contacts: [{ name: "", phone: "" }],
                 clientEmail: "",
-                deadlineDate: "",
-                isSaved: false
+                deadlineDate: ""
             };
 
-            const STORAGE_KEY = "alrai_project_request_draft_v1";
-            const HISTORY_STORAGE_KEY = "alrai_project_request_history_v1";
-            const TARGET_EMAIL = "Eng.amir@alraiengineering.com";
-            const COMPANY_NAME = "شركة الراي الهندسية لتشييد و تشطيب المباني";
+            let currentViewedProject = null;
 
-            // عناصر DOM
-            const el = {
-                projectName: document.getElementById("projectName"),
-                urgentBtn: document.getElementById("urgentBtn"),
-                urgentTitle: document.getElementById("urgentTitle"),
-                urgentSub: document.getElementById("urgentSub"),
-                urgentPill: document.getElementById("urgentPill"),
-                senderName: document.getElementById("senderName"),
-                requestDate: document.getElementById("requestDate"),
-                locationSearch: document.getElementById("locationSearch"),
-                btnShowAllAreas: document.getElementById("btnShowAllAreas"),
-                areaDropdown: document.getElementById("areaDropdown"),
-                locationDetails: document.getElementById("locationDetails"),
-                workTypesGrid: document.getElementById("workTypesGrid"),
-                customWorkInput: document.getElementById("customWorkInput"),
-                btnAddCustomWork: document.getElementById("btnAddCustomWork"),
-                pricingPreferenceBox: document.getElementById("pricingPreferenceBox"),
-                pricingOptionsGrid: document.getElementById("pricingOptionsGrid"),
-                specificationsText: document.getElementById("specificationsText"),
-                attachmentsGrid: document.getElementById("attachmentsGrid"),
-                contactsWrapper: document.getElementById("contactsWrapper"),
-                btnAddContact: document.getElementById("btnAddContact"),
-                clientEmail: document.getElementById("clientEmail"),
-                deadlineDate: document.getElementById("deadlineDate"),
-                btnSaveForm: document.getElementById("btnSaveForm"),
-                saveStatusHint: document.getElementById("saveStatusHint"),
-                saveStatusBadge: document.getElementById("saveStatusBadge"),
-                btnSendEmail: document.getElementById("btnSendEmail"),
-                btnExportPDF: document.getElementById("btnExportPDF"),
-                btnCopyText: document.getElementById("btnCopyText"),
-                btnQuickCopy: document.getElementById("btnQuickCopy"),
-                messagePreviewBox: document.getElementById("messagePreviewBox"),
-                progressPercent: document.getElementById("progressPercent"),
-                progressFill: document.getElementById("progressFill"),
-                btnResetAll: document.getElementById("btnResetAll"),
-                btnToggleTheme: document.getElementById("btnToggleTheme"),
-                btnOpenHistory: document.getElementById("btnOpenHistory"),
-                btnCloseHistory: document.getElementById("btnCloseHistory"),
-                historyModal: document.getElementById("historyModal"),
-                historyListContainer: document.getElementById("historyListContainer"),
-                historyCountBadge: document.getElementById("historyCountBadge"),
-                printReportContainer: document.getElementById("printReportContainer"),
-                toastWrap: document.getElementById("toastWrap")
-            };
+            const $ = (id) => document.getElementById(id);
 
-            // إظهار الإشعارات
-            function notify(message, type = "info") {
+            function showToast(msg, type = 'info') {
+                const wrap = $('toastWrap');
+                const el = document.createElement('div');
+                el.className = 'toast-msg';
                 const colors = {
-                    success: "#059669",
-                    error: "#e11d48",
-                    info: "#0284c7"
+                    success: '#059669',
+                    error: '#e11d48',
+                    warning: '#d97706',
+                    info: '#0284c7'
                 };
-                const div = document.createElement("div");
-                div.className = "toast-msg";
-                div.style.background = colors[type] || colors.info;
-                div.textContent = message;
-                el.toastWrap.appendChild(div);
-                setTimeout(() => div.remove(), 3200);
+                el.style.background = colors[type] || colors.info;
+                el.textContent = msg;
+                wrap.appendChild(el);
+                setTimeout(() => {
+                    el.style.opacity = '0';
+                    el.style.transition = 'opacity 0.25s';
+                    setTimeout(() => el.remove(), 250);
+                }, 2800);
             }
 
-            // وضع التعديل (إلغاء حالة الحفظ تلقائياً عند تغيير أي مدخل)
-            function markDirty() {
-                if (state.isSaved) {
-                    state.isSaved = false;
-                    renderSaveLockState();
-                }
-                renderSummaryAndProgress();
-            }
-
-            // رسم بنود الأعمال
-            function renderWorkTypes() {
-                el.workTypesGrid.innerHTML = "";
-                state.workTypes.forEach((work) => {
-                    const isSelected = state.selectedWorks.includes(work);
-                    const btn = document.createElement("button");
-                    btn.type = "button";
-                    btn.className = "select-tile" + (isSelected ? " active" : "");
-                    btn.innerHTML = `<span class="check-box-visual">${isSelected ? "✓" : ""}</span><span>${escapeHtml(work)}</span>`;
-                    btn.addEventListener("click", () => {
-                        const idx = state.selectedWorks.indexOf(work);
-                        if (idx > -1) {
-                            state.selectedWorks.splice(idx, 1);
-                        } else {
-                            state.selectedWorks.push(work);
-                        }
-                        renderWorkTypes();
-                        renderPricingOptions();
-                        markDirty();
-                    });
-                    el.workTypesGrid.appendChild(btn);
-                });
-            }
-
-            // رسم خيارات طريقة التسعير
-            function renderPricingOptions() {
-                if (state.selectedWorks.length >= 2) {
-                    el.pricingPreferenceBox.classList.remove("hidden");
-                } else {
-                    el.pricingPreferenceBox.classList.add("hidden");
-                }
-
-                el.pricingOptionsGrid.innerHTML = "";
-                PRICING_OPTIONS.forEach((opt) => {
-                    const isSelected = state.pricingStyle === opt;
-                    const btn = document.createElement("button");
-                    btn.type = "button";
-                    btn.className = "select-tile" + (isSelected ? " active" : "");
-                    btn.style.width = "100%";
-                    btn.innerHTML = `<span class="check-box-visual" style="border-radius:50%;">${isSelected ? "●" : ""}</span><span>${escapeHtml(opt)}</span>`;
-                    btn.addEventListener("click", () => {
-                        state.pricingStyle = opt;
-                        renderPricingOptions();
-                        markDirty();
-                    });
-                    el.pricingOptionsGrid.appendChild(btn);
-                });
-            }
-
-            // رسم خانات المرفقات المربعية
-            function renderAttachments() {
-                el.attachmentsGrid.innerHTML = "";
-                ATTACHMENT_OPTIONS.forEach((att) => {
-                    const isSelected = state.selectedAttachments.includes(att);
-                    const btn = document.createElement("button");
-                    btn.type = "button";
-                    btn.className = "select-tile" + (isSelected ? " active" : "");
-                    btn.innerHTML = `<span class="check-box-visual">${isSelected ? "✓" : ""}</span><span>${escapeHtml(att)}</span>`;
-                    btn.addEventListener("click", () => {
-                        const idx = state.selectedAttachments.indexOf(att);
-                        if (idx > -1) {
-                            state.selectedAttachments.splice(idx, 1);
-                        } else {
-                            state.selectedAttachments.push(att);
-                        }
-                        renderAttachments();
-                        markDirty();
-                    });
-                    el.attachmentsGrid.appendChild(btn);
-                });
-            }
-
-            // رسم جهات الاتصال
-            function renderContacts() {
-                el.contactsWrapper.innerHTML = "";
-                state.contacts.forEach((contact, idx) => {
-                    const card = document.createElement("div");
-                    card.className = "contact-card";
-
-                    const top = document.createElement("div");
-                    top.className = "contact-card-top";
-                    top.innerHTML = `<span>جهة تواصل #${idx + 1}</span>`;
-
-                    if (state.contacts.length > 1) {
-                        const delBtn = document.createElement("button");
-                        delBtn.type = "button";
-                        delBtn.className = "btn-danger-sm";
-                        delBtn.textContent = "حذف ✕";
-                        delBtn.addEventListener("click", () => {
-                            state.contacts.splice(idx, 1);
-                            renderContacts();
-                            markDirty();
-                        });
-                        top.appendChild(delBtn);
-                    }
-
-                    const row = document.createElement("div");
-                    row.className = "grid-2";
-
-                    const nameInput = document.createElement("input");
-                    nameInput.type = "text";
-                    nameInput.className = "input-control";
-                    nameInput.placeholder = "الاسم (المالك / المهندس / المقاول)";
-                    nameInput.value = contact.name;
-                    nameInput.addEventListener("input", (e) => {
-                        state.contacts[idx].name = e.target.value;
-                        markDirty();
-                    });
-
-                    const phoneInput = document.createElement("input");
-                    phoneInput.type = "tel";
-                    phoneInput.setAttribute("inputmode", "tel");
-                    phoneInput.className = "input-control num-en";
-                    phoneInput.placeholder = "رقم الهاتف (مثال: 99xxxxxx)";
-                    phoneInput.value = contact.phone;
-                    phoneInput.addEventListener("input", (e) => {
-                        state.contacts[idx].phone = e.target.value;
-                        markDirty();
-                    });
-
-                    row.appendChild(nameInput);
-                    row.appendChild(phoneInput);
-                    card.appendChild(top);
-                    card.appendChild(row);
-                    el.contactsWrapper.appendChild(card);
-                });
-            }
-
-            // رسم زر الأولوية المستعجلة
-            function renderUrgentButton() {
-                if (state.isUrgent) {
-                    el.urgentBtn.classList.add("is-urgent");
-                    el.urgentTitle.textContent = "مستعجل جداً 🔥";
-                    el.urgentTitle.style.color = "#fb7185";
-                    el.urgentSub.textContent = "سيتم إعطاؤه أولوية قصوى بالتسعير";
-                    el.urgentPill.textContent = "مستعجل 🔥";
-                } else {
-                    el.urgentBtn.classList.remove("is-urgent");
-                    el.urgentTitle.textContent = "مشروع عادي";
-                    el.urgentTitle.style.color = "";
-                    el.urgentSub.textContent = "اضغط هنا لتفعيل وضع المستعجل جداً";
-                    el.urgentPill.textContent = "عادي";
-                }
-            }
-
-            // مناطق الكويت
-            function showAreaMatches(queryText) {
-                const q = queryText.trim().toLowerCase();
-                const matches = q ? KUWAIT_AREAS.filter((a) => a.toLowerCase().includes(q)) : KUWAIT_AREAS;
-
-                el.areaDropdown.innerHTML = "";
-                if (matches.length === 0) {
-                    const info = document.createElement("div");
-                    info.style.padding = "12px";
-                    info.style.fontSize = "12px";
-                    info.style.color = "var(--text-muted)";
-                    info.style.textAlign = "center";
-                    info.textContent = "سيتم اعتماد المنطقة كما كتبتها";
-                    el.areaDropdown.appendChild(info);
-                } else {
-                    matches.forEach((area) => {
-                        const item = document.createElement("button");
-                        item.type = "button";
-                        item.className = "area-item";
-                        item.textContent = area;
-                        item.addEventListener("click", () => {
-                            state.area = area;
-                            el.locationSearch.value = area;
-                            el.areaDropdown.classList.add("hidden");
-                            markDirty();
-                        });
-                        el.areaDropdown.appendChild(item);
-                    });
-                }
-                el.areaDropdown.classList.remove("hidden");
-            }
-
-            // بناء نص الطلب المنسق للإيميل والنسخ
-            function buildFormattedRequestText() {
-                const lines = [];
-                lines.push("شركة الراي الهندسية لتشييد و تشطيب المباني");
-                lines.push("📋 طلب تسعير مشروع جديد");
-                if (state.isUrgent) {
-                    lines.push("🚨 الأولوية: مستعجل جداً 🔥");
-                }
-                lines.push("━━━━━━━━━━━━━━━━━━━━");
-                lines.push(`🏗️ اسم المشروع: ${state.projectName.trim() || "لم يُحدد"}`);
-                lines.push(`👤 المسؤول / المُرسل: ${state.senderName.trim() || "غير محدد"}`);
-                lines.push(`📅 تاريخ الطلب: ${state.requestDate || "-"}`);
-                if (state.deadlineDate) {
-                    lines.push(`⏳ آخر موعد للتسليم: ${state.deadlineDate}`);
-                }
-                const loc = state.area.trim() || "غير محدد";
-                const det = state.locationDetails.trim();
-                lines.push(`📍 الموقع: ${loc}${det ? ` (${det})` : ""}`);
-
-                lines.push("\n🛠️ نوع الأعمال / البنود المطلوبة:");
-                if (state.selectedWorks.length > 0) {
-                    state.selectedWorks.forEach((w, i) => lines.push(`   ${i + 1}. ${w}`));
-                    if (state.selectedWorks.length >= 2) {
-                        lines.push(`💰 طريقة التسعير: ${state.pricingStyle}`);
-                    }
-                } else {
-                    lines.push("   - غير محدد");
-                }
-
-                lines.push("\n📝 المواصفات والتفاصيل المطلوبة:");
-                lines.push(state.specifications.trim() || "لا توجد مواصفات إضافية مكتوبة.");
-
-                if (state.selectedAttachments.length > 0) {
-                    lines.push(`\n📎 المرفقات المرسلة: ${state.selectedAttachments.join(" ، ")}`);
-                }
-
-                lines.push("\n📞 بيانات التواصل:");
-                const validContacts = state.contacts.filter((c) => c.name.trim() || c.phone.trim());
-                if (validContacts.length > 0) {
-                    validContacts.forEach((c) => {
-                        lines.push(`   • ${c.name.trim() || "جهة تواصل"}: ${c.phone.trim() || "-"}`);
-                    });
-                } else {
-                    lines.push("   • لا يوجد");
-                }
-                if (state.clientEmail.trim()) {
-                    lines.push(`   ✉️ البريد: ${state.clientEmail.trim()}`);
-                }
-
-                lines.push("━━━━━━━━━━━━━━━━━━━━");
-                lines.push("تم إعداد الطلب عبر نموذج التسعير الذكي - شركة الراي الهندسية");
-
-                return lines.join("\n");
-            }
-
-            // تحديث المعاينة ونسبة الاكتمال
-            function renderSummaryAndProgress() {
-                el.messagePreviewBox.textContent = buildFormattedRequestText();
-
-                let score = 0;
-                if (state.projectName.trim()) score += 25;
-                if (state.senderName.trim()) score += 20;
-                if (state.area.trim()) score += 20;
-                if (state.selectedWorks.length > 0) score += 15;
-                if (state.specifications.trim()) score += 20;
-
-                el.progressPercent.textContent = score + "%";
-                el.progressFill.style.width = score + "%";
-            }
-
-            // تحديث حالة قفل الأزرار
-            function renderSaveLockState() {
-                const exportBtns = [el.btnSendEmail, el.btnExportPDF, el.btnCopyText];
-                if (state.isSaved) {
-                    exportBtns.forEach((b) => b.classList.remove("locked"));
-                    el.btnSaveForm.classList.add("saved");
-                    el.btnSaveForm.textContent = "✅ تم الحفظ والاعتماد (اضغط لتحديث الحفظ عند التعديل)";
-                    el.saveStatusHint.textContent = "✅ البيانات محفوظة ومعتمدة — يمكنك الآن الإرسال عبر الإيميل أو النسخ أو PDF";
-                    el.saveStatusHint.style.color = "#6ee7b7";
-                    el.saveStatusBadge.textContent = "محفوظ ✓";
-                    el.saveStatusBadge.style.background = "rgba(16, 185, 129, 0.25)";
-                    el.saveStatusBadge.style.color = "#6ee7b7";
-                } else {
-                    exportBtns.forEach((b) => b.classList.add("locked"));
-                    el.btnSaveForm.classList.remove("saved");
-                    el.btnSaveForm.textContent = "💾 حفظ واعتماد بيانات الطلب";
-                    el.saveStatusHint.textContent = "🔒 يجب الضغط على زر الحفظ أولاً لفتح أزرار الإيميل والنسخ والـ PDF";
-                    el.saveStatusHint.style.color = "#fcd34d";
-                    el.saveStatusBadge.textContent = "غير محفوظ";
-                    el.saveStatusBadge.style.background = "rgba(245, 158, 11, 0.2)";
-                    el.saveStatusBadge.style.color = "#fcd34d";
-                }
-            }
-
-            // التحقق من الحقول الإلزامية
-            function validateForm() {
-                if (!state.projectName.trim()) {
-                    notify("يرجى إدخال اسم المشروع أولاً!", "error");
-                    el.projectName.focus();
-                    return false;
-                }
-                if (!state.senderName.trim()) {
-                    notify("يرجى إدخال اسم المسؤول / مُرسل الطلب!", "error");
-                    el.senderName.focus();
-                    return false;
-                }
-                if (!state.area.trim()) {
-                    notify("يرجى تحديد منطقة المشروع!", "error");
-                    el.locationSearch.focus();
-                    return false;
-                }
-                if (!state.specifications.trim()) {
-                    notify("يرجى كتابة المواصفات والتفاصيل الفنية المطلوبة!", "error");
-                    el.specificationsText.focus();
-                    return false;
-                }
-                return true;
-            }
-
-            function requireSaved() {
-                if (!state.isSaved) {
-                    notify("يجب الضغط على زر (حفظ واعتماد بيانات الطلب) أولاً!", "error");
-                    el.btnSaveForm.scrollIntoView({ behavior: "smooth", block: "center" });
-                    return false;
-                }
-                return true;
-            }
-
-            // نسخ النص
-            function copyTextAction() {
-                if (!requireSaved()) return;
-                const text = buildFormattedRequestText();
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        notify("تم نسخ التفاصيل بالكامل! يمكنك لصقها في أي مكان الآن", "success");
-                    }).catch(() => fallbackCopy(text));
-                } else {
-                    fallbackCopy(text);
-                }
-            }
-
-            function fallbackCopy(text) {
-                const ta = document.createElement("textarea");
-                ta.value = text;
-                ta.style.position = "fixed";
-                ta.style.opacity = "0";
-                document.body.appendChild(ta);
-                ta.focus();
-                ta.select();
-                document.execCommand("copy");
-                document.body.removeChild(ta);
-                notify("تم نسخ التفاصيل بالكامل! يمكنك لصقها في أي مكان الآن", "success");
-            }
-
-            // إرسال عبر الإيميل (Outlook) تلقائياً
-            function sendEmailAction() {
-                if (!requireSaved()) return;
-                const projectTitle = state.projectName.trim() || "طلب تسعير مشروع";
-                const subjectText = `${projectTitle} - ${COMPANY_NAME}`;
-                const bodyText = buildFormattedRequestText();
-
-                const mailtoUrl = `mailto:${TARGET_EMAIL}?subject=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
-                window.location.href = mailtoUrl;
-                notify("جاري فتح برنامج الإيميل (Outlook) مع تعبئة البيانات...", "info");
-            }
-
-            // إدارة السجل (History)
             function getHistoryList() {
                 try {
-                    const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+                    const raw = localStorage.getItem(STORAGE_KEY);
                     return raw ? JSON.parse(raw) : [];
                 } catch (e) {
                     return [];
@@ -1511,374 +1441,889 @@
             }
 
             function saveHistoryList(list) {
-                try {
-                    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(list));
-                } catch (e) {}
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
                 updateHistoryBadge();
             }
 
             function updateHistoryBadge() {
                 const list = getHistoryList();
-                el.historyCountBadge.textContent = list.length;
+                $('historyCountBadge').textContent = list.length;
             }
 
-            function addCurrentStateToHistory() {
-                const list = getHistoryList();
-                const now = new Date();
-                const timestamp = now.toLocaleDateString("ar-KW") + " - " + now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+            function markUnsaved() {
+                if (state.isSaved) {
+                    state.isSaved = false;
+                    syncSaveUI();
+                }
+            }
 
-                const snapshot = JSON.parse(JSON.stringify(state));
-                delete snapshot.isSaved;
+            function syncSaveUI() {
+                const btnSave = $('btnSaveForm');
+                const badge = $('saveStatusBadge');
+                const hint = $('saveStatusHint');
+                const btnView = $('btnOpenSavedDetail');
+                const exportBtns = [$('btnSendEmail'), $('btnPrintPdf'), $('btnCopyText')];
 
-                const entry = {
-                    id: Date.now().toString(),
-                    savedAt: timestamp,
-                    projectName: state.projectName.trim(),
-                    area: state.area.trim(),
-                    senderName: state.senderName.trim(),
-                    isUrgent: state.isUrgent,
-                    data: snapshot
+                if (state.isSaved) {
+                    btnSave.classList.add('saved');
+                    btnSave.innerHTML = '✅ تم الحفظ والاعتماد (اضغط للتحديث)';
+                    badge.textContent = 'محفوظ ومعتمد';
+                    badge.style.background = 'rgba(16, 185, 129, 0.22)';
+                    badge.style.color = '#6ee7b7';
+                    hint.textContent = '✔️ الطلب محفوظ الآن — يمكنك عرضه بصفحة مستقلة أو إرساله';
+                    hint.style.color = '#6ee7b7';
+                    btnView.classList.remove('hidden');
+                    exportBtns.forEach(b => b.classList.remove('locked'));
+                } else {
+                    btnSave.classList.remove('saved');
+                    btnSave.innerHTML = state.editingId
+                        ? '💾 حفظ التعديلات وعرض المشروع'
+                        : '💾 حفظ واعتماد وعرض المشروع';
+                    badge.textContent = 'غير محفوظ';
+                    badge.style.background = 'rgba(245, 158, 11, 0.2)';
+                    badge.style.color = '#fcd34d';
+                    hint.textContent = '🔒 احفظ الطلب لفتحه في صفحة عرض منظمة أو إرساله';
+                    hint.style.color = '#fcd34d';
+                    btnView.classList.add('hidden');
+                    exportBtns.forEach(b => b.classList.add('locked'));
+                }
+
+                if (state.editingId) {
+                    $('editModeBanner').classList.remove('hidden');
+                } else {
+                    $('editModeBanner').classList.add('hidden');
+                }
+            }
+
+            function updateProgress() {
+                let score = 0;
+                const total = 6;
+                if (state.projectName.trim()) score++;
+                if (state.companyName.trim()) score++;
+                if (state.senderName.trim()) score++;
+                if (state.locationArea.trim()) score++;
+                if (state.selectedWorkTypes.length > 0) score++;
+                if (state.specifications.trim()) score++;
+
+                const pct = Math.round((score / total) * 100);
+                $('progressPercent').textContent = pct + '%';
+                $('progressFill').style.width = pct + '%';
+            }
+
+            function renderWorkTypes() {
+                const grid = $('workTypesGrid');
+                grid.innerHTML = '';
+                const allWorks = [...DEFAULT_WORK_TYPES, ...state.customWorkTypes];
+
+                allWorks.forEach(item => {
+                    const isSelected = state.selectedWorkTypes.includes(item);
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'select-tile' + (isSelected ? ' active' : '');
+                    btn.innerHTML = `
+                        <span class="check-box-visual">${isSelected ? '✓' : ''}</span>
+                        <span>${escapeHtml(item)}</span>
+                    `;
+                    btn.addEventListener('click', () => {
+                        if (state.selectedWorkTypes.includes(item)) {
+                            state.selectedWorkTypes = state.selectedWorkTypes.filter(w => w !== item);
+                        } else {
+                            state.selectedWorkTypes.push(item);
+                        }
+                        markUnsaved();
+                        renderWorkTypes();
+                        renderPricingOptions();
+                        updateProgress();
+                    });
+                    grid.appendChild(btn);
+                });
+            }
+
+            function renderPricingOptions() {
+                const box = $('pricingPreferenceBox');
+                const grid = $('pricingOptionsGrid');
+                if (state.selectedWorkTypes.length > 1) {
+                    box.classList.remove('hidden');
+                } else {
+                    box.classList.add('hidden');
+                    return;
+                }
+
+                grid.innerHTML = '';
+                PRICING_MODES.forEach(mode => {
+                    const active = state.pricingMode === mode.id;
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'select-tile' + (active ? ' active' : '');
+                    btn.style.width = '100%';
+                    btn.innerHTML = `
+                        <span class="check-box-visual">${active ? '✓' : ''}</span>
+                        <span>${mode.label}</span>
+                    `;
+                    btn.addEventListener('click', () => {
+                        state.pricingMode = mode.id;
+                        markUnsaved();
+                        renderPricingOptions();
+                    });
+                    grid.appendChild(btn);
+                });
+            }
+
+            function renderAttachments() {
+                const grid = $('attachmentsGrid');
+                grid.innerHTML = '';
+                ATTACHMENT_OPTIONS.forEach(att => {
+                    const active = state.selectedAttachments.includes(att);
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'select-tile' + (active ? ' active' : '');
+                    btn.innerHTML = `
+                        <span class="check-box-visual">${active ? '✓' : ''}</span>
+                        <span>${escapeHtml(att)}</span>
+                    `;
+                    btn.addEventListener('click', () => {
+                        if (state.selectedAttachments.includes(att)) {
+                            state.selectedAttachments = state.selectedAttachments.filter(a => a !== att);
+                        } else {
+                            state.selectedAttachments.push(att);
+                        }
+                        markUnsaved();
+                        renderAttachments();
+                    });
+                    grid.appendChild(btn);
+                });
+            }
+
+            function renderContacts() {
+                const wrap = $('contactsWrapper');
+                wrap.innerHTML = '';
+                state.contacts.forEach((c, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'contact-card';
+                    card.innerHTML = `
+                        <div class="contact-card-top">
+                            <span>جهة التواصل رقم (${idx + 1})</span>
+                            ${state.contacts.length > 1 ? `<button type="button" class="btn-danger-sm" data-del-idx="${idx}">حذف</button>` : ''}
+                        </div>
+                        <div class="grid-2">
+                            <input type="text" class="input-control contact-name-inp" data-idx="${idx}" placeholder="الاسم / الصفة (مثال: م. أحمد - مدير المشروع)" value="${escapeAttr(c.name)}">
+                            <input type="tel" class="input-control num-en contact-phone-inp" data-idx="${idx}" placeholder="رقم الهاتف (مثال: 99001122)" value="${escapeAttr(c.phone)}">
+                        </div>
+                    `;
+                    wrap.appendChild(card);
+                });
+
+                wrap.querySelectorAll('.contact-name-inp').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const i = Number(e.target.dataset.idx);
+                        state.contacts[i].name = e.target.value;
+                        markUnsaved();
+                    });
+                });
+
+                wrap.querySelectorAll('.contact-phone-inp').forEach(inp => {
+                    inp.addEventListener('input', (e) => {
+                        const i = Number(e.target.dataset.idx);
+                        state.contacts[i].phone = e.target.value;
+                        markUnsaved();
+                    });
+                });
+
+                wrap.querySelectorAll('[data-del-idx]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const i = Number(e.target.dataset.delIdx);
+                        state.contacts.splice(i, 1);
+                        markUnsaved();
+                        renderContacts();
+                    });
+                });
+            }
+
+            function renderAreaDropdown(filterText = '') {
+                const dd = $('areaDropdown');
+                const q = filterText.trim();
+                const filtered = q
+                    ? KUWAIT_AREAS.filter(a => a.includes(q))
+                    : KUWAIT_AREAS;
+
+                if (filtered.length === 0) {
+                    dd.classList.add('hidden');
+                    return;
+                }
+
+                dd.innerHTML = '';
+                filtered.forEach(area => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'area-item';
+                    btn.textContent = area;
+                    btn.addEventListener('click', () => {
+                        state.locationArea = area;
+                        $('locationSearch').value = area;
+                        dd.classList.add('hidden');
+                        markUnsaved();
+                        updateProgress();
+                    });
+                    dd.appendChild(btn);
+                });
+                dd.classList.remove('hidden');
+            }
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;');
+            }
+
+            function escapeAttr(str) {
+                return escapeHtml(str);
+            }
+
+            function syncInputsFromState() {
+                $('projectName').value = state.projectName;
+                $('companyName').value = state.companyName;
+                $('senderName').value = state.senderName;
+                $('requestDate').value = state.requestDate;
+                $('locationSearch').value = state.locationArea;
+                $('locationDetails').value = state.locationDetails;
+                $('specificationsText').value = state.specifications;
+                $('clientEmail').value = state.clientEmail;
+                $('deadlineDate').value = state.deadlineDate;
+
+                const urgentBtn = $('urgentBtn');
+                if (state.isUrgent) {
+                    urgentBtn.classList.add('is-urgent');
+                    $('urgentTitle').textContent = '🔥 مشروع مستعجل جداً (أولوية قصوى)';
+                    $('urgentSub').textContent = 'تم تفعيل حالة الاستعجال لهذا الطلب';
+                    $('urgentPill').textContent = 'مستعجل';
+                } else {
+                    urgentBtn.classList.remove('is-urgent');
+                    $('urgentTitle').textContent = 'مشروع عادي';
+                    $('urgentSub').textContent = 'اضغط هنا لتفعيل وضع المستعجل جداً';
+                    $('urgentPill').textContent = 'عادي';
+                }
+
+                renderWorkTypes();
+                renderPricingOptions();
+                renderAttachments();
+                renderContacts();
+                updateProgress();
+                syncSaveUI();
+            }
+
+            function resetToNewProject() {
+                state = {
+                    editingId: null,
+                    isSaved: false,
+                    projectName: "",
+                    companyName: "",
+                    isUrgent: false,
+                    senderName: "",
+                    requestDate: new Date().toISOString().split('T')[0],
+                    locationArea: "",
+                    locationDetails: "",
+                    selectedWorkTypes: [],
+                    customWorkTypes: [],
+                    pricingMode: "itemized",
+                    specifications: "",
+                    selectedAttachments: [],
+                    contacts: [{ name: "", phone: "" }],
+                    clientEmail: "",
+                    deadlineDate: ""
+                };
+                currentViewedProject = null;
+                showFormView();
+                syncInputsFromState();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showToast('✨ تم فتح نموذج مشروع جديد', 'info');
+            }
+
+            function showFormView() {
+                $('projectDetailView').classList.add('hidden');
+                $('mainFormContainer').classList.remove('hidden');
+            }
+
+            /* =========================================================
+               عرض صفحة تفاصيل المشروع المحفوظ بتصميم بطاقات احترافي
+               ========================================================= */
+            function openProjectDetailPage(projectObj) {
+                currentViewedProject = projectObj;
+                $('mainFormContainer').classList.add('hidden');
+                $('historyModal').classList.add('hidden');
+                $('projectDetailView').classList.remove('hidden');
+
+                const pricingText = projectObj.selectedWorkTypes.length > 1
+                    ? (projectObj.pricingMode === 'lump_sum' ? 'سعر إجمالي مقطوع لجميع البنود' : 'تسعير تفصيلي منفصل لكل بند')
+                    : 'تسعير بند واحد';
+
+                const validContacts = (projectObj.contacts || []).filter(c => (c.name && c.name.trim()) || (c.phone && c.phone.trim()));
+
+                const contactsHtml = validContacts.length > 0
+                    ? validContacts.map((c, i) => `
+                        <div class="view-contact-row">
+                            <div>
+                                <div style="font-size:11px; color:var(--text-muted); font-weight:800;">جهة تواصل #${i + 1}</div>
+                                <div style="font-size:14px; font-weight:900;">${escapeHtml(c.name || 'غير محدد')}</div>
+                            </div>
+                            ${c.phone ? `<a href="tel:${escapeAttr(c.phone)}" class="num-en" style="background:rgba(14,165,233,0.16); color:#38bdf8; padding:6px 12px; border-radius:10px; font-weight:800; text-decoration:none; font-size:13px;">📞 ${escapeHtml(c.phone)}</a>` : ''}
+                        </div>
+                    `).join('')
+                    : `<div style="font-size:13px; color:var(--text-muted); font-weight:700;">لا توجد أرقام تواصل مسجلة</div>`;
+
+                const worksHtml = (projectObj.selectedWorkTypes && projectObj.selectedWorkTypes.length > 0)
+                    ? projectObj.selectedWorkTypes.map(w => `<span class="view-tag-pill">✓ ${escapeHtml(w)}</span>`).join('')
+                    : `<span style="color:var(--text-muted); font-size:13px;">لم يتم تحديد بنود أعمال</span>`;
+
+                const attachmentsHtml = (projectObj.selectedAttachments && projectObj.selectedAttachments.length > 0)
+                    ? projectObj.selectedAttachments.map(a => `<span class="view-tag-pill" style="background:rgba(16,185,129,0.14); border-color:rgba(16,185,129,0.35); color:#34d399;">📎 ${escapeHtml(a)}</span>`).join('')
+                    : `<span style="color:var(--text-muted); font-size:13px;">لا توجد مرفقات محددة</span>`;
+
+                $('projectDetailContent').innerHTML = `
+                    <div class="view-hero-card">
+                        <div class="view-hero-badge ${projectObj.isUrgent ? 'urgent' : 'normal'}">
+                            ${projectObj.isUrgent ? '🔥 أولوية قصوى - مشروع مستعجل جداً' : '📋 طلب تسعير مشروع - أولوية عادية'}
+                        </div>
+                        <h2 class="view-project-title">${escapeHtml(projectObj.projectName)}</h2>
+                        <p class="view-company-subtitle">🏢 الشركة / الجهة: ${escapeHtml(projectObj.companyName || 'غير محدد')}</p>
+                    </div>
+
+                    <div class="view-section-card">
+                        <h3 class="view-section-title">📌 المعلومات الإدارية والموقع</h3>
+                        <div class="view-info-grid">
+                            <div class="view-info-item">
+                                <div class="view-info-label">الشركة / الجهة الطالبة</div>
+                                <div class="view-info-value">${escapeHtml(projectObj.companyName || 'غير محدد')}</div>
+                            </div>
+                            <div class="view-info-item">
+                                <div class="view-info-label">اسم المسؤول / مُرسل الطلب</div>
+                                <div class="view-info-value">${escapeHtml(projectObj.senderName)}</div>
+                            </div>
+                            <div class="view-info-item">
+                                <div class="view-info-label">تاريخ الطلب</div>
+                                <div class="view-info-value num-en">${escapeHtml(projectObj.requestDate || '-')}</div>
+                            </div>
+                            <div class="view-info-item">
+                                <div class="view-info-label">آخر موعد لتقديم السعر</div>
+                                <div class="view-info-value num-en">${escapeHtml(projectObj.deadlineDate || 'غير محدد')}</div>
+                            </div>
+                            <div class="view-info-item" style="grid-column: 1 / -1;">
+                                <div class="view-info-label">موقع المشروع</div>
+                                <div class="view-info-value">📍 ${escapeHtml(projectObj.locationArea)} ${projectObj.locationDetails ? ' — ' + escapeHtml(projectObj.locationDetails) : ''}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="view-section-card">
+                        <h3 class="view-section-title">🛠️ نطاق الأعمال المطلوبة للتسعير</h3>
+                        <div class="view-tags-list">${worksHtml}</div>
+                        <div class="view-info-item">
+                            <div class="view-info-label">نظام عرض السعر المطلوب</div>
+                            <div class="view-info-value">${escapeHtml(pricingText)}</div>
+                        </div>
+                    </div>
+
+                    <div class="view-section-card">
+                        <h3 class="view-section-title">📝 المواصفات والتفاصيل الفنية</h3>
+                        <div class="view-specs-box">${escapeHtml(projectObj.specifications)}</div>
+                    </div>
+
+                    <div class="view-section-card">
+                        <h3 class="view-section-title">📎 المرفقات المتوفرة</h3>
+                        <div class="view-tags-list">${attachmentsHtml}</div>
+                    </div>
+
+                    <div class="view-section-card">
+                        <h3 class="view-section-title">📞 بيانات التواصل للعميل / الموقع</h3>
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            ${contactsHtml}
+                            ${projectObj.clientEmail ? `
+                                <div class="view-info-item">
+                                    <div class="view-info-label">البريد الإلكتروني</div>
+                                    <div class="view-info-value num-en">${escapeHtml(projectObj.clientEmail)}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function loadProjectIntoEditor(projectObj) {
+                state = {
+                    editingId: projectObj.id,
+                    isSaved: true,
+                    projectName: projectObj.projectName || "",
+                    companyName: projectObj.companyName || "",
+                    isUrgent: Boolean(projectObj.isUrgent),
+                    senderName: projectObj.senderName || "",
+                    requestDate: projectObj.requestDate || new Date().toISOString().split('T')[0],
+                    locationArea: projectObj.locationArea || "",
+                    locationDetails: projectObj.locationDetails || "",
+                    selectedWorkTypes: Array.isArray(projectObj.selectedWorkTypes) ? [...projectObj.selectedWorkTypes] : [],
+                    customWorkTypes: Array.isArray(projectObj.customWorkTypes) ? [...projectObj.customWorkTypes] : [],
+                    pricingMode: projectObj.pricingMode || "itemized",
+                    specifications: projectObj.specifications || "",
+                    selectedAttachments: Array.isArray(projectObj.selectedAttachments) ? [...projectObj.selectedAttachments] : [],
+                    contacts: (Array.isArray(projectObj.contacts) && projectObj.contacts.length > 0)
+                        ? projectObj.contacts.map(c => ({ name: c.name || "", phone: c.phone || "" }))
+                        : [{ name: "", phone: "" }],
+                    clientEmail: projectObj.clientEmail || "",
+                    deadlineDate: projectObj.deadlineDate || ""
                 };
 
-                list.unshift(entry);
+                currentViewedProject = projectObj;
+                showFormView();
+                syncInputsFromState();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showToast('✏️ تم فتح المشروع للتعديل — عدّل ما تريد ثم اضغط حفظ', 'warning');
+            }
+
+            function validateAndSaveProject() {
+                if (!state.projectName.trim()) {
+                    showToast('⚠️ يرجى إدخال اسم المشروع أولاً', 'error');
+                    $('projectName').focus();
+                    return null;
+                }
+                if (!state.companyName.trim()) {
+                    showToast('⚠️ يرجى إدخال اسم الشركة / الجهة المالكة', 'error');
+                    $('companyName').focus();
+                    return null;
+                }
+                if (!state.senderName.trim()) {
+                    showToast('⚠️ يرجى إدخال اسم المسؤول / مُرسل الطلب', 'error');
+                    $('senderName').focus();
+                    return null;
+                }
+                if (!state.locationArea.trim()) {
+                    showToast('⚠️ يرجى تحديد منطقة المشروع', 'error');
+                    $('locationSearch').focus();
+                    return null;
+                }
+                if (!state.specifications.trim()) {
+                    showToast('⚠️ يرجى كتابة المواصفات والتفاصيل الفنية المطلوبة', 'error');
+                    $('specificationsText').focus();
+                    return null;
+                }
+
+                const list = getHistoryList();
+                const nowIso = new Date().toISOString();
+                const recordId = state.editingId || ('PRJ-' + Date.now());
+
+                const record = {
+                    id: recordId,
+                    savedAt: nowIso,
+                    projectName: state.projectName.trim(),
+                    companyName: state.companyName.trim(),
+                    isUrgent: state.isUrgent,
+                    senderName: state.senderName.trim(),
+                    requestDate: state.requestDate,
+                    locationArea: state.locationArea.trim(),
+                    locationDetails: state.locationDetails.trim(),
+                    selectedWorkTypes: [...state.selectedWorkTypes],
+                    customWorkTypes: [...state.customWorkTypes],
+                    pricingMode: state.pricingMode,
+                    specifications: state.specifications.trim(),
+                    selectedAttachments: [...state.selectedAttachments],
+                    contacts: state.contacts.map(c => ({ name: c.name.trim(), phone: c.phone.trim() })),
+                    clientEmail: state.clientEmail.trim(),
+                    deadlineDate: state.deadlineDate
+                };
+
+                const existingIndex = list.findIndex(item => item.id === recordId);
+                if (existingIndex >= 0) {
+                    list[existingIndex] = record;
+                } else {
+                    list.unshift(record);
+                }
+
                 saveHistoryList(list);
+                state.editingId = recordId;
+                state.isSaved = true;
+                currentViewedProject = record;
+                syncSaveUI();
+
+                showToast('✅ تم حفظ واعتماد بيانات المشروع بنجاح', 'success');
+                openProjectDetailPage(record);
+                return record;
+            }
+
+            function buildPlainTextReport(proj) {
+                const p = proj || state;
+                const lines = [];
+                lines.push('====================================');
+                lines.push('شركة الراي الهندسية لتشييد وتشطيب المباني');
+                lines.push('نموذج طلب تسعير مشروع - قسم الدراسات');
+                lines.push('====================================');
+                if (p.isUrgent) {
+                    lines.push('⚠️ الأولوية: مستعجل جداً (أولوية قصوى)');
+                }
+                lines.push(`• اسم المشروع: ${p.projectName}`);
+                lines.push(`• اسم الشركة: ${p.companyName}`);
+                lines.push(`• مُرسل الطلب: ${p.senderName}`);
+                lines.push(`• تاريخ الطلب: ${p.requestDate || '-'}`);
+                if (p.deadlineDate) {
+                    lines.push(`• آخر موعد للتسعير: ${p.deadlineDate}`);
+                }
+                lines.push(`• الموقع: ${p.locationArea}${p.locationDetails ? ' - ' + p.locationDetails : ''}`);
+                lines.push('');
+                lines.push('• بنود الأعمال المطلوبة:');
+                if (p.selectedWorkTypes && p.selectedWorkTypes.length > 0) {
+                    p.selectedWorkTypes.forEach(w => lines.push(`  - ${w}`));
+                    if (p.selectedWorkTypes.length > 1) {
+                        lines.push(`• طريقة التسعير: ${p.pricingMode === 'lump_sum' ? 'سعر إجمالي مقطوع' : 'تسعير تفصيلي لكل بند'}`);
+                    }
+                } else {
+                    lines.push('  - حسب المواصفات المرفقة');
+                }
+                lines.push('');
+                lines.push('• المواصفات والتفاصيل الفنية:');
+                lines.push(p.specifications);
+                lines.push('');
+                if (p.selectedAttachments && p.selectedAttachments.length > 0) {
+                    lines.push('• المرفقات المتوفرة:');
+                    p.selectedAttachments.forEach(a => lines.push(`  - ${a}`));
+                    lines.push('');
+                }
+                const validContacts = (p.contacts || []).filter(c => c.name || c.phone);
+                if (validContacts.length > 0) {
+                    lines.push('• بيانات التواصل:');
+                    validContacts.forEach(c => lines.push(`  - ${c.name || 'جهة تواصل'}: ${c.phone || ''}`));
+                }
+                if (p.clientEmail) {
+                    lines.push(`• البريد الإلكتروني: ${p.clientEmail}`);
+                }
+                return lines.join('\n');
+            }
+
+            function handleCopyReport(proj) {
+                const text = buildPlainTextReport(proj);
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showToast('📋 تم نسخ تقرير طلب التسعير بنجاح', 'success');
+                    }).catch(() => fallbackCopy(text));
+                } else {
+                    fallbackCopy(text);
+                }
+            }
+
+            function fallbackCopy(text) {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                ta.remove();
+                showToast('📋 تم نسخ تقرير طلب التسعير بنجاح', 'success');
+            }
+
+            function handleSendEmail(proj) {
+                const p = proj || state;
+                const subject = `${p.isUrgent ? '[مستعجل] ' : ''}طلب تسعير مشروع: ${p.projectName} - ${p.companyName}`;
+                const body = buildPlainTextReport(p);
+                window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            }
+
+            function handlePrintPdf(proj) {
+                const p = proj || state;
+                const container = $('printReportContainer');
+                const validContacts = (p.contacts || []).filter(c => c.name || c.phone);
+
+                container.innerHTML = `
+                    <div style="font-family:'Cairo',sans-serif; direction:rtl; color:#0f172a; border:2px solid #0284c7; border-radius:14px; padding:20px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e2e8f0; padding-bottom:14px; margin-bottom:16px;">
+                            <div>
+                                <h1 style="margin:0; font-size:20px; color:#0284c7;">شركة الراي الهندسية لتشييد وتشطيب المباني</h1>
+                                <p style="margin:4px 0 0 0; font-size:13px; color:#475569; font-weight:700;">نموذج طلب تسعير مشروع • قسم الدراسات</p>
+                            </div>
+                            <div style="text-align:left;">
+                                <span style="display:inline-block; padding:5px 12px; border-radius:8px; font-weight:800; font-size:12px; background:${p.isUrgent ? '#fee2e2' : '#e0f2fe'}; color:${p.isUrgent ? '#b91c1c' : '#0369a1'};">
+                                    ${p.isUrgent ? 'مستعجل جداً' : 'طلب عادي'}
+                                </span>
+                                <div style="font-size:12px; margin-top:6px; color:#475569;">التاريخ: <strong>${escapeHtml(p.requestDate || '-')}</strong></div>
+                            </div>
+                        </div>
+
+                        <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:14px; margin-bottom:14px;">
+                            <div style="font-size:16px; font-weight:900; margin-bottom:6px;">المشروع: ${escapeHtml(p.projectName)}</div>
+                            <div style="font-size:14px; font-weight:800; color:#0369a1; margin-bottom:6px;">الشركة / الجهة: ${escapeHtml(p.companyName)}</div>
+                            <div style="font-size:13px; color:#334155;">
+                                <strong>الموقع:</strong> ${escapeHtml(p.locationArea)} ${p.locationDetails ? ' - ' + escapeHtml(p.locationDetails) : ''} &nbsp;|&nbsp;
+                                <strong>مُرسل الطلب:</strong> ${escapeHtml(p.senderName)}
+                                ${p.deadlineDate ? ` &nbsp;|&nbsp; <strong>آخر موعد:</strong> ${escapeHtml(p.deadlineDate)}` : ''}
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:14px;">
+                            <h3 style="margin:0 0 8px 0; font-size:14px; color:#0284c7;">بنود الأعمال المطلوبة:</h3>
+                            <div style="font-size:13px; font-weight:700; background:#f1f5f9; padding:10px 14px; border-radius:8px;">
+                                ${(p.selectedWorkTypes && p.selectedWorkTypes.length) ? p.selectedWorkTypes.map(escapeHtml).join(' • ') : 'حسب المواصفات المرفقة'}
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:14px;">
+                            <h3 style="margin:0 0 8px 0; font-size:14px; color:#0284c7;">المواصفات والتفاصيل الفنية:</h3>
+                            <div style="font-size:13px; line-height:1.8; white-space:pre-wrap; border:1px solid #cbd5e1; padding:12px; border-radius:8px;">${escapeHtml(p.specifications)}</div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                            <div style="border:1px solid #cbd5e1; padding:10px 12px; border-radius:8px;">
+                                <strong style="font-size:12px; color:#0284c7;">المرفقات:</strong>
+                                <div style="font-size:12px; margin-top:4px;">${(p.selectedAttachments && p.selectedAttachments.length) ? p.selectedAttachments.map(escapeHtml).join('، ') : 'لا يوجد'}</div>
+                            </div>
+                            <div style="border:1px solid #cbd5e1; padding:10px 12px; border-radius:8px;">
+                                <strong style="font-size:12px; color:#0284c7;">بيانات التواصل:</strong>
+                                <div style="font-size:12px; margin-top:4px;">
+                                    ${validContacts.length ? validContacts.map(c => `${escapeHtml(c.name)} (${escapeHtml(c.phone)})`).join(' | ') : 'غير محدد'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                window.print();
             }
 
             function renderHistoryModal() {
                 const list = getHistoryList();
-                el.historyListContainer.innerHTML = "";
+                const container = $('historyListContainer');
+                container.innerHTML = '';
 
                 if (list.length === 0) {
-                    el.historyListContainer.innerHTML = `
-                        <div style="text-align:center; padding:32px 16px; color:var(--text-muted); font-size:13px; font-weight:700;">
-                            لا توجد طلبات محفوظة في السجل حتى الآن.<br>
-                            عند الضغط على زر (حفظ واعتماد بيانات الطلب) سيُحفظ الطلب هنا تلقائياً.
+                    container.innerHTML = `
+                        <div style="text-align:center; padding:30px 16px; color:var(--text-muted); font-weight:800;">
+                            لا توجد مشاريع محفوظة في السجل حتى الآن
                         </div>
                     `;
                     return;
                 }
 
-                list.forEach((item) => {
-                    const card = document.createElement("div");
-                    card.className = "history-item-card";
-
-                    const urgentBadge = item.isUrgent
-                        ? `<span style="background:#e11d48; color:#fff; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:900;">مستعجل 🔥</span>`
-                        : `<span style="background:rgba(14,165,233,0.15); color:#38bdf8; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:800;">عادي</span>`;
-
+                list.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'history-item-card';
                     card.innerHTML = `
                         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
-                            <div style="font-size:14px; font-weight:900; color:var(--text-main);">${escapeHtml(item.projectName || "بدون اسم")}</div>
-                            ${urgentBadge}
+                            <div>
+                                <div style="font-size:14px; font-weight:900;">${escapeHtml(item.projectName)}</div>
+                                <div style="font-size:12px; font-weight:800; color:#38bdf8; margin-top:2px;">🏢 ${escapeHtml(item.companyName || 'بدون اسم شركة')}</div>
+                                <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">📍 ${escapeHtml(item.locationArea)} • 📅 ${escapeHtml(item.requestDate || '')}</div>
+                            </div>
+                            ${item.isUrgent ? '<span style="background:#e11d48; color:#fff; font-size:10px; font-weight:900; padding:3px 8px; border-radius:99px;">مستعجل</span>' : ''}
                         </div>
-                        <div style="font-size:12px; color:var(--text-muted); display:flex; flex-wrap:wrap; gap:10px;">
-                            <span>📍 ${escapeHtml(item.area || "-")}</span>
-                            <span>👤 ${escapeHtml(item.senderName || "-")}</span>
-                            <span class="num-en" style="font-size:11px;">🕒 ${escapeHtml(item.savedAt || "")}</span>
+                        <div class="history-item-actions">
+                            <button type="button" class="btn-history-view">👁️ عرض التفاصيل</button>
+                            <button type="button" class="btn-history-load">✏️ تعديل</button>
+                            <button type="button" class="btn-history-del">🗑️ حذف</button>
                         </div>
                     `;
 
-                    const actionsRow = document.createElement("div");
-                    actionsRow.className = "history-item-actions";
-
-                    const loadBtn = document.createElement("button");
-                    loadBtn.type = "button";
-                    loadBtn.className = "btn-history-load";
-                    loadBtn.textContent = "📂 استرجاع ومراجعة الطلب";
-                    loadBtn.addEventListener("click", () => {
-                        Object.assign(state, JSON.parse(JSON.stringify(item.data)));
-                        state.isSaved = true;
-                        saveToLocalStorage();
-                        syncInputsFromState();
-                        renderAll();
-                        el.historyModal.classList.add("hidden");
-                        notify(`تم استرجاع طلب "${item.projectName}" بنجاح`, "success");
+                    card.querySelector('.btn-history-view').addEventListener('click', () => {
+                        openProjectDetailPage(item);
                     });
 
-                    const delBtn = document.createElement("button");
-                    delBtn.type = "button";
-                    delBtn.className = "btn-history-del";
-                    delBtn.textContent = "حذف ✕";
-                    delBtn.addEventListener("click", () => {
-                        const updated = getHistoryList().filter((x) => x.id !== item.id);
+                    card.querySelector('.btn-history-load').addEventListener('click', () => {
+                        $('historyModal').classList.add('hidden');
+                        loadProjectIntoEditor(item);
+                    });
+
+                    card.querySelector('.btn-history-del').addEventListener('click', () => {
+                        const updated = getHistoryList().filter(x => x.id !== item.id);
                         saveHistoryList(updated);
                         renderHistoryModal();
-                        notify("تم حذف السجل", "info");
+                        showToast('🗑️ تم حذف المشروع من السجل', 'info');
                     });
 
-                    actionsRow.appendChild(loadBtn);
-                    actionsRow.appendChild(delBtn);
-                    card.appendChild(actionsRow);
-                    el.historyListContainer.appendChild(card);
+                    container.appendChild(card);
                 });
             }
 
-            // توليد تقرير PDF والطباعة
-            function exportPDFAction() {
-                if (!requireSaved()) return;
+            /* ربط الأحداث */
+            $('projectName').addEventListener('input', (e) => {
+                state.projectName = e.target.value;
+                markUnsaved();
+                updateProgress();
+            });
 
-                const validContacts = state.contacts.filter((c) => c.name.trim() || c.phone.trim());
-                const effectivePricing = state.selectedWorks.length >= 2 ? state.pricingStyle : "سعر إجمالي واحد للمشروع";
+            $('companyName').addEventListener('input', (e) => {
+                state.companyName = e.target.value;
+                markUnsaved();
+                updateProgress();
+            });
 
-                el.printReportContainer.innerHTML = `
-                    <div style="border:2px solid #0284c7; border-radius:16px; padding:22px; font-family:'Cairo', sans-serif; color:#0f172a;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0284c7; padding-bottom:14px; margin-bottom:18px;">
-                            <div>
-                                <h1 style="font-size:19px; font-weight:900; margin:0;">شركة الراي الهندسية لتشييد و تشطيب المباني</h1>
-                                <p style="font-size:12px; color:#475569; margin:4px 0 0 0;">نموذج طلب دراسة وتسعير مشروع • قسم الدراسات والمشاريع (م. أمير)</p>
-                            </div>
-                            <div style="text-align:left;">
-                                <div style="font-size:11px; color:#64748b;">تاريخ الطلب</div>
-                                <div style="font-size:14px; font-weight:800; font-family:monospace;">${escapeHtml(state.requestDate || "-")}</div>
-                                <div style="margin-top:6px; padding:3px 10px; border-radius:6px; font-size:11px; font-weight:900; ${state.isUrgent ? "background:#e11d48; color:#fff;" : "background:#e2e8f0; color:#334155;"}">
-                                    ${state.isUrgent ? "🚨 مشروع مستعجل جداً" : "الأولوية: عادي"}
-                                </div>
-                            </div>
-                        </div>
+            $('senderName').addEventListener('input', (e) => {
+                state.senderName = e.target.value;
+                markUnsaved();
+                updateProgress();
+            });
 
-                        <table style="width:100%; border-collapse:collapse; margin-bottom:16px; font-size:13px;">
-                            <tr>
-                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800; width:24%;">اسم المشروع</td>
-                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:900; font-size:15px;" colspan="3">${escapeHtml(state.projectName)}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800;">الموقع (المنطقة)</td>
-                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:700;">${escapeHtml(state.area)} ${state.locationDetails ? `(${escapeHtml(state.locationDetails)})` : ""}</td>
-                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800; width:22%;">المسؤول / المُرسل</td>
-                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:700;">${escapeHtml(state.senderName)}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800;">طريقة التسعير</td>
-                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:700; color:#0369a1;">${escapeHtml(effectivePricing)}</td>
-                                <td style="padding:10px; background:#f8fafc; border:1px solid #cbd5e1; font-weight:800;">آخر موعد للتسليم</td>
-                                <td style="padding:10px; border:1px solid #cbd5e1; font-weight:700; font-family:monospace;">${escapeHtml(state.deadlineDate || "غير محدد")}</td>
-                            </tr>
-                        </table>
+            $('requestDate').addEventListener('change', (e) => {
+                state.requestDate = e.target.value;
+                markUnsaved();
+            });
 
-                        <div style="margin-bottom:16px;">
-                            <h3 style="font-size:13px; font-weight:900; color:#0369a1; margin:0 0 8px 0;">1. بنود ونوع الأعمال المطلوب تسعيرها:</h3>
-                            <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                                ${state.selectedWorks.length > 0
-                                    ? state.selectedWorks.map((w) => `<span style="background:#e0f2fe; border:1px solid #7dd3fc; color:#0c4a6e; padding:5px 12px; border-radius:8px; font-size:12px; font-weight:800;">✓ ${escapeHtml(w)}</span>`).join("")
-                                    : '<span style="font-size:12px; color:#64748b;">لم يتم تحديد بنود</span>'}
-                            </div>
-                        </div>
+            $('urgentBtn').addEventListener('click', () => {
+                state.isUrgent = !state.isUrgent;
+                markUnsaved();
+                syncInputsFromState();
+            });
 
-                        <div style="margin-bottom:16px;">
-                            <h3 style="font-size:13px; font-weight:900; color:#0369a1; margin:0 0 8px 0;">2. المواصفات والتفاصيل الفنية المطلوبة:</h3>
-                            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:14px; font-size:13px; line-height:1.8; white-space:pre-wrap; min-height:110px;">${escapeHtml(state.specifications)}</div>
-                        </div>
+            $('locationSearch').addEventListener('input', (e) => {
+                state.locationArea = e.target.value;
+                markUnsaved();
+                updateProgress();
+                renderAreaDropdown(e.target.value);
+            });
 
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
-                            <div style="border:1px solid #cbd5e1; border-radius:10px; padding:12px;">
-                                <h4 style="font-size:12px; font-weight:900; color:#0f766e; margin:0 0 8px 0;">3. أشخاص التواصل وأرقام الهواتف:</h4>
-                                ${validContacts.length > 0
-                                    ? validContacts.map((c) => `<div style="font-size:12px; margin-bottom:4px;"><strong>${escapeHtml(c.name || "تواصل")}:</strong> <span style="font-family:monospace; font-weight:800;">${escapeHtml(c.phone || "-")}</span></div>`).join("")
-                                    : '<div style="font-size:12px; color:#64748b;">لا يوجد</div>'}
-                                ${state.clientEmail ? `<div style="font-size:11px; color:#475569; margin-top:6px; border-top:1px dashed #cbd5e1; padding-top:4px;">Email: ${escapeHtml(state.clientEmail)}</div>` : ""}
-                            </div>
+            $('locationSearch').addEventListener('focus', (e) => {
+                renderAreaDropdown(e.target.value);
+            });
 
-                            <div style="border:1px solid #cbd5e1; border-radius:10px; padding:12px;">
-                                <h4 style="font-size:12px; font-weight:900; color:#b45309; margin:0 0 8px 0;">4. المرفقات المرسلة مع الطلب:</h4>
-                                ${state.selectedAttachments.length > 0
-                                    ? state.selectedAttachments.map((a) => `<div style="font-size:12px; font-weight:700; margin-bottom:3px;">• ${escapeHtml(a)}</div>`).join("")
-                                    : '<div style="font-size:12px; color:#64748b;">لا توجد مرفقات محددة</div>'}
-                            </div>
-                        </div>
-
-                        <div style="border-top:1px solid #cbd5e1; padding-top:10px; display:flex; justify-content:space-between; font-size:10px; color:#64748b;">
-                            <span>شركة الراي الهندسية لتشييد و تشطيب المباني - دولة الكويت</span>
-                            <span>مُعد للإدخال في نظام إدارة عروض الأسعار</span>
-                        </div>
-                    </div>
-                `;
-
-                const oldTitle = document.title;
-                document.title = `طلب_تسعير_${state.projectName.trim().replace(/\s+/g, "_")}`;
-                setTimeout(() => {
-                    window.print();
-                    document.title = oldTitle;
-                }, 200);
-            }
-
-            // حفظ في ذاكرة المتصفح
-            function saveToLocalStorage() {
-                try {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-                } catch (e) {}
-            }
-
-            function loadFromLocalStorage() {
-                try {
-                    const raw = localStorage.getItem(STORAGE_KEY);
-                    if (!raw) return;
-                    const saved = JSON.parse(raw);
-                    Object.assign(state, saved);
-                    state.isSaved = false; // يتطلب ضغط زر الاعتماد عند الفتح الجديد
-                } catch (e) {}
-            }
-
-            function escapeHtml(str) {
-                return String(str)
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;");
-            }
-
-            // ربط كافة الأحداث
-            function bindEvents() {
-                el.projectName.addEventListener("input", (e) => { state.projectName = e.target.value; markDirty(); });
-                el.senderName.addEventListener("input", (e) => { state.senderName = e.target.value; markDirty(); });
-                el.requestDate.addEventListener("change", (e) => { state.requestDate = e.target.value; markDirty(); });
-                el.locationDetails.addEventListener("input", (e) => { state.locationDetails = e.target.value; markDirty(); });
-                el.specificationsText.addEventListener("input", (e) => { state.specifications = e.target.value; markDirty(); });
-                el.clientEmail.addEventListener("input", (e) => { state.clientEmail = e.target.value; markDirty(); });
-                el.deadlineDate.addEventListener("change", (e) => { state.deadlineDate = e.target.value; markDirty(); });
-
-                el.urgentBtn.addEventListener("click", () => {
-                    state.isUrgent = !state.isUrgent;
-                    renderUrgentButton();
-                    markDirty();
-                });
-
-                el.locationSearch.addEventListener("input", (e) => {
-                    state.area = e.target.value;
-                    showAreaMatches(e.target.value);
-                    markDirty();
-                });
-
-                el.btnShowAllAreas.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    if (el.areaDropdown.classList.contains("hidden")) {
-                        showAreaMatches("");
-                    } else {
-                        el.areaDropdown.classList.add("hidden");
-                    }
-                });
-
-                document.addEventListener("click", (e) => {
-                    if (!document.getElementById("areaFieldWrapper").contains(e.target)) {
-                        el.areaDropdown.classList.add("hidden");
-                    }
-                });
-
-                function handleAddCustomWork() {
-                    const val = el.customWorkInput.value.trim();
-                    if (!val) return;
-                    if (!state.workTypes.includes(val)) {
-                        state.workTypes.push(val);
-                    }
-                    if (!state.selectedWorks.includes(val)) {
-                        state.selectedWorks.push(val);
-                    }
-                    el.customWorkInput.value = "";
-                    renderWorkTypes();
-                    renderPricingOptions();
-                    markDirty();
-                    notify(`تم إضافة بند "${val}"`, "success");
+            $('btnShowAllAreas').addEventListener('click', () => {
+                const dd = $('areaDropdown');
+                if (dd.classList.contains('hidden')) {
+                    renderAreaDropdown('');
+                } else {
+                    dd.classList.add('hidden');
                 }
+            });
 
-                el.btnAddCustomWork.addEventListener("click", handleAddCustomWork);
-                el.customWorkInput.addEventListener("keydown", (e) => {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleAddCustomWork();
-                    }
-                });
+            document.addEventListener('click', (e) => {
+                if (!$('areaFieldWrapper').contains(e.target)) {
+                    $('areaDropdown').classList.add('hidden');
+                }
+            });
 
-                el.btnAddContact.addEventListener("click", () => {
-                    state.contacts.push({ name: "", phone: "" });
-                    renderContacts();
-                    markDirty();
-                });
+            $('locationDetails').addEventListener('input', (e) => {
+                state.locationDetails = e.target.value;
+                markUnsaved();
+            });
 
-                el.btnSaveForm.addEventListener("click", () => {
-                    if (!validateForm()) return;
-                    state.isSaved = true;
-                    saveToLocalStorage();
-                    addCurrentStateToHistory();
-                    renderSaveLockState();
-                    renderSummaryAndProgress();
-                    notify("تم حفظ واعتماد بيانات الطلب وإضافته للسجل! اختر طريقة الإرسال الآن", "success");
-                });
-
-                el.btnSendEmail.addEventListener("click", sendEmailAction);
-                el.btnExportPDF.addEventListener("click", exportPDFAction);
-                el.btnCopyText.addEventListener("click", copyTextAction);
-                el.btnQuickCopy.addEventListener("click", copyTextAction);
-
-                // أحداث نافذة السجل (History)
-                el.btnOpenHistory.addEventListener("click", () => {
-                    renderHistoryModal();
-                    el.historyModal.classList.remove("hidden");
-                });
-
-                el.btnCloseHistory.addEventListener("click", () => {
-                    el.historyModal.classList.add("hidden");
-                });
-
-                el.historyModal.addEventListener("click", (e) => {
-                    if (e.target === el.historyModal) {
-                        el.historyModal.classList.add("hidden");
-                    }
-                });
-
-                el.btnToggleTheme.addEventListener("click", () => {
-                    const isDark = document.documentElement.classList.toggle("dark");
-                    el.btnToggleTheme.textContent = isDark ? "☀️" : "🌙";
-                });
-
-                el.btnResetAll.addEventListener("click", () => {
-                    state.projectName = "";
-                    state.isUrgent = false;
-                    state.senderName = "";
-                    state.requestDate = new Date().toISOString().slice(0, 10);
-                    state.area = "";
-                    state.locationDetails = "";
-                    state.selectedWorks = [];
-                    state.pricingStyle = PRICING_OPTIONS[0];
-                    state.specifications = "";
-                    state.selectedAttachments = [];
-                    state.contacts = [{ name: "", phone: "" }];
-                    state.clientEmail = "";
-                    state.deadlineDate = "";
-                    state.isSaved = false;
-
-                    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-                    syncInputsFromState();
-                    renderAll();
-                    notify("تم تفريغ النموذج لبدء طلب جديد", "info");
-                });
-            }
-
-            function syncInputsFromState() {
-                el.projectName.value = state.projectName;
-                el.senderName.value = state.senderName;
-                el.requestDate.value = state.requestDate;
-                el.locationSearch.value = state.area;
-                el.locationDetails.value = state.locationDetails;
-                el.specificationsText.value = state.specifications;
-                el.clientEmail.value = state.clientEmail;
-                el.deadlineDate.value = state.deadlineDate;
-            }
-
-            function renderAll() {
-                renderUrgentButton();
+            $('btnAddCustomWork').addEventListener('click', () => {
+                const val = $('customWorkInput').value.trim();
+                if (!val) return;
+                if (!DEFAULT_WORK_TYPES.includes(val) && !state.customWorkTypes.includes(val)) {
+                    state.customWorkTypes.push(val);
+                }
+                if (!state.selectedWorkTypes.includes(val)) {
+                    state.selectedWorkTypes.push(val);
+                }
+                $('customWorkInput').value = '';
+                markUnsaved();
                 renderWorkTypes();
                 renderPricingOptions();
-                renderAttachments();
-                renderContacts();
-                renderSaveLockState();
-                renderSummaryAndProgress();
-                updateHistoryBadge();
-            }
+                updateProgress();
+            });
 
-            // التشغيل الأولي
-            loadFromLocalStorage();
+            $('specificationsText').addEventListener('input', (e) => {
+                state.specifications = e.target.value;
+                markUnsaved();
+                updateProgress();
+            });
+
+            $('btnAddContact').addEventListener('click', () => {
+                state.contacts.push({ name: "", phone: "" });
+                markUnsaved();
+                renderContacts();
+            });
+
+            $('clientEmail').addEventListener('input', (e) => {
+                state.clientEmail = e.target.value;
+                markUnsaved();
+            });
+
+            $('deadlineDate').addEventListener('change', (e) => {
+                state.deadlineDate = e.target.value;
+                markUnsaved();
+            });
+
+            $('btnSaveForm').addEventListener('click', () => {
+                validateAndSaveProject();
+            });
+
+            $('btnOpenSavedDetail').addEventListener('click', () => {
+                if (currentViewedProject) {
+                    openProjectDetailPage(currentViewedProject);
+                }
+            });
+
+            $('btnSendEmail').addEventListener('click', () => {
+                if (!state.isSaved) {
+                    showToast('🔒 يرجى حفظ الطلب أولاً قبل الإرسال', 'warning');
+                    return;
+                }
+                handleSendEmail(currentViewedProject || state);
+            });
+
+            $('btnPrintPdf').addEventListener('click', () => {
+                if (!state.isSaved) {
+                    showToast('🔒 يرجى حفظ الطلب أولاً قبل الطباعة', 'warning');
+                    return;
+                }
+                handlePrintPdf(currentViewedProject || state);
+            });
+
+            $('btnCopyText').addEventListener('click', () => {
+                if (!state.isSaved) {
+                    showToast('🔒 يرجى حفظ الطلب أولاً قبل النسخ', 'warning');
+                    return;
+                }
+                handleCopyReport(currentViewedProject || state);
+            });
+
+            /* أزرار صفحة عرض تفاصيل المشروع */
+            $('btnBackToForm').addEventListener('click', () => {
+                showFormView();
+            });
+
+            $('btnEditFromView').addEventListener('click', () => {
+                if (currentViewedProject) {
+                    loadProjectIntoEditor(currentViewedProject);
+                }
+            });
+
+            $('btnViewEmail').addEventListener('click', () => {
+                if (currentViewedProject) handleSendEmail(currentViewedProject);
+            });
+
+            $('btnViewPdf').addEventListener('click', () => {
+                if (currentViewedProject) handlePrintPdf(currentViewedProject);
+            });
+
+            $('btnViewCopy').addEventListener('click', () => {
+                if (currentViewedProject) handleCopyReport(currentViewedProject);
+            });
+
+            /* أزرار الهيدر والسجل */
+            $('btnNewProject').addEventListener('click', resetToNewProject);
+
+            $('btnCancelEdit').addEventListener('click', resetToNewProject);
+
+            $('btnOpenHistory').addEventListener('click', () => {
+                renderHistoryModal();
+                $('historyModal').classList.remove('hidden');
+            });
+
+            $('btnCloseHistory').addEventListener('click', () => {
+                $('historyModal').classList.add('hidden');
+            });
+
+            $('historyModal').addEventListener('click', (e) => {
+                if (e.target === $('historyModal')) {
+                    $('historyModal').classList.add('hidden');
+                }
+            });
+
+            $('btnToggleTheme').addEventListener('click', () => {
+                const html = document.documentElement;
+                html.classList.toggle('dark');
+                $('btnToggleTheme').textContent = html.classList.contains('dark') ? '☀️' : '🌙';
+            });
+
+            /* التهيئة الأولية */
+            updateHistoryBadge();
             syncInputsFromState();
-            bindEvents();
-            renderAll();
         })();
     </script>
 </body>
