@@ -717,7 +717,7 @@
         }
 
         /* =========================================================
-           صفحة / واجهة عرض المشروع الاحترافية (Project Detail View)
+           صفحة / واجهة عرض الفاتورة الاحترافية (Invoice / Project View)
            ========================================================= */
         .project-view-page {
             max-width: 780px;
@@ -732,185 +732,191 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 18px;
-            padding: 14px 16px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
             flex-wrap: wrap;
             box-shadow: var(--shadow-card);
+            position: sticky;
+            top: 65px;
+            z-index: 45;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        .btn-edit-project {
-            padding: 10px 18px;
-            border-radius: 12px;
+        .invoice-actions-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-invoice-action {
+            height: 38px;
+            padding: 0 14px;
+            border-radius: 10px;
             border: none;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #020617;
             font-family: inherit;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 900;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
-        }
-
-        .btn-edit-project:active {
-            transform: scale(0.97);
-        }
-
-        .view-hero-card {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            border: 1.5px solid #334155;
-            border-radius: 22px;
-            padding: 22px 20px;
-            color: #f8fafc;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .view-hero-badge {
-            display: inline-flex;
-            align-items: center;
+            justify-content: center;
             gap: 6px;
-            padding: 5px 12px;
-            border-radius: 99px;
-            font-size: 12px;
-            font-weight: 900;
-            margin-bottom: 12px;
+            transition: all 0.15s;
         }
 
-        .view-hero-badge.normal {
-            background: rgba(14, 165, 233, 0.2);
+        .btn-invoice-action:active {
+            transform: scale(0.96);
+        }
+
+        .btn-inv-email { background: #0078d4; color: #fff; }
+        .btn-inv-pdf { background: #0ea5e9; color: #fff; }
+        .btn-inv-copy { background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-color); }
+        .btn-inv-edit { background: linear-gradient(135deg, #f59e0b, #d97706); color: #020617; }
+
+        /* تصميم الفاتورة الرسمي */
+        .invoice-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            border-radius: 22px;
+            padding: 24px 20px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 16px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .invoice-company-info h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .invoice-company-info p {
+            margin: 4px 0 0 0;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .invoice-badge-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .invoice-status-pill {
+            padding: 5px 14px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .invoice-status-pill.normal {
+            background: rgba(14, 165, 233, 0.15);
             color: #38bdf8;
             border: 1px solid rgba(56, 189, 248, 0.35);
         }
 
-        .view-hero-badge.urgent {
-            background: rgba(244, 63, 94, 0.25);
-            color: #fda4af;
-            border: 1px solid rgba(244, 63, 94, 0.5);
+        .invoice-status-pill.urgent {
+            background: rgba(244, 63, 94, 0.2);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.4);
         }
 
-        .view-project-title {
-            font-size: 20px;
-            font-weight: 900;
-            margin: 0 0 8px 0;
-            line-height: 1.4;
-            color: #ffffff;
-        }
-
-        .view-company-subtitle {
-            font-size: 14px;
-            font-weight: 800;
-            color: #38bdf8;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .view-section-card {
-            background: var(--bg-card);
+        .invoice-title-section {
+            background: var(--bg-input);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 18px;
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+            border-radius: 16px;
+            padding: 16px;
         }
 
-        .view-section-title {
-            font-size: 14px;
-            font-weight: 900;
-            color: var(--primary);
-            margin: 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .view-info-grid {
+        .invoice-grid-meta {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
         }
 
         @media (min-width: 560px) {
-            .view-info-grid {
+            .invoice-grid-meta {
                 grid-template-columns: 1fr 1fr;
             }
         }
 
-        .view-info-item {
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 12px 14px;
+        .invoice-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
         }
 
-        .view-info-label {
+        .invoice-meta-label {
             font-size: 11px;
             font-weight: 800;
             color: var(--text-muted);
-            margin-bottom: 4px;
         }
 
-        .view-info-value {
+        .invoice-meta-val {
             font-size: 14px;
             font-weight: 900;
             color: var(--text-main);
             word-break: break-word;
         }
 
-        .view-tags-list {
+        .invoice-section-heading {
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .invoice-tags-wrap {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
 
-        .view-tag-pill {
-            padding: 7px 13px;
+        .invoice-tag {
+            padding: 6px 12px;
             border-radius: 10px;
-            background: rgba(14, 165, 233, 0.14);
-            border: 1px solid rgba(14, 165, 233, 0.35);
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(14, 165, 233, 0.3);
             color: #38bdf8;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
         }
 
-        html:not(.dark) .view-tag-pill {
+        html:not(.dark) .invoice-tag {
             color: #0284c7;
         }
 
-        .view-specs-box {
+        .invoice-specs-content {
             background: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 14px 16px;
-            font-size: 14px;
+            padding: 14px;
+            font-size: 13px;
             font-weight: 700;
-            line-height: 1.85;
+            line-height: 1.8;
             white-space: pre-wrap;
-            color: var(--text-main);
-        }
-
-        .view-contact-row {
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 12px 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
         }
 
         /* نافذة السجل (History Modal) */
@@ -1118,31 +1124,24 @@
     </div>
 
     <!-- =========================================================
-         صفحة عرض تفاصيل المشروع المحفوظ (واجهة أنيقة بعيداً عن الجداول)
+         صفحة عرض الفاتورة / تفاصيل المشروع المحفوظ (مع أزرار إرسال علوية سريعة)
          ========================================================= -->
     <section id="projectDetailView" class="project-view-page hidden no-print">
+        <!-- شريط علوي للفاتورة يضم كافة أزرار الإرسال والتعديل فوراً بدون تمرير -->
         <div class="view-top-bar">
             <button type="button" id="btnBackToForm" class="icon-btn">
-                → العودة للنموذج
+                ← العودة للنموذج
             </button>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button type="button" id="btnEditFromView" class="btn-edit-project">
-                    ✏️ تعديل بيانات المشروع
-                </button>
+            <div class="invoice-actions-group">
+                <button type="button" id="btnViewEmail" class="btn-invoice-action btn-inv-email" title="إرسال عبر الإيميل">✉️ إيميل</button>
+                <button type="button" id="btnViewPdf" class="btn-invoice-action btn-inv-pdf" title="طباعة أو حفظ PDF">📄 PDF</button>
+                <button type="button" id="btnViewCopy" class="btn-invoice-action btn-inv-copy" title="نسخ التقرير للنص">📋 نسخ</button>
+                <button type="button" id="btnEditFromView" class="btn-invoice-action btn-inv-edit" title="تعديل البيانات">✏️ تعديل</button>
             </div>
         </div>
 
-        <div id="projectDetailContent" style="display:flex; flex-direction:column; gap:16px;"></div>
-
-        <!-- أزرار الإرسال السريعة من صفحة العرض -->
-        <div class="action-hub">
-            <div style="font-size:14px; font-weight:900;">مشاركة وتصدير بيانات المشروع المعتمد:</div>
-            <div class="export-grid">
-                <button type="button" id="btnViewEmail" class="btn-export btn-email">✉️ إرسال إيميل</button>
-                <button type="button" id="btnViewPdf" class="btn-export btn-pdf">📄 طباعة / PDF</button>
-                <button type="button" id="btnViewCopy" class="btn-export btn-copy">📋 نسخ التقرير</button>
-            </div>
-        </div>
+        <!-- بطاقة الفاتورة الهندسية الرسمية -->
+        <div id="invoiceCardContent" class="invoice-card"></div>
     </section>
 
     <!-- =========================================================
@@ -1181,7 +1180,6 @@
                 <input type="text" id="projectName" class="input-control" placeholder="مثال: إنشاء وتشطيب مبنى إداري - قطعة 3">
             </div>
 
-            <!-- الخانة الجديدة: اسم الشركة بعد اسم المشروع مباشرة -->
             <div class="field-group">
                 <label class="field-label" for="companyName">اسم الشركة / الجهة المالكة <span class="req">*</span></label>
                 <input type="text" id="companyName" class="input-control" placeholder="مثال: شركة الخليج للتجارة والمقاولات العامة">
@@ -1303,7 +1301,7 @@
                     <div>
                         <div style="font-size:15px; font-weight:900;">1. حفظ واعتماد بيانات الطلب</div>
                         <div id="saveStatusHint" style="font-size:12px; color:#fcd34d; margin-top:3px; font-weight:700;">
-                            🔒 احفظ الطلب لفتحه في صفحة عرض منظمة أو إرساله
+                            🔒 احفظ الطلب لعرضه فوراً كفاتورة رسمية أو إرساله
                         </div>
                     </div>
                     <span id="saveStatusBadge" style="padding:4px 10px; border-radius:8px; background:rgba(245,158,11,0.2); color:#fcd34d; font-size:11px; font-weight:900; flex-shrink:0;">
@@ -1312,21 +1310,12 @@
                 </div>
 
                 <button type="button" id="btnSaveForm" class="btn-save-main">
-                    💾 حفظ واعتماد وعرض المشروع
+                    💾 حفظ واعتماد وعرض فاتورة المشروع
                 </button>
 
                 <button type="button" id="btnOpenSavedDetail" class="btn-view-saved hidden">
-                    👁️ عرض صفحة تفاصيل المشروع المحفوظ
+                    👁️ عرض فاتورة المشروع المحفوظ
                 </button>
-            </div>
-
-            <div class="step-panel">
-                <div style="font-size:14px; font-weight:900;">2. خيارات الإرسال والتصدير المباشر</div>
-                <div class="export-grid">
-                    <button type="button" id="btnSendEmail" class="btn-export btn-email locked">✉️ إرسال إيميل</button>
-                    <button type="button" id="btnPrintPdf" class="btn-export btn-pdf locked">📄 طباعة / PDF</button>
-                    <button type="button" id="btnCopyText" class="btn-export btn-copy locked">📋 نسخ النص</button>
-                </div>
             </div>
         </section>
 
@@ -1462,7 +1451,6 @@
                 const badge = $('saveStatusBadge');
                 const hint = $('saveStatusHint');
                 const btnView = $('btnOpenSavedDetail');
-                const exportBtns = [$('btnSendEmail'), $('btnPrintPdf'), $('btnCopyText')];
 
                 if (state.isSaved) {
                     btnSave.classList.add('saved');
@@ -1470,22 +1458,20 @@
                     badge.textContent = 'محفوظ ومعتمد';
                     badge.style.background = 'rgba(16, 185, 129, 0.22)';
                     badge.style.color = '#6ee7b7';
-                    hint.textContent = '✔️ الطلب محفوظ الآن — يمكنك عرضه بصفحة مستقلة أو إرساله';
+                    hint.textContent = '✔️ الطلب محفوظ الآن — يمكنك عرضه كفاتورة أو تعديله';
                     hint.style.color = '#6ee7b7';
                     btnView.classList.remove('hidden');
-                    exportBtns.forEach(b => b.classList.remove('locked'));
                 } else {
                     btnSave.classList.remove('saved');
                     btnSave.innerHTML = state.editingId
-                        ? '💾 حفظ التعديلات وعرض المشروع'
-                        : '💾 حفظ واعتماد وعرض المشروع';
+                        ? '💾 حفظ التعديلات وعرض فاتورة المشروع'
+                        : '💾 حفظ واعتماد وعرض فاتورة المشروع';
                     badge.textContent = 'غير محفوظ';
                     badge.style.background = 'rgba(245, 158, 11, 0.2)';
                     badge.style.color = '#fcd34d';
-                    hint.textContent = '🔒 احفظ الطلب لفتحه في صفحة عرض منظمة أو إرساله';
+                    hint.textContent = '🔒 احفظ الطلب لعرضه فوراً كفاتورة رسمية أو إرساله';
                     hint.style.color = '#fcd34d';
                     btnView.classList.add('hidden');
-                    exportBtns.forEach(b => b.classList.add('locked'));
                 }
 
                 if (state.editingId) {
@@ -1747,7 +1733,7 @@
             }
 
             /* =========================================================
-               عرض صفحة تفاصيل المشروع المحفوظ بتصميم بطاقات احترافي
+               عرض فاتورة المشروع الاحترافية (Invoice Style)
                ========================================================= */
             function openProjectDetailPage(projectObj) {
                 currentViewedProject = projectObj;
@@ -1763,86 +1749,94 @@
 
                 const contactsHtml = validContacts.length > 0
                     ? validContacts.map((c, i) => `
-                        <div class="view-contact-row">
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); border:1px solid var(--border-color); border-radius:12px; padding:10px 14px; gap:8px;">
                             <div>
                                 <div style="font-size:11px; color:var(--text-muted); font-weight:800;">جهة تواصل #${i + 1}</div>
-                                <div style="font-size:14px; font-weight:900;">${escapeHtml(c.name || 'غير محدد')}</div>
+                                <div style="font-size:13px; font-weight:900;">${escapeHtml(c.name || 'غير محدد')}</div>
                             </div>
-                            ${c.phone ? `<a href="tel:${escapeAttr(c.phone)}" class="num-en" style="background:rgba(14,165,233,0.16); color:#38bdf8; padding:6px 12px; border-radius:10px; font-weight:800; text-decoration:none; font-size:13px;">📞 ${escapeHtml(c.phone)}</a>` : ''}
+                            ${c.phone ? `<a href="tel:${escapeAttr(c.phone)}" class="num-en" style="background:rgba(14,165,233,0.16); color:#38bdf8; padding:5px 12px; border-radius:10px; font-weight:800; text-decoration:none; font-size:12px;">📞 ${escapeHtml(c.phone)}</a>` : ''}
                         </div>
                     `).join('')
                     : `<div style="font-size:13px; color:var(--text-muted); font-weight:700;">لا توجد أرقام تواصل مسجلة</div>`;
 
                 const worksHtml = (projectObj.selectedWorkTypes && projectObj.selectedWorkTypes.length > 0)
-                    ? projectObj.selectedWorkTypes.map(w => `<span class="view-tag-pill">✓ ${escapeHtml(w)}</span>`).join('')
+                    ? projectObj.selectedWorkTypes.map(w => `<span class="invoice-tag">✓ ${escapeHtml(w)}</span>`).join('')
                     : `<span style="color:var(--text-muted); font-size:13px;">لم يتم تحديد بنود أعمال</span>`;
 
                 const attachmentsHtml = (projectObj.selectedAttachments && projectObj.selectedAttachments.length > 0)
-                    ? projectObj.selectedAttachments.map(a => `<span class="view-tag-pill" style="background:rgba(16,185,129,0.14); border-color:rgba(16,185,129,0.35); color:#34d399;">📎 ${escapeHtml(a)}</span>`).join('')
+                    ? projectObj.selectedAttachments.map(a => `<span class="invoice-tag" style="background:rgba(16,185,129,0.14); border-color:rgba(16,185,129,0.35); color:#34d399;">📎 ${escapeHtml(a)}</span>`).join('')
                     : `<span style="color:var(--text-muted); font-size:13px;">لا توجد مرفقات محددة</span>`;
 
-                $('projectDetailContent').innerHTML = `
-                    <div class="view-hero-card">
-                        <div class="view-hero-badge ${projectObj.isUrgent ? 'urgent' : 'normal'}">
-                            ${projectObj.isUrgent ? '🔥 أولوية قصوى - مشروع مستعجل جداً' : '📋 طلب تسعير مشروع - أولوية عادية'}
+                $('invoiceCardContent').innerHTML = `
+                    <!-- هيدر الفاتورة الداخلي -->
+                    <div class="invoice-header-row">
+                        <div class="invoice-company-info">
+                            <h2>شركة الراي الهندسية</h2>
+                            <p>لتشييد وتشطيب المباني • قسم الدراسات والتسعير</p>
                         </div>
-                        <h2 class="view-project-title">${escapeHtml(projectObj.projectName)}</h2>
-                        <p class="view-company-subtitle">🏢 الشركة / الجهة: ${escapeHtml(projectObj.companyName || 'غير محدد')}</p>
-                    </div>
-
-                    <div class="view-section-card">
-                        <h3 class="view-section-title">📌 المعلومات الإدارية والموقع</h3>
-                        <div class="view-info-grid">
-                            <div class="view-info-item">
-                                <div class="view-info-label">الشركة / الجهة الطالبة</div>
-                                <div class="view-info-value">${escapeHtml(projectObj.companyName || 'غير محدد')}</div>
-                            </div>
-                            <div class="view-info-item">
-                                <div class="view-info-label">اسم المسؤول / مُرسل الطلب</div>
-                                <div class="view-info-value">${escapeHtml(projectObj.senderName)}</div>
-                            </div>
-                            <div class="view-info-item">
-                                <div class="view-info-label">تاريخ الطلب</div>
-                                <div class="view-info-value num-en">${escapeHtml(projectObj.requestDate || '-')}</div>
-                            </div>
-                            <div class="view-info-item">
-                                <div class="view-info-label">آخر موعد لتقديم السعر</div>
-                                <div class="view-info-value num-en">${escapeHtml(projectObj.deadlineDate || 'غير محدد')}</div>
-                            </div>
-                            <div class="view-info-item" style="grid-column: 1 / -1;">
-                                <div class="view-info-label">موقع المشروع</div>
-                                <div class="view-info-value">📍 ${escapeHtml(projectObj.locationArea)} ${projectObj.locationDetails ? ' — ' + escapeHtml(projectObj.locationDetails) : ''}</div>
-                            </div>
+                        <div class="invoice-badge-box">
+                            <span class="invoice-status-pill ${projectObj.isUrgent ? 'urgent' : 'normal'}">
+                                ${projectObj.isUrgent ? '🔥 مشروع مستعجل جداً' : '📋 طلب تسعير نظامي'}
+                            </span>
+                            <div style="font-size:11px; color:var(--text-muted); font-weight:800;" class="num-en">الرقم المرجعي: #${escapeHtml(projectObj.id)}</div>
                         </div>
                     </div>
 
-                    <div class="view-section-card">
-                        <h3 class="view-section-title">🛠️ نطاق الأعمال المطلوبة للتسعير</h3>
-                        <div class="view-tags-list">${worksHtml}</div>
-                        <div class="view-info-item">
-                            <div class="view-info-label">نظام عرض السعر المطلوب</div>
-                            <div class="view-info-value">${escapeHtml(pricingText)}</div>
+                    <!-- معلومات المشروع الأساسية -->
+                    <div class="invoice-title-section">
+                        <div style="font-size:11px; font-weight:800; color:var(--text-muted); margin-bottom:4px;">اسم المشروع</div>
+                        <div style="font-size:18px; font-weight:900; color:var(--text-main); margin-bottom:10px;">${escapeHtml(projectObj.projectName)}</div>
+                        <div style="font-size:13px; font-weight:900; color:#38bdf8;">🏢 الجهة / الشركة المالكة: ${escapeHtml(projectObj.companyName || 'غير محدد')}</div>
+                    </div>
+
+                    <!-- تفاصيل الجدول الإداري -->
+                    <div class="invoice-grid-meta">
+                        <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:12px; padding:12px;">
+                            <div class="invoice-meta-label">اسم المسؤول / المُرسل</div>
+                            <div class="invoice-meta-val">${escapeHtml(projectObj.senderName)}</div>
+                        </div>
+                        <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:12px; padding:12px;">
+                            <div class="invoice-meta-label">تاريخ إرسال الطلب</div>
+                            <div class="invoice-meta-val num-en">${escapeHtml(projectObj.requestDate || '-')}</div>
+                        </div>
+                        <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:12px; padding:12px;">
+                            <div class="invoice-meta-label">آخر موعد لتقديم السعر</div>
+                            <div class="invoice-meta-val num-en">${escapeHtml(projectObj.deadlineDate || 'غير محدد')}</div>
+                        </div>
+                        <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:12px; padding:12px;">
+                            <div class="invoice-meta-label">موقع المشروع</div>
+                            <div class="invoice-meta-val">📍 ${escapeHtml(projectObj.locationArea)} ${projectObj.locationDetails ? ' (' + escapeHtml(projectObj.locationDetails) + ')' : ''}</div>
                         </div>
                     </div>
 
-                    <div class="view-section-card">
-                        <h3 class="view-section-title">📝 المواصفات والتفاصيل الفنية</h3>
-                        <div class="view-specs-box">${escapeHtml(projectObj.specifications)}</div>
+                    <!-- بنود الأعمال -->
+                    <div>
+                        <div class="invoice-section-heading">🛠️ بنود الأعمال المطلوبة</div>
+                        <div class="invoice-tags-wrap">${worksHtml}</div>
+                        <div style="margin-top:8px; font-size:12px; font-weight:800; color:var(--text-muted);">طريقة التسعير: <span style="color:var(--text-main);">${escapeHtml(pricingText)}</span></div>
                     </div>
 
-                    <div class="view-section-card">
-                        <h3 class="view-section-title">📎 المرفقات المتوفرة</h3>
-                        <div class="view-tags-list">${attachmentsHtml}</div>
+                    <!-- المواصفات والفنيات -->
+                    <div>
+                        <div class="invoice-section-heading">📝 المواصفات والتفاصيل الفنية</div>
+                        <div class="invoice-specs-content">${escapeHtml(projectObj.specifications)}</div>
                     </div>
 
-                    <div class="view-section-card">
-                        <h3 class="view-section-title">📞 بيانات التواصل للعميل / الموقع</h3>
+                    <!-- المرفقات -->
+                    <div>
+                        <div class="invoice-section-heading">📎 المرفقات المتوفرة</div>
+                        <div class="invoice-tags-wrap">${attachmentsHtml}</div>
+                    </div>
+
+                    <!-- التواصل والبريد -->
+                    <div>
+                        <div class="invoice-section-heading">📞 بيانات التواصل للعميل / الموقع</div>
                         <div style="display:flex; flex-direction:column; gap:8px;">
                             ${contactsHtml}
                             ${projectObj.clientEmail ? `
-                                <div class="view-info-item">
-                                    <div class="view-info-label">البريد الإلكتروني</div>
-                                    <div class="view-info-value num-en">${escapeHtml(projectObj.clientEmail)}</div>
+                                <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:12px; padding:10px 14px;">
+                                    <div class="invoice-meta-label">البريد الإلكتروني</div>
+                                    <div class="invoice-meta-val num-en">${escapeHtml(projectObj.clientEmail)}</div>
                                 </div>
                             ` : ''}
                         </div>
@@ -1946,7 +1940,7 @@
                 currentViewedProject = record;
                 syncSaveUI();
 
-                showToast('✅ تم حفظ واعتماد بيانات المشروع بنجاح', 'success');
+                showToast('✅ تم حفظ واعتماد فاتورة المشروع بنجاح', 'success');
                 openProjectDetailPage(record);
                 return record;
             }
@@ -2037,7 +2031,7 @@
                         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e2e8f0; padding-bottom:14px; margin-bottom:16px;">
                             <div>
                                 <h1 style="margin:0; font-size:20px; color:#0284c7;">شركة الراي الهندسية لتشييد وتشطيب المباني</h1>
-                                <p style="margin:4px 0 0 0; font-size:13px; color:#475569; font-weight:700;">نموذج طلب تسعير مشروع • قسم الدراسات</p>
+                                <p style="margin:4px 0 0 0; font-size:13px; color:#475569; font-weight:700;">فاتورة طلب تسعير مشروع • قسم الدراسات</p>
                             </div>
                             <div style="text-align:left;">
                                 <span style="display:inline-block; padding:5px 12px; border-radius:8px; font-weight:800; font-size:12px; background:${p.isUrgent ? '#fee2e2' : '#e0f2fe'}; color:${p.isUrgent ? '#b91c1c' : '#0369a1'};">
@@ -2113,7 +2107,7 @@
                             ${item.isUrgent ? '<span style="background:#e11d48; color:#fff; font-size:10px; font-weight:900; padding:3px 8px; border-radius:99px;">مستعجل</span>' : ''}
                         </div>
                         <div class="history-item-actions">
-                            <button type="button" class="btn-history-view">👁️ عرض التفاصيل</button>
+                            <button type="button" class="btn-history-view">👁️ عرض الفاتورة</button>
                             <button type="button" class="btn-history-load">✏️ تعديل</button>
                             <button type="button" class="btn-history-del">🗑️ حذف</button>
                         </div>
@@ -2248,31 +2242,7 @@
                 }
             });
 
-            $('btnSendEmail').addEventListener('click', () => {
-                if (!state.isSaved) {
-                    showToast('🔒 يرجى حفظ الطلب أولاً قبل الإرسال', 'warning');
-                    return;
-                }
-                handleSendEmail(currentViewedProject || state);
-            });
-
-            $('btnPrintPdf').addEventListener('click', () => {
-                if (!state.isSaved) {
-                    showToast('🔒 يرجى حفظ الطلب أولاً قبل الطباعة', 'warning');
-                    return;
-                }
-                handlePrintPdf(currentViewedProject || state);
-            });
-
-            $('btnCopyText').addEventListener('click', () => {
-                if (!state.isSaved) {
-                    showToast('🔒 يرجى حفظ الطلب أولاً قبل النسخ', 'warning');
-                    return;
-                }
-                handleCopyReport(currentViewedProject || state);
-            });
-
-            /* أزرار صفحة عرض تفاصيل المشروع */
+            /* أزرار صفحة عرض الفاتورة العلوية السريعة */
             $('btnBackToForm').addEventListener('click', () => {
                 showFormView();
             });
