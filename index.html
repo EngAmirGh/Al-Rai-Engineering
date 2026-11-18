@@ -1948,6 +1948,44 @@
                 return record;
             }
 
+            /* =========================================================
+               توليد حزمة البيانات المشفرة للاستيراد الفوري 100% في نظام الإدارة
+               ========================================================= */
+            function encodeSyncPayload(p) {
+                try {
+                    const validContacts = (p.contacts || [])
+                        .filter(c => (c.name && c.name.trim()) || (c.phone && c.phone.trim()))
+                        .map(c => ({ name: (c.name || '').trim(), phone: (c.phone || '').trim() }));
+
+                    const payload = {
+                        v: 1,
+                        pn: (p.projectName || '').trim(),
+                        cn: (p.companyName || '').trim(),
+                        ur: Boolean(p.isUrgent),
+                        sn: (p.senderName || '').trim(),
+                        rd: p.requestDate || '',
+                        la: (p.locationArea || '').trim(),
+                        ld: (p.locationDetails || '').trim(),
+                        wt: Array.isArray(p.selectedWorkTypes) ? p.selectedWorkTypes : [],
+                        pm: p.pricingMode || 'itemized',
+                        sp: (p.specifications || '').trim(),
+                        at: Array.isArray(p.selectedAttachments) ? p.selectedAttachments : [],
+                        ct: validContacts,
+                        em: (p.clientEmail || '').trim(),
+                        dl: p.deadlineDate || ''
+                    };
+                    const jsonStr = JSON.stringify(payload);
+                    const utf8Bytes = new TextEncoder().encode(jsonStr);
+                    let binaryStr = '';
+                    for (let i = 0; i < utf8Bytes.length; i++) {
+                        binaryStr += String.fromCharCode(utf8Bytes[i]);
+                    }
+                    return btoa(binaryStr);
+                } catch (e) {
+                    return '';
+                }
+            }
+
             function buildPlainTextReport(proj) {
                 const p = proj || state;
                 const lines = [];
@@ -1993,6 +2031,14 @@
                 if (p.clientEmail) {
                     lines.push(`• البريد الإلكتروني: ${p.clientEmail}`);
                 }
+
+                // إرفاق رمز المزامنة الهندسي الموثق في أسفل الرسالة للاستيراد التلقائي الآمن 100%
+                const syncCode = encodeSyncPayload(p);
+                if (syncCode) {
+                    lines.push('');
+                    lines.push(`[ALRAI_SYNC:${syncCode}]`);
+                }
+
                 return lines.join('\n');
             }
 
