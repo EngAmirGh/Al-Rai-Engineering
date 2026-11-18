@@ -1949,38 +1949,36 @@
             }
 
             /* =========================================================
-               توليد حزمة البيانات المشفرة للاستيراد الفوري 100% في نظام الإدارة
+               تشفير بيانات الطلب بدقة وموثوقية لربطها بنظام إدارة المشاريع
                ========================================================= */
             function encodeSyncPayload(p) {
                 try {
-                    const validContacts = (p.contacts || [])
-                        .filter(c => (c.name && c.name.trim()) || (c.phone && c.phone.trim()))
-                        .map(c => ({ name: (c.name || '').trim(), phone: (c.phone || '').trim() }));
-
-                    const payload = {
+                    const syncData = {
                         v: 1,
                         pn: (p.projectName || '').trim(),
                         cn: (p.companyName || '').trim(),
                         ur: Boolean(p.isUrgent),
                         sn: (p.senderName || '').trim(),
-                        rd: p.requestDate || '',
+                        rd: (p.requestDate || '').trim(),
                         la: (p.locationArea || '').trim(),
                         ld: (p.locationDetails || '').trim(),
                         wt: Array.isArray(p.selectedWorkTypes) ? p.selectedWorkTypes : [],
                         pm: p.pricingMode || 'itemized',
                         sp: (p.specifications || '').trim(),
                         at: Array.isArray(p.selectedAttachments) ? p.selectedAttachments : [],
-                        ct: validContacts,
+                        ct: (p.contacts || [])
+                            .filter(c => (c.name && c.name.trim()) || (c.phone && c.phone.trim()))
+                            .map(c => ({ n: (c.name || '').trim(), p: (c.phone || '').trim() })),
                         em: (p.clientEmail || '').trim(),
-                        dl: p.deadlineDate || ''
+                        dl: (p.deadlineDate || '').trim()
                     };
-                    const jsonStr = JSON.stringify(payload);
-                    const utf8Bytes = new TextEncoder().encode(jsonStr);
-                    let binaryStr = '';
-                    for (let i = 0; i < utf8Bytes.length; i++) {
-                        binaryStr += String.fromCharCode(utf8Bytes[i]);
+                    const jsonStr = JSON.stringify(syncData);
+                    const bytes = new TextEncoder().encode(jsonStr);
+                    let binStr = '';
+                    for (let i = 0; i < bytes.length; i++) {
+                        binStr += String.fromCharCode(bytes[i]);
                     }
-                    return btoa(binaryStr);
+                    return '[ALRAI_SYNC:' + btoa(binStr) + ']';
                 } catch (e) {
                     return '';
                 }
@@ -2032,13 +2030,12 @@
                     lines.push(`• البريد الإلكتروني: ${p.clientEmail}`);
                 }
 
-                // إرفاق رمز المزامنة الهندسي الموثق في أسفل الرسالة للاستيراد التلقائي الآمن 100%
-                const syncCode = encodeSyncPayload(p);
-                if (syncCode) {
+                const syncToken = encodeSyncPayload(p);
+                if (syncToken) {
                     lines.push('');
-                    lines.push(`[ALRAI_SYNC:${syncCode}]`);
+                    lines.push('------------------------------------');
+                    lines.push(syncToken);
                 }
-
                 return lines.join('\n');
             }
 
